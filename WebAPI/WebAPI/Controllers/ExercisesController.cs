@@ -1,37 +1,49 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Models;
+using WebAPI.Repositories;
+using WebAPI.DTO_s;
+using WebAPI.Profiles;
+using AutoMapper;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/[Controller]")]
+    [Route("api/workouts/{workoutId}/[Controller]")]
     [ApiController]
     public class ExercisesController : ControllerBase
     {
-        private readonly WebContext _context;
+        private readonly IMapper _mapper;
+        private readonly IExerciseRepository _exerciseRepository;
 
-        public ExercisesController(WebContext context)
+        public ExercisesController(IExerciseRepository exerciseRepository, IMapper mapper)
         {
-            _context = context;
+            _exerciseRepository = exerciseRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Exercise>>> GetExercises()
         {
-            return await _context.Exercises.ToListAsync();
+            var exercises = await _exerciseRepository.GetAll();
+
+            var mapped = _mapper.Map<IEnumerable<ExerciseDTO>>(exercises);
+
+            return Ok(mapped);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Exercise>> GetExercise(long id)
         {
-            var exercise = await _context.Exercises.FindAsync(id);
+            var exercise = await _exerciseRepository.Get(id);
 
             if (exercise == null)
             {
                 return NotFound();
             }
 
-            return exercise;
+            var mapped = _mapper.Map<ExerciseDTO>(exercise);
+
+            return Ok(mapped);
         }
 
         [HttpPut("{id}")]
@@ -41,55 +53,41 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Entry(exercise).State = EntityState.Modified;
-
-            try
+            if (_exerciseRepository.Get(id) == null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ExerciseExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
-            return NoContent();
+            var updatedExercise = await _exerciseRepository.Update(exercise);
+
+            return Ok(updatedExercise);
         }
 
         [HttpPost]
-        public async Task<ActionResult<Exercise>> PostExercise(Exercise exercise)
+        public async Task<ActionResult<Exercise>> PostExercise(ExerciseDTO exerciseDTO, long workoutId)
         {
-            _context.Exercises.Add(exercise);
-            await _context.SaveChangesAsync();
+            var exercise = _mapper.Map<Exercise>(exerciseDTO);
 
-            return CreatedAtAction(nameof(GetExercise), new { id = exercise.Id }, exercise);
+            exercise.WorkoutId = workoutId;
+
+            var exerciseFromDb = await _exerciseRepository.Add(exercise); 
+
+            return CreatedAtAction(nameof(GetExercise), new { id = exerciseFromDb.Id }, _mapper.Map<ExerciseDTO>(exerciseFromDb));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteExercise(long id)
         {
-            var exercise = await _context.Exercises.FindAsync(id);
+            var exercise = await _exerciseRepository.Get(id);
+
             if (exercise == null)
             {
                 return NotFound();
             }
 
-            _context.Exercises.Remove(exercise);
-            await _context.SaveChangesAsync();
+            await _exerciseRepository.Delete(exercise);
 
             return NoContent();
-        }
-
-        private bool ExerciseExists(long id)
-        {
-            return _context.Exercises.Any(e => e.Id == id);
         }
     }
 }

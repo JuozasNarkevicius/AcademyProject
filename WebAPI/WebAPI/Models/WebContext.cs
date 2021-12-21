@@ -12,6 +12,8 @@ namespace WebAPI.Models
 
         public DbSet<User> Users { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
+        public DbSet<WorkoutDay> Workouts { get; set; }
+        public DbSet<WorkoutProgram> Programs { get; set; }
 
     }
 }

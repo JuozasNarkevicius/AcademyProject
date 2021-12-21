@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAPI.Models;
 
@@ -10,9 +11,10 @@ using WebAPI.Models;
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(WebContext))]
-    partial class WebContextModelSnapshot : ModelSnapshot
+    [Migration("20211220170854_somefixes")]
+    partial class somefixes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,8 +49,6 @@ namespace WebAPI.Migrations
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("WorkoutId");
 
                     b.ToTable("Exercises");
                 });
@@ -98,61 +98,7 @@ namespace WebAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProgramId");
-
                     b.ToTable("Workouts");
-                });
-
-            modelBuilder.Entity("WebAPI.Models.WorkoutProgram", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("UserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Programs");
-                });
-
-            modelBuilder.Entity("WebAPI.Models.Exercise", b =>
-                {
-                    b.HasOne("WebAPI.Models.WorkoutDay", "Workout")
-                        .WithMany("Exercises")
-                        .HasForeignKey("WorkoutId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Workout");
-                });
-
-            modelBuilder.Entity("WebAPI.Models.WorkoutDay", b =>
-                {
-                    b.HasOne("WebAPI.Models.WorkoutProgram", "Program")
-                        .WithMany("Workouts")
-                        .HasForeignKey("ProgramId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Program");
-                });
-
-            modelBuilder.Entity("WebAPI.Models.WorkoutDay", b =>
-                {
-                    b.Navigation("Exercises");
-                });
-
-            modelBuilder.Entity("WebAPI.Models.WorkoutProgram", b =>
-                {
-                    b.Navigation("Workouts");
                 });
 #pragma warning restore 612, 618
         }
