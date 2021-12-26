@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using WebAPI.Models;
-using WebAPI.Repositories;
+using WebAPI.Data;
+using WebAPI.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

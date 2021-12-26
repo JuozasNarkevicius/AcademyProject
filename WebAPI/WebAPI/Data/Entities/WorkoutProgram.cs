@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace WebAPI.Models
+﻿namespace WebAPI.Data.Entities
 {
     public class WorkoutProgram
     {

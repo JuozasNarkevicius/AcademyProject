@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.DTO_s;
-using WebAPI.Models;
-using WebAPI.Repositories;
+using WebAPI.Data.DTO_s;
+using WebAPI.Data.Entities;
+using WebAPI.Data.Repositories;
 
 namespace WebAPI.Controllers
 {

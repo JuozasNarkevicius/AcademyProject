@@ -11,8 +11,8 @@ using WebAPI.Data;
 namespace WebAPI.Migrations
 {
     [DbContext(typeof(WebContext))]
-    [Migration("20211220220101_fix")]
-    partial class fix
+    [Migration("20211226162741_DataSeeding")]
+    partial class DataSeeding
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -113,7 +113,7 @@ namespace WebAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
-                    b.Property<string>("Title")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -128,7 +128,7 @@ namespace WebAPI.Migrations
             modelBuilder.Entity("WebAPI.Models.Exercise", b =>
                 {
                     b.HasOne("WebAPI.Models.WorkoutDay", "Workout")
-                        .WithMany()
+                        .WithMany("Exercises")
                         .HasForeignKey("WorkoutId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -139,12 +139,22 @@ namespace WebAPI.Migrations
             modelBuilder.Entity("WebAPI.Models.WorkoutDay", b =>
                 {
                     b.HasOne("WebAPI.Models.WorkoutProgram", "Program")
-                        .WithMany()
+                        .WithMany("Workouts")
                         .HasForeignKey("ProgramId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Program");
+                });
+
+            modelBuilder.Entity("WebAPI.Models.WorkoutDay", b =>
+                {
+                    b.Navigation("Exercises");
+                });
+
+            modelBuilder.Entity("WebAPI.Models.WorkoutProgram", b =>
+                {
+                    b.Navigation("Workouts");
                 });
 #pragma warning restore 612, 618
         }

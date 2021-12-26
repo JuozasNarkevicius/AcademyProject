@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebAPI.Models;
-using WebAPI.Repositories;
-using WebAPI.DTO_s;
-using WebAPI.Profiles;
+//using WebAPI.Models;
+//using WebAPI.Repositories;
+//using WebAPI.DTO_s;
+//using WebAPI.Profiles;
 using AutoMapper;
+using WebAPI.Data.Repositories;
+using WebAPI.Data.Entities;
+using WebAPI.Data.DTO_s;
 
 namespace WebAPI.Controllers
 {

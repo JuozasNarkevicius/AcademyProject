@@ -1,13 +1,18 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.CodeAnalysis;
+using WebAPI.Data.Entities;
 
-namespace WebAPI.Models
+namespace WebAPI.Data
 {
     public class WebContext : DbContext
     {
         public WebContext(DbContextOptions<WebContext> options) : base(options)
         {
             
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Seed();
         }
 
         public DbSet<User> Users { get; set; }

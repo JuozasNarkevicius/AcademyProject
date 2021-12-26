@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebAPI.Models;
+using WebAPI.Data.Entities;
 
-namespace WebAPI.Repositories
+namespace WebAPI.Data.Repositories
 {
     public interface IWorkoutProgramRepository
     {

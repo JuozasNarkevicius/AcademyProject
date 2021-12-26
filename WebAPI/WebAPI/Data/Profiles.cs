@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using WebAPI.DTO_s;
-using WebAPI.Models;
+using WebAPI.Data.DTO_s;
+using WebAPI.Data.Entities;
 
-namespace WebAPI.Profiles
+namespace WebAPI.Data
 {
     public class Profiles : Profile
     {

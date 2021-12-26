@@ -1,4 +1,4 @@
-﻿namespace WebAPI.DTO_s
+﻿namespace WebAPI.Data.DTO_s
 {
     public class ExerciseDTO
     {
