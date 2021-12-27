@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebAPI.Data;
 using WebAPI.Data.DTO_s;
 using WebAPI.Data.Entities;
+using WebAPI.Data.Models;
 using WebAPI.Data.Repositories;
 
 namespace WebAPI.Controllers
@@ -26,6 +21,7 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
@@ -91,6 +87,19 @@ namespace WebAPI.Controllers
             await _userRepository.Delete(user);
 
             return NoContent();
+        }
+
+        [HttpPost("authenticate")]
+        public IActionResult Authenticate(AuthenticateRequest model)
+        {
+            var response = _userRepository.Authenticate(model);
+
+            if (response == null)
+            {
+                return BadRequest(new { message = "Username or password is incorrect" });
+            }
+
+            return Ok(response);
         }
     }
 }
