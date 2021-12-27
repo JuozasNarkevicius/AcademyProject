@@ -6,6 +6,7 @@ namespace WebAPI.Data.Repositories
     public interface IWorkoutProgramRepository
     {
         public Task<WorkoutProgram> Get(long id);
+        public Task<WorkoutProgram> Add(WorkoutProgram program);
     }
     public class WorkoutProgramRepository : IWorkoutProgramRepository
     {
@@ -23,6 +24,13 @@ namespace WebAPI.Data.Repositories
                 .FirstOrDefaultAsync(p => p.Id == id);
 
             return program;
+        }
+
+        public async Task<WorkoutProgram> Add(WorkoutProgram program)
+        {
+            _context.Programs.Add(program);
+            await _context.SaveChangesAsync();
+            return await Get(program.Id);
         }
     }
 }

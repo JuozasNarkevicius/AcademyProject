@@ -1,8 +1,7 @@
-﻿namespace WebAPI.Data.Entities
+﻿namespace WebAPI.Data.DTO_s
 {
-    public class User
+    public class UserDTO
     {
-        public long Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Age { get; set; }

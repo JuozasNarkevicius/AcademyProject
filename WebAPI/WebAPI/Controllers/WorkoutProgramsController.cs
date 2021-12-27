@@ -6,7 +6,7 @@ using WebAPI.Data.Repositories;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/programs")]
+    [Route("api/users/{userId}/programs")]
     [ApiController]
     public class WorkoutProgramsController : ControllerBase
     {
@@ -32,6 +32,18 @@ namespace WebAPI.Controllers
             var mapped = _mapper.Map<WorkoutProgramDTO>(program);
 
             return Ok(mapped);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<WorkoutProgram>> PostProgram(long userId, CreateWorkoutProgramDTO programDTO)
+        {
+            var program = _mapper.Map<WorkoutProgram>(programDTO);
+
+            program.UserId = userId;
+
+            var programFromDb = await _workoutProgramRepository.Add(program);
+
+            return CreatedAtAction(nameof(GetProgram), new { id = programFromDb.Id }, _mapper.Map<WorkoutProgramDTO>(programFromDb));
         }
     }
 }

@@ -14,6 +14,7 @@ builder.Services.AddDbContext<WebContext>(options =>
 builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
 builder.Services.AddScoped<IWorkoutDayRepository, WorkoutDayRepository>();
 builder.Services.AddScoped<IWorkoutProgramRepository, WorkoutProgramRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 

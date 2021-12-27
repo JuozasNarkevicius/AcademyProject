@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPI.Data;
+using WebAPI.Data.DTO_s;
 using WebAPI.Data.Entities;
+using WebAPI.Data.Repositories;
 
 namespace WebAPI.Controllers
 {
@@ -14,30 +17,38 @@ namespace WebAPI.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        private readonly WebContext _context;
+        private readonly IMapper _mapper;
+        private readonly IUserRepository _userRepository;
 
-        public UsersController(WebContext context)
+        public UsersController(IUserRepository userRepository, IMapper mapper)
         {
-            _context = context;
+            _userRepository = userRepository;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            var users = await _userRepository.GetAll();
+
+            var mapped = _mapper.Map<IEnumerable<UserDTO>>(users);
+
+            return Ok(mapped);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(long id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _userRepository.Get(id);
 
             if (user == null)
             {
                 return NotFound();
             }
 
-            return user;
+            var mapped = _mapper.Map<UserDTO>(user);
+
+            return Ok(mapped);
         }
 
         [HttpPut("{id}")]
@@ -47,55 +58,39 @@ namespace WebAPI.Controllers
             {
                 return BadRequest();
             }
-
-            _context.Entry(user).State = EntityState.Modified;
-
-            try
+            if (_userRepository.Get(id) == null)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
-            return NoContent();
+            var updatedUser = await _userRepository.Update(user);
+
+            return Ok(updatedUser);
         }
 
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<User>> PostUser(UserDTO userDTO)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            var user = _mapper.Map<User>(userDTO);
 
-            return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
+            var userFromDb = await _userRepository.Add(user);
+
+            return CreatedAtAction(nameof(GetUser), new { id = userFromDb.Id }, _mapper.Map<UserDTO>(userFromDb));
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(long id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _userRepository.Get(id);
+
             if (user == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            await _userRepository.Delete(user);
 
             return NoContent();
-        }
-
-        private bool UserExists(long id)
-        {
-            return _context.Users.Any(e => e.Id == id);
         }
     }
 }
