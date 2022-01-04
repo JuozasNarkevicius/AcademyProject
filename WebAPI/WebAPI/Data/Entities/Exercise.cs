@@ -9,8 +9,6 @@ namespace WebAPI.Data.Entities
         public int Sets { get; set; }
         public string Reps { get; set; }
         public int Rest { get; set; }
-        [ForeignKey("WorkoutDay")]
         public long WorkoutId { get; set; }
-        public WorkoutDay Workout { get; set; }
     }
 }

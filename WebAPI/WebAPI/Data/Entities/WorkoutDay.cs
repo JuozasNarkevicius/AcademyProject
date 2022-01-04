@@ -7,8 +7,6 @@ namespace WebAPI.Data.Entities
         public long Id { get; set; }
         public string Name { get; set; }
         public List<Exercise> Exercises { get; set; }
-        [ForeignKey("WorkoutProgram")]
         public long ProgramId { get; set; }
-        public WorkoutProgram Program { get; set; }
     }
 }

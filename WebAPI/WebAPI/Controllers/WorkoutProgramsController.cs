@@ -12,10 +12,14 @@ namespace WebAPI.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IWorkoutProgramRepository _workoutProgramRepository;
+        private readonly IWorkoutDayRepository _workoutDayRepository;
+        private readonly IExerciseRepository _exerciseRepository;
 
-        public WorkoutProgramsController(IWorkoutProgramRepository workoutProgramRepository, IMapper mapper)
+        public WorkoutProgramsController(IWorkoutProgramRepository workoutProgramRepository, IWorkoutDayRepository workoutDayRepository, IExerciseRepository exerciseRepository, IMapper mapper)
         {
             _workoutProgramRepository = workoutProgramRepository;
+            _workoutDayRepository = workoutDayRepository;
+            _exerciseRepository = exerciseRepository;
             _mapper = mapper;
         }
 
@@ -38,12 +42,23 @@ namespace WebAPI.Controllers
         public async Task<ActionResult<WorkoutProgram>> PostProgram(long userId, CreateWorkoutProgramDTO programDTO)
         {
             var program = _mapper.Map<WorkoutProgram>(programDTO);
-
             program.UserId = userId;
-
             var programFromDb = await _workoutProgramRepository.Add(program);
 
-            return CreatedAtAction(nameof(GetProgram), new { id = programFromDb.Id }, _mapper.Map<WorkoutProgramDTO>(programFromDb));
+            foreach (var workoutDTO in programDTO.Workouts)
+            {
+                var workout = _mapper.Map<WorkoutDay>(workoutDTO);
+                workout.ProgramId = programFromDb.Id;
+                var workoutFromDb = await _workoutDayRepository.Add(workout);
+
+                foreach (var exerciseDTO in workoutDTO.Exercises)
+                {
+                    var exercise = _mapper.Map<Exercise>(exerciseDTO);
+                    exercise.WorkoutId = workoutFromDb.Id;
+                    await _exerciseRepository.Add(exercise);
+                }
+            }
+            return CreatedAtAction(nameof(GetProgram), new { userId, id = programFromDb.Id }, _mapper.Map<WorkoutProgramDTO>(programFromDb));
         }
     }
 }

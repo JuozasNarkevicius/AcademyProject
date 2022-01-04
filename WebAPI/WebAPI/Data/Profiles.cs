@@ -29,8 +29,12 @@ namespace WebAPI.Data
 
             CreateMap<WorkoutProgram, WorkoutProgramDTO>();
 
-            CreateMap<CreateWorkoutDayDTO, WorkoutDay>();
-            CreateMap<CreateWorkoutProgramDTO, WorkoutProgram>();
+            CreateMap<CreateWorkoutDayDTO, WorkoutDay>()
+                .ForMember(dest => dest.Exercises,
+                opt => opt.Ignore());
+            CreateMap<CreateWorkoutProgramDTO, WorkoutProgram>()
+                .ForMember(dest => dest.Workouts,
+                opt => opt.Ignore());
         }
     }
 }

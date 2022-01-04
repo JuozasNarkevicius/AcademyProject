@@ -70,7 +70,9 @@ namespace WebAPI.Controllers
 
             var workoutFromDb = await _workoutRepository.Add(workout);
 
-            return CreatedAtAction(nameof(GetWorkout), new { id = workoutFromDb.Id }, _mapper.Map<WorkoutDayDTO>(workoutFromDb));
+            Console.WriteLine(workoutFromDb.Id);
+
+            return CreatedAtAction("GetWorkout", new { programId, id = workoutFromDb.Id }, _mapper.Map<WorkoutDayDTO>(workoutFromDb));
         }
 
         [HttpDelete("{id}")]
