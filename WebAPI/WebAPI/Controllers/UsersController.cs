@@ -1,10 +1,10 @@
-﻿using AutoMapper;
+﻿using Application.Jwt;
+using Application.Repositories;
+using AutoMapper;
+using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Data.DTO_s;
-using WebAPI.Data.Entities;
-using WebAPI.Data.Models;
-using WebAPI.Data.Repositories;
+using WebAPI.DTO_s;
 
 namespace WebAPI.Controllers
 {
@@ -21,7 +21,7 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
-        [Authorize]
+        [Microsoft.AspNetCore.Authorization.Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
