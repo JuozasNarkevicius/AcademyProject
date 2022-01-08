@@ -24,7 +24,7 @@ const ProgramForm = () => {
         <Button variant="contained" onClick={addWorkout}>Add new workout</Button>
         {workouts.map((w) => (
           <div key={workouts.indexOf(w)}>
-            <WorkoutDay data={w} />
+            <WorkoutDay workout={w} />
             <Button variant="contained" type="button">Delete workout</Button>
           </div>
         ))}
