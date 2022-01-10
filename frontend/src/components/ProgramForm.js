@@ -16,10 +16,16 @@ const ProgramForm = () => {
     setProgram({ ...newProgram });
   };
 
+  const deleteWorkout = (workoutId) => {
+    const newProgram = program;
+    newProgram.workouts.splice(program.workouts.findIndex((w) => w.id === workoutId), 1);
+    setProgram({ ...newProgram });
+  };
+
   const setProgramValues = (workout) => {
-    const newWorkouts = program.workouts;
-    newWorkouts[program.workouts.findIndex((w) => w.id === workout.id)] = workout;
-    setProgram({ ...program, workouts: newWorkouts });
+    const newProgram = program;
+    newProgram.workouts[program.workouts.findIndex((w) => w.id === workout.id)] = workout;
+    setProgram({ ...newProgram });
   };
 
   const handleProgramSubmit = async () => {
@@ -34,7 +40,7 @@ const ProgramForm = () => {
         {program.workouts.map((w) => (
           <div key={w.id}>
             <WorkoutDay workoutId={w.id} setProgramValues={setProgramValues} />
-            <Button variant="contained" type="button">Delete workout</Button>
+            <Button variant="contained" onClick={() => deleteWorkout(w.id)}>Delete workout</Button>
           </div>
         ))}
         <Button variant="contained" onClick={handleProgramSubmit}>Finalize program</Button>

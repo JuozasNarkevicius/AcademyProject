@@ -14,6 +14,12 @@ const WorkoutDay = ({ workoutId, setProgramValues }) => {
     setWorkout({ ...newWorkout });
   };
 
+  const deleteExercise = (exerciseId) => {
+    const newWorkout = workout;
+    newWorkout.exercises.splice(workout.exercises.findIndex((e) => e.id === exerciseId), 1);
+    setWorkout({ ...newWorkout });
+  };
+
   const updateExerciseValue = (exercise, event) => {
     const index = workout.exercises.indexOf(exercise);
     const newExercisesArray = [...workout.exercises];
@@ -36,6 +42,7 @@ const WorkoutDay = ({ workoutId, setProgramValues }) => {
               <TextField name="sets" type="number" label="Sets" variant="outlined" onChange={(event) => updateExerciseValue(exercise, event)} />
               <TextField name="reps" type="text" label="Reps" variant="outlined" onChange={(event) => updateExerciseValue(exercise, event)} />
               <TextField name="rest" type="number" label="Rest" variant="outlined" onChange={(event) => updateExerciseValue(exercise, event)} />
+              <Button variant="contained" onClick={() => deleteExercise(exercise.id)}>Delete exercise</Button>
             </div>
           ))}
         </div>
