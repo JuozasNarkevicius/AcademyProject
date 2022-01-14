@@ -12,7 +12,7 @@ const ProgramForm = () => {
 
   const addWorkout = () => {
     const newProgram = program;
-    newProgram.workouts.push({ id: uuidv4() });
+    newProgram.workouts.push({ id: uuidv4(), name: '', exercises: [] });
     setProgram({ ...newProgram });
   };
 
@@ -22,9 +22,31 @@ const ProgramForm = () => {
     setProgram({ ...newProgram });
   };
 
-  const setProgramValues = (workout) => {
+  const addExercise = (workoutId) => {
     const newProgram = program;
-    newProgram.workouts[program.workouts.findIndex((w) => w.id === workout.id)] = workout;
+    newProgram.workouts.find((w) => w.id === workoutId).exercises.push({ id: uuidv4() });
+    setProgram({ ...newProgram });
+  };
+
+  const deleteExercise = (workoutId, exerciseId) => {
+    const newProgram = program;
+    const newExercisesArray = newProgram.workouts.find((w) => w.id === workoutId).exercises;
+    newExercisesArray.splice(newExercisesArray.findIndex((e) => e.id === exerciseId), 1);
+    newProgram.workouts.find((w) => w.id === workoutId).exercises = newExercisesArray;
+    setProgram({ ...newProgram });
+  };
+
+  const setWorkoutName = (workoutId, workoutName) => {
+    const newProgram = program;
+    newProgram.workouts.find((w) => w.id === workoutId).name = workoutName;
+    setProgram({ ...newProgram });
+  };
+
+  const updateExerciseValue = (workoutId, exerciseId, event) => {
+    const newProgram = program;
+    newProgram
+      .workouts.find((w) => w.id === workoutId)
+      .exercises.find((e) => e.id === exerciseId)[event.target.name] = event.target.value;
     setProgram({ ...newProgram });
   };
 
@@ -35,12 +57,18 @@ const ProgramForm = () => {
   return (
     <Container>
       <FormControl>
-        <TextField id="outlined-basic" label="Program name" variant="outlined" onChange={(event) => { setProgram({ ...program, name: event.target.value }); }} />
+        <TextField sx={{ m: 2, width: '25ch' }} id="outlined-basic" label="Program name" variant="outlined" onChange={(event) => { setProgram({ ...program, name: event.target.value }); }} />
         <Button variant="contained" onClick={addWorkout}>Add new workout</Button>
-        {program.workouts.map((w) => (
-          <div key={w.id}>
-            <WorkoutDay workoutId={w.id} setProgramValues={setProgramValues} />
-            <Button variant="contained" onClick={() => deleteWorkout(w.id)}>Delete workout</Button>
+        {program.workouts.map((workout) => (
+          <div key={workout.id}>
+            <WorkoutDay
+              workout={workout}
+              addExercise={addExercise}
+              deleteExercise={deleteExercise}
+              setWorkoutName={setWorkoutName}
+              updateExerciseValue={updateExerciseValue}
+            />
+            <Button variant="contained" onClick={() => deleteWorkout(workout.id)}>Delete workout</Button>
           </div>
         ))}
         <Button variant="contained" onClick={handleProgramSubmit}>Finalize program</Button>
