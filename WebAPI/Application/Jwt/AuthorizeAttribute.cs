@@ -10,6 +10,10 @@ namespace Application.Jwt
     {
         public void OnAuthorization(AuthorizationFilterContext context)
         {
+            var allowAnonymous = context.ActionDescriptor.EndpointMetadata.OfType<AllowAnonymousAttribute>().Any();
+            if (allowAnonymous)
+                return;
+
             var user = (User)context.HttpContext.Items["User"];
             if (user != null)
             {

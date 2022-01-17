@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities
+﻿using System.Text.Json.Serialization;
+
+namespace Domain.Entities
 {
     public class User
     {
@@ -8,5 +10,7 @@
         public int Age { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        [JsonIgnore]
+        public List<RefreshToken> RefreshTokens { get; set; }
     }
 }

@@ -3,10 +3,6 @@ using Application.Jwt;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace Application.Repositories
 {
@@ -17,31 +13,72 @@ namespace Application.Repositories
         public Task<User> Update(User user);
         public Task<User> Add(User user);
         public Task Delete(User user);
-        public AuthenticateResponse Authenticate(AuthenticateRequest model);
+        public AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress);
+        public AuthenticateResponse RefreshToken(string token, string ipAddress);
+        public void RevokeToken(string token, string ipAddress);
 
     }
     public class UserRepository : IUserRepository
     {
         private readonly WebContext _context;
         private readonly JwtConfig _config;
-        public UserRepository(WebContext context, IOptions<JwtConfig> config)
+        private IJwtUtils _jwtUtils;
+        public UserRepository(WebContext context, IOptions<JwtConfig> config, IJwtUtils jwtUtils)
         {
             _context = context;
             _config = config.Value;
+            _jwtUtils = jwtUtils;
         }
 
-        public AuthenticateResponse Authenticate(AuthenticateRequest model)
+        public AuthenticateResponse Authenticate(AuthenticateRequest model, string ipAddress)
         {
-            var user = _context.Users.SingleOrDefault(x => x.Email == model.Email && x.Password == model.Password);
+            var user = _context.Users.SingleOrDefault(x => x.Email == model.Email);
 
-            if (user == null)
+            var jwtToken = _jwtUtils.GenerateJwtToken(user);
+            var refreshToken = _jwtUtils.GenerateRefreshToken(ipAddress);
+            user.RefreshTokens.Add(refreshToken);
+
+            removeOldRefreshTokens(user);
+
+            _context.Update(user);
+            _context.SaveChanges();
+
+            return new AuthenticateResponse(user, jwtToken, refreshToken.Token);
+        }
+
+        public AuthenticateResponse RefreshToken(string token, string ipAddress)
+        {
+            var user = getUserByRefreshToken(token);
+            var refreshToken = user.RefreshTokens.Single(x => x.Token == token);
+
+            if (refreshToken.IsRevoked)
             {
-                return null;
+                revokeDescendantRefreshTokens(refreshToken, user, ipAddress, $"Attempted reuse of revoked ancestor token: {token}");
+                _context.Update(user);
+                _context.SaveChanges();
             }
 
-            var token = GenerateJwtToken(user);
+            var newRefreshToken = rotateRefreshToken(refreshToken, ipAddress);
+            user.RefreshTokens.Add(newRefreshToken);
 
-            return new AuthenticateResponse(user, token);
+            removeOldRefreshTokens(user);
+
+            _context.Update(user);
+            _context.SaveChanges();
+
+            var jwtToken = _jwtUtils.GenerateJwtToken(user);
+
+            return new AuthenticateResponse(user, jwtToken, newRefreshToken.Token);
+        }
+
+        public void RevokeToken(string token, string ipAddress)
+        {
+            var user = getUserByRefreshToken(token);
+            var refreshToken = user.RefreshTokens.Single(x => x.Token == token);
+
+            revokeRefreshToken(refreshToken, ipAddress, "Revoked without replacement");
+            _context.Update(user);
+            _context.SaveChanges();
         }
 
         public async Task<IEnumerable<User>> GetAll()
@@ -74,18 +111,45 @@ namespace Application.Repositories
             await _context.SaveChangesAsync();
         }
 
-        private string GenerateJwtToken(User user)
+        private void removeOldRefreshTokens(User user)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_config.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            user.RefreshTokens.RemoveAll(x =>
+                !x.IsActive &&
+                x.Created.AddDays(_config.RefreshTokenTTL) <= DateTime.UtcNow);
+        }
+
+        private User getUserByRefreshToken(string token)
+        {
+            var user = _context.Users.SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == token));
+
+            return user;
+        }
+
+        private RefreshToken rotateRefreshToken(RefreshToken refreshToken, string ipAddress)
+        {
+            var newRefreshToken = _jwtUtils.GenerateRefreshToken(ipAddress);
+            revokeRefreshToken(refreshToken, ipAddress, "Replaced by new token", newRefreshToken.Token);
+            return newRefreshToken;
+        }
+
+        private void revokeDescendantRefreshTokens(RefreshToken refreshToken, User user, string ipAddress, string reason)
+        {
+            if (!string.IsNullOrEmpty(refreshToken.ReplacedByToken))
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
-                Expires = DateTime.UtcNow.AddDays(7),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+                var childToken = user.RefreshTokens.SingleOrDefault(x => x.Token == refreshToken.ReplacedByToken);
+                if (childToken.IsActive)
+                    revokeRefreshToken(childToken, ipAddress, reason);
+                else
+                    revokeDescendantRefreshTokens(childToken, user, ipAddress, reason);
+            }
+        }
+
+        private void revokeRefreshToken(RefreshToken token, string ipAddress, string reason = null, string replacedByToken = null)
+        {
+            token.Revoked = DateTime.UtcNow;
+            token.RevokedByIp = ipAddress;
+            token.ReasonRevoked = reason;
+            token.ReplacedByToken = replacedByToken;
         }
     }
 }
