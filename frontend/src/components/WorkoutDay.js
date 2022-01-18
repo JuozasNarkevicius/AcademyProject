@@ -10,18 +10,16 @@ const WorkoutDay = ({
 }) => (
   <Container>
     <FormControl>
-      <div>
-        <TextField label="Workout name" variant="outlined" onChange={(event) => { setWorkoutName(workout.id, event.target.value); }} />
-        {workout.exercises.map((exercise) => (
-          <div key={exercise.id}>
-            <TextField name="name" type="text" label="Exercise name" variant="outlined" onChange={(event) => updateExerciseValue(workout.id, exercise.id, event)} />
-            <TextField name="sets" type="number" label="Sets" variant="outlined" onChange={(event) => updateExerciseValue(workout.id, exercise.id, event)} />
-            <TextField name="reps" type="text" label="Reps" variant="outlined" onChange={(event) => updateExerciseValue(workout.id, exercise.id, event)} />
-            <TextField name="rest" type="number" label="Rest" variant="outlined" onChange={(event) => updateExerciseValue(workout.id, exercise.id, event)} />
-            <Button variant="contained" onClick={() => deleteExercise(workout.id, exercise.id)}>Delete exercise</Button>
-          </div>
-        ))}
-      </div>
+      <TextField label="Workout name" variant="outlined" onChange={(event) => { setWorkoutName(workout.id, event.target.value); }} />
+      {workout.exercises.map((exercise) => (
+        <div key={exercise.id}>
+          <TextField name="name" type="text" label="Exercise name" variant="outlined" onChange={(event) => updateExerciseValue(workout.id, exercise.id, event)} />
+          <TextField name="sets" type="number" label="Sets" variant="outlined" onChange={(event) => updateExerciseValue(workout.id, exercise.id, event)} />
+          <TextField name="reps" type="text" label="Reps" variant="outlined" onChange={(event) => updateExerciseValue(workout.id, exercise.id, event)} />
+          <TextField name="rest" type="number" label="Rest" variant="outlined" onChange={(event) => updateExerciseValue(workout.id, exercise.id, event)} />
+          <Button variant="contained" color="error" onClick={() => deleteExercise(workout.id, exercise.id)}>Delete exercise</Button>
+        </div>
+      ))}
       <Button variant="contained" onClick={() => addExercise(workout.id)}>Add new exercise</Button>
     </FormControl>
   </Container>

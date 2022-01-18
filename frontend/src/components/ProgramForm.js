@@ -57,7 +57,7 @@ const ProgramForm = () => {
   return (
     <Container>
       <FormControl>
-        <TextField sx={{ m: 2, width: '25ch' }} id="outlined-basic" label="Program name" variant="outlined" onChange={(event) => { setProgram({ ...program, name: event.target.value }); }} />
+        <TextField id="outlined-basic" label="Program name" variant="outlined" onChange={(event) => { setProgram({ ...program, name: event.target.value }); }} />
         <Button variant="contained" onClick={addWorkout}>Add new workout</Button>
         {program.workouts.map((workout) => (
           <div key={workout.id}>
@@ -68,7 +68,7 @@ const ProgramForm = () => {
               setWorkoutName={setWorkoutName}
               updateExerciseValue={updateExerciseValue}
             />
-            <Button variant="contained" onClick={() => deleteWorkout(workout.id)}>Delete workout</Button>
+            <Button variant="contained" color="error" onClick={() => deleteWorkout(workout.id)}>Delete workout</Button>
           </div>
         ))}
         <Button variant="contained" onClick={handleProgramSubmit}>Finalize program</Button>

@@ -1,23 +1,23 @@
 import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Home';
-import Sport from './pages/Sport';
-import Nutrition from './pages/Nutrition';
-import Login from './pages/Login';
-import Register from './pages/Register';
 import Navigation from './components/Navigation';
+import ProgramList from './components/dataDisplay/ProgramList';
+import {
+  Home, Sport, Nutrition, Login, Register, ProgramCreation,
+} from './pages';
+import ROUTES from './constants/Routes';
 import './App.css';
-import ProgramCreation from './pages/ProgramCreation';
 
 const App = () => (
   <div className="App">
     <Navigation />
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/sport" element={<Sport />} />
-      <Route path="/nutrition" element={<Nutrition />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/sport/create" element={<ProgramCreation />} />
+      <Route path={ROUTES.HOME} element={<Home />} />
+      <Route path={ROUTES.SPORT} element={<Sport />} />
+      <Route path={ROUTES.MY_PROGRAMS} element={<ProgramList />} />
+      <Route path={ROUTES.NUTRITION} element={<Nutrition />} />
+      <Route path={ROUTES.LOGIN} element={<Login />} />
+      <Route path={ROUTES.REGISTER} element={<Register />} />
+      <Route path={ROUTES.CREATE_PROGRAM} element={<ProgramCreation />} />
     </Routes>
   </div>
 );
