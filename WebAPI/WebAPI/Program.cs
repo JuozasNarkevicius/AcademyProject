@@ -25,7 +25,7 @@ builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("AppSetti
 builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
 builder.Services.AddScoped<IWorkoutDayRepository, WorkoutDayRepository>();
 builder.Services.AddScoped<IWorkoutProgramRepository, WorkoutProgramRepository>();
-builder.Services.AddScoped<IJwtUtils, JwtUtils>();
+builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddAuthentication(x =>
@@ -63,8 +63,6 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
-
-app.UseMiddleware<JwtMiddleware>();
 
 app.MapControllers();
 

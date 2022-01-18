@@ -1,12 +1,13 @@
-﻿using Application.Jwt;
-using Application.Repositories;
+﻿using Application.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DTO_s;
 
 namespace WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/[Controller]")]
     [ApiController]
     public class UsersController : ControllerBase
@@ -20,7 +21,6 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
@@ -86,53 +86,6 @@ namespace WebAPI.Controllers
             await _userRepository.Delete(user);
 
             return NoContent();
-        }
-
-        [HttpPost("authenticate")]
-        public IActionResult Authenticate(AuthenticateRequest model)
-        {
-            var response = _userRepository.Authenticate(model, ipAddress());
-            setTokenCookie(response.RefreshToken);
-            return Ok(response);
-        }
-
-        [HttpPost("refresh-token")]
-        public IActionResult RefreshToken()
-        {
-            var refreshToken = Request.Cookies["refreshToken"];
-            var response = _userRepository.RefreshToken(refreshToken, ipAddress());
-            setTokenCookie(response.RefreshToken);
-            return Ok(response);
-        }
-
-        [HttpPost("revoke-token")]
-        public IActionResult RevokeToken(RevokeTokenRequest model)
-        {
-            var token = model.Token ?? Request.Cookies["refreshToken"];
-
-            if (string.IsNullOrEmpty(token))
-                return BadRequest(new { message = "Token is required" });
-
-            _userRepository.RevokeToken(token, ipAddress());
-            return Ok(new { message = "Token revoked" });
-        }
-
-        private void setTokenCookie(string token)
-        {
-            var cookieOptions = new CookieOptions
-            {
-                HttpOnly = true,
-                Expires = DateTime.UtcNow.AddDays(7)
-            };
-            Response.Cookies.Append("refreshToken", token, cookieOptions);
-        }
-
-        private string ipAddress()
-        {
-            if (Request.Headers.ContainsKey("X-Forwarded-For"))
-                return Request.Headers["X-Forwarded-For"];
-            else
-                return HttpContext.Connection.RemoteIpAddress.MapToIPv4().ToString();
         }
     }
 }

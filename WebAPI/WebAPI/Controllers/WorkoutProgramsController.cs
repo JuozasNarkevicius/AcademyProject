@@ -24,9 +24,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<WorkoutProgram>>> GetPrograms()
+        public async Task<ActionResult<IEnumerable<WorkoutProgram>>> GetPrograms(long userId)
         {
-            var programs = await _workoutProgramRepository.GetAll();
+            var programs = await _workoutProgramRepository.GetAll(userId);
 
             var mapped = _mapper.Map<IEnumerable<WorkoutProgramDTO>>(programs);
 
@@ -34,9 +34,9 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<WorkoutProgram>> GetProgram(long id)
+        public async Task<ActionResult<WorkoutProgram>> GetProgram(long id, long userId)
         {
-            var program = await _workoutProgramRepository.Get(id);
+            var program = await _workoutProgramRepository.Get(id, userId);
 
             if (program == null)
             {
