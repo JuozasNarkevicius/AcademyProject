@@ -6,6 +6,7 @@ namespace Application.Repositories
 {
     public interface IWorkoutProgramRepository
     {
+        public Task<IEnumerable<WorkoutProgram>> GetAll();
         public Task<WorkoutProgram> Get(long id);
         public Task<WorkoutProgram> Add(WorkoutProgram program);
     }
@@ -15,6 +16,13 @@ namespace Application.Repositories
         public WorkoutProgramRepository(WebContext context)
         {
             _context = context;
+        }
+
+        public async Task<IEnumerable<WorkoutProgram>> GetAll()
+        {
+            var programs = await _context.Programs.ToListAsync();
+
+            return programs;
         }
 
         public async Task<WorkoutProgram> Get(long id)

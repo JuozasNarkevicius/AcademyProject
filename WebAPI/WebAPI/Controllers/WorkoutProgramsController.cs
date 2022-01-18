@@ -23,6 +23,16 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<WorkoutProgram>>> GetPrograms()
+        {
+            var programs = await _workoutProgramRepository.GetAll();
+
+            var mapped = _mapper.Map<IEnumerable<WorkoutProgramDTO>>(programs);
+
+            return Ok(mapped);
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult<WorkoutProgram>> GetProgram(long id)
         {
