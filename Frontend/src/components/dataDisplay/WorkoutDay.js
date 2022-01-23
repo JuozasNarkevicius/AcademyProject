@@ -1,6 +1,6 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Icon, Input,
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
 } from '@mui/material';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -9,32 +9,31 @@ import deleteIcon from '../../assets/icons/x.svg';
 import saveIcon from '../../assets/icons/checkmark.svg';
 import ProgramContext from '../../Context';
 import baseAdress from '../../API/BaseAddress';
+import EditableExercise from './EditableExercise';
 
 const WorkoutDay = ({ workout }) => {
   const { program, setProgram } = useContext(ProgramContext);
-  const [editedExercise, setEditedExercise] = useState({});
 
-  const saveExercise = async (workoutId, exerciseId) => {
+  const saveExercise = async (editedExercise, exerciseId) => {
     const newProgram = program;
     const workoutIndex = newProgram.workouts
-      .findIndex((w) => w.id === workoutId);
+      .findIndex((w) => w.id === workout.id);
     const exerciseIndex = newProgram.workouts[workoutIndex]
       .exercises.findIndex((e) => e.id === exerciseId);
     newProgram.workouts[workoutIndex]
       .exercises[exerciseIndex] = editedExercise;
     setProgram({ ...newProgram });
-    setEditedExercise({});
     const { id, ...newExercise } = editedExercise;
-    await axios.put(`${baseAdress}/workouts/${workoutId}/exercises/${exerciseId}`, newExercise);
+    await axios.put(`${baseAdress}/workouts/${workout.id}/exercises/${exerciseId}`, newExercise);
   };
 
-  const deleteExercise = async (workoutId, exerciseId) => {
+  const deleteExercise = async (exerciseId) => {
     const newProgram = program;
-    const newExercisesArray = newProgram.workouts.find((w) => w.id === workoutId).exercises;
+    const newExercisesArray = newProgram.workouts.find((w) => w.id === workout.id).exercises;
     newExercisesArray.splice(newExercisesArray.findIndex((e) => e.id === exerciseId), 1);
-    newProgram.workouts.find((w) => w.id === workoutId).exercises = newExercisesArray;
+    newProgram.workouts.find((w) => w.id === workout.id).exercises = newExercisesArray;
     setProgram({ ...newProgram });
-    await axios.delete(`${baseAdress}/workouts/${workoutId}/exercises/${exerciseId}`);
+    await axios.delete(`${baseAdress}/workouts/${workout.id}/exercises/${exerciseId}`);
   };
 
   return (
@@ -51,55 +50,14 @@ const WorkoutDay = ({ workout }) => {
         </TableHead>
         <TableBody>
           {workout.exercises.map((e) => (
-            editedExercise.id && editedExercise.id === e.id ? (
-              <TableRow
-                key={e.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  <Input type="text" value={editedExercise.name} onChange={(event) => { setEditedExercise({ ...editedExercise, name: event.target.value }); }} />
-                </TableCell>
-                <TableCell align="right"><Input value={editedExercise.sets} onChange={(event) => { setEditedExercise({ ...editedExercise, sets: event.target.value }); }} /></TableCell>
-                <TableCell align="right"><Input value={editedExercise.reps} onChange={(event) => { setEditedExercise({ ...editedExercise, reps: event.target.value }); }} /></TableCell>
-                <TableCell align="right"><Input value={editedExercise.rest} onChange={(event) => { setEditedExercise({ ...editedExercise, rest: event.target.value }); }} /></TableCell>
-                <TableCell align="right">
-                  <IconButton title="Save exercise" onClick={() => saveExercise(workout.id, e.id)}>
-                    <Icon>
-                      <img src={saveIcon} height={25} width={25} alt="k" />
-                    </Icon>
-                  </IconButton>
-                  <IconButton title="Delete exercise" onClick={() => deleteExercise(workout.id, e.id)}>
-                    <Icon>
-                      <img src={deleteIcon} height={20} width={20} alt="k" />
-                    </Icon>
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ) : (
-              <TableRow
-                key={e.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {e.name}
-                </TableCell>
-                <TableCell align="right">{e.sets}</TableCell>
-                <TableCell align="right">{e.reps}</TableCell>
-                <TableCell align="right">{e.rest}</TableCell>
-                <TableCell align="right">
-                  <IconButton title="Edit exercise" onClick={() => setEditedExercise(e)}>
-                    <Icon>
-                      <img src={editIcon} height={23} width={23} alt="k" />
-                    </Icon>
-                  </IconButton>
-                  <IconButton title="Delete exercise" onClick={() => deleteExercise(workout.id, e.id)}>
-                    <Icon>
-                      <img src={deleteIcon} height={20} width={20} alt="k" />
-                    </Icon>
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            )
+            <EditableExercise
+              exercise={e}
+              imgSrcEdit={editIcon}
+              imgSrcSave={saveIcon}
+              imgSrcDelete={deleteIcon}
+              saveExercise={saveExercise}
+              deleteExercise={deleteExercise}
+            />
           ))}
         </TableBody>
       </Table>
@@ -109,13 +67,13 @@ const WorkoutDay = ({ workout }) => {
 
 WorkoutDay.propTypes = {
   workout: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     name: PropTypes.string,
     exercises: PropTypes.arrayOf(
       PropTypes.shape({
-        id: PropTypes.string,
+        id: PropTypes.number,
         name: PropTypes.string,
-        sets: PropTypes.string,
+        sets: PropTypes.number,
         reps: PropTypes.string,
         rest: PropTypes.string,
       }),
