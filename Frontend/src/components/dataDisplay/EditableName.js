@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import { Icon } from '@material-ui/core';
-import { Input } from '@mui/material';
+import {
+  Typography, IconButton, Input, Icon,
+} from '@mui/material';
 import PropTypes from 'prop-types';
 
 const EditableName = ({
-  imgSrcEdit, imgSrcSave, nameField, update, objectId,
+  imgSrcEdit, imgSrcSave, nameField, saveNewName, objectId,
 }) => {
   const [newName, setNewName] = useState(null);
-  const [updated, setUpdated] = useState(false);
+  const [isUpdated, setIsUpdated] = useState(false);
 
   const save = (e) => {
     e.stopPropagation();
-    update(newName, objectId);
+    saveNewName(newName, objectId);
     setNewName(null);
-    setUpdated(false);
+    setIsUpdated(false);
   };
 
   return (
     <Typography>
-      {!newName && updated === false ? (
+      {!newName && isUpdated === false ? (
         <>
           {nameField}
           <IconButton
@@ -43,7 +42,7 @@ const EditableName = ({
             onClickCapture={(e) => e.stopPropagation()}
             onChange={(e) => {
               setNewName(e.target.value);
-              setUpdated(true);
+              setIsUpdated(true);
             }}
           />
           <IconButton title="Save" onClick={save}>
@@ -61,7 +60,7 @@ EditableName.propTypes = {
   imgSrcEdit: PropTypes.string.isRequired,
   imgSrcSave: PropTypes.string.isRequired,
   nameField: PropTypes.string.isRequired,
-  update: PropTypes.func.isRequired,
+  saveNewName: PropTypes.func.isRequired,
   objectId: PropTypes.number,
 };
 

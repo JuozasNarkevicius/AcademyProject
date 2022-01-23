@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import { Container } from '@mui/material';
-import Typography from '@mui/material/Typography';
+import { Container, Typography } from '@mui/material';
 import ProgramListDrawer from '../components/dataDisplay/ProgramListDrawer';
 import baseAdress from '../API/BaseAddress';
 import ProgramDaysAccordion from '../components/dataDisplay/ProgramDaysAccordion';

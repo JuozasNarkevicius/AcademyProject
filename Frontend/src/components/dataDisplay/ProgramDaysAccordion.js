@@ -1,10 +1,8 @@
 import React, { useContext } from 'react';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import Typography from '@mui/material/Typography';
+import {
+  Accordion, AccordionSummary, AccordionDetails, Typography, Container,
+} from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Container from '@mui/material/Container';
 import axios from 'axios';
 import WorkoutDay from './WorkoutDay';
 import baseAdress from '../../API/BaseAddress';
@@ -34,7 +32,7 @@ const ProgramDaysAccordion = () => {
         imgSrcEdit={editIcon}
         imgSrcSave={saveIcon}
         nameField={program.name}
-        update={updateProgramName}
+        saveNewName={updateProgramName}
       />
       {program.workouts.map((w) => (
         <Accordion key={w.id}>
@@ -48,7 +46,7 @@ const ProgramDaysAccordion = () => {
               imgSrcSave={saveIcon}
               nameField={w.name}
               objectId={w.id}
-              update={updateWorkoutName}
+              saveNewName={updateWorkoutName}
             />
           </AccordionSummary>
           <AccordionDetails>

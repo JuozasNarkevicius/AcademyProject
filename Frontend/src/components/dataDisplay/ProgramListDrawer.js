@@ -1,11 +1,7 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
-import Toolbar from '@mui/material/Toolbar';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
+import React from 'react';
+import {
+  Box, Drawer, CssBaseline, Toolbar, List, ListItem, ListItemText,
+} from '@mui/material';
 import PropTypes from 'prop-types';
 
 const drawerWidth = 240;

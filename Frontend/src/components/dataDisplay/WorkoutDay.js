@@ -1,14 +1,7 @@
 import React, { useState, useContext } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import IconButton from '@mui/material/IconButton';
-import { Icon } from '@material-ui/core';
-import { Input } from '@mui/material';
+import {
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Icon, Input,
+} from '@mui/material';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import editIcon from '../../assets/icons/edit.svg';

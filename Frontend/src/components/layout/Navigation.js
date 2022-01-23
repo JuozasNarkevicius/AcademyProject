@@ -1,9 +1,7 @@
 import React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import {
+  AppBar, Box, Toolbar, Typography, Button,
+} from '@mui/material';
 import { Link } from 'react-router-dom';
 import ROUTES from '../../constants/Routes';
 
