@@ -44,15 +44,12 @@ namespace Application.Migrations
                     b.Property<int>("Sets")
                         .HasColumnType("int");
 
-                    b.Property<long?>("WorkoutDayId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("WorkoutId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WorkoutDayId");
+                    b.HasIndex("WorkoutId");
 
                     b.ToTable("Exercises");
 
@@ -250,12 +247,9 @@ namespace Application.Migrations
                     b.Property<long>("ProgramId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("WorkoutProgramId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("WorkoutProgramId");
+                    b.HasIndex("ProgramId");
 
                     b.ToTable("Workouts");
 
@@ -316,9 +310,13 @@ namespace Application.Migrations
 
             modelBuilder.Entity("Domain.Entities.Exercise", b =>
                 {
-                    b.HasOne("Domain.Entities.WorkoutDay", null)
+                    b.HasOne("Domain.Entities.WorkoutDay", "WorkoutDay")
                         .WithMany("Exercises")
-                        .HasForeignKey("WorkoutDayId");
+                        .HasForeignKey("WorkoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("WorkoutDay");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -373,9 +371,13 @@ namespace Application.Migrations
 
             modelBuilder.Entity("Domain.Entities.WorkoutDay", b =>
                 {
-                    b.HasOne("Domain.Entities.WorkoutProgram", null)
+                    b.HasOne("Domain.Entities.WorkoutProgram", "WorkoutProgram")
                         .WithMany("Workouts")
-                        .HasForeignKey("WorkoutProgramId");
+                        .HasForeignKey("ProgramId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("WorkoutProgram");
                 });
 
             modelBuilder.Entity("Domain.Entities.WorkoutDay", b =>

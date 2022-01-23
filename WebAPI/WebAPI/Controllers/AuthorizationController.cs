@@ -1,5 +1,8 @@
 ﻿using Application.Jwt;
+using Application.Repositories;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace WebAPI.Controllers
 {
@@ -8,10 +11,12 @@ namespace WebAPI.Controllers
     public class AuthorizationController : ControllerBase
     {
         private readonly IAuthorizationService _authorizationService;
+        private readonly IUserRepository _userRepository;
 
-        public AuthorizationController(IAuthorizationService authorizationService)
+        public AuthorizationController(IAuthorizationService authorizationService, IUserRepository userRepository)
         {
             _authorizationService = authorizationService;
+            _userRepository = userRepository;
         }
 
         [HttpPost]
@@ -25,9 +30,16 @@ namespace WebAPI.Controllers
                 return Unauthorized();
             }
 
-            var jwtToken = await _authorizationService.GenerateJwtToken(request.Email);
+            var user = _userRepository.Get(request.Email);
 
-            return Ok(new AuthenticateResponse(jwtToken));
+            var claimsIdentity = new ClaimsIdentity(new[]
+            {
+                new Claim(ClaimTypes.Email, request.Email),
+            }, "Cookies");
+            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+            await Request.HttpContext.SignInAsync("Cookies", claimsPrincipal);
+
+            return Ok();
         }
 
         private void setTokenCookie(string token)

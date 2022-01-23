@@ -45,20 +45,20 @@ namespace WebAPI.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutWorkout(long id, WorkoutDay workout)
+        public async Task<IActionResult> PutWorkout(long id, UpdateWorkoutNameDTO workout)
         {
-            if (id != workout.Id)
-            {
-                return BadRequest();
-            }
-            if (_workoutRepository.Get(id) == null)
+            var workoutFromDB = await _workoutRepository.GetWorkoutName(id);
+
+            if (workoutFromDB == null)
             {
                 return NotFound();
             }
 
-            var updatedWorkout = await _workoutRepository.Update(workout);
+            _mapper.Map(workout, workoutFromDB);
 
-            return Ok(updatedWorkout);
+            var updatedWorkout = await _workoutRepository.Update(workoutFromDB);
+
+            return Ok(_mapper.Map<UpdateWorkoutNameDTO>(updatedWorkout));
         }
 
         [HttpPost]

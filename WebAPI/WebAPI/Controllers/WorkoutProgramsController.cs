@@ -1,6 +1,7 @@
 ﻿using Application.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DTO_s;
 
@@ -23,12 +24,13 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<WorkoutProgram>>> GetPrograms(long userId)
         {
             var programs = await _workoutProgramRepository.GetAll(userId);
 
-            var mapped = _mapper.Map<IEnumerable<WorkoutProgramDTO>>(programs);
+            var mapped = _mapper.Map<IEnumerable<WorkoutProgramNamesDTO>>(programs);
 
             return Ok(mapped);
         }
@@ -46,6 +48,23 @@ namespace WebAPI.Controllers
             var mapped = _mapper.Map<WorkoutProgramDTO>(program);
 
             return Ok(mapped);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<WorkoutProgramNamesDTO>> UpdateProgram(long id, UpdateProgramNameDTO program)
+        {
+            var programFromDB = await _workoutProgramRepository.GetProgramName(id);
+
+            if (programFromDB == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(program, programFromDB);
+
+            var updatedProgram = await _workoutProgramRepository.Update(programFromDB);
+
+            return Ok(_mapper.Map<UpdateProgramNameDTO>(updatedProgram));
         }
 
         [HttpPost]

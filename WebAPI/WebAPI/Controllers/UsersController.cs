@@ -64,6 +64,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult<User>> PostUser(UserDTO userDTO)
         {
             var user = _mapper.Map<User>(userDTO);

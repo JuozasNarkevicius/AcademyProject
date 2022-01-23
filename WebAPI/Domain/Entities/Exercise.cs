@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Domain.Entities
 {
     public class Exercise
     {
@@ -7,6 +9,10 @@
         public int Sets { get; set; }
         public string Reps { get; set; }
         public int Rest { get; set; }
+
+        [ForeignKey("WorkoutDay")]
         public long WorkoutId { get; set; }
+        public WorkoutDay WorkoutDay { get; set; }
+
     }
 }

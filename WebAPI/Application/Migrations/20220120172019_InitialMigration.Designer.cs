@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Application.Migrations
 {
     [DbContext(typeof(WebContext))]
-    [Migration("20220117144124_AddedRefreshTokenToUser")]
-    partial class AddedRefreshTokenToUser
+    [Migration("20220120172019_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -46,15 +46,12 @@ namespace Application.Migrations
                     b.Property<int>("Sets")
                         .HasColumnType("int");
 
-                    b.Property<long?>("WorkoutDayId")
-                        .HasColumnType("bigint");
-
                     b.Property<long>("WorkoutId")
                         .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("WorkoutDayId");
+                    b.HasIndex("WorkoutId");
 
                     b.ToTable("Exercises");
 
@@ -252,12 +249,9 @@ namespace Application.Migrations
                     b.Property<long>("ProgramId")
                         .HasColumnType("bigint");
 
-                    b.Property<long?>("WorkoutProgramId")
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("WorkoutProgramId");
+                    b.HasIndex("ProgramId");
 
                     b.ToTable("Workouts");
 
@@ -318,9 +312,13 @@ namespace Application.Migrations
 
             modelBuilder.Entity("Domain.Entities.Exercise", b =>
                 {
-                    b.HasOne("Domain.Entities.WorkoutDay", null)
+                    b.HasOne("Domain.Entities.WorkoutDay", "WorkoutDay")
                         .WithMany("Exercises")
-                        .HasForeignKey("WorkoutDayId");
+                        .HasForeignKey("WorkoutId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("WorkoutDay");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>
@@ -337,29 +335,24 @@ namespace Application.Migrations
                                 .HasColumnType("datetime2");
 
                             b1.Property<string>("CreatedByIp")
-                                .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<DateTime>("Expires")
                                 .HasColumnType("datetime2");
 
                             b1.Property<string>("ReasonRevoked")
-                                .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("ReplacedByToken")
-                                .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<DateTime?>("Revoked")
                                 .HasColumnType("datetime2");
 
                             b1.Property<string>("RevokedByIp")
-                                .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("Token")
-                                .IsRequired()
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<long>("UserId")
@@ -380,9 +373,13 @@ namespace Application.Migrations
 
             modelBuilder.Entity("Domain.Entities.WorkoutDay", b =>
                 {
-                    b.HasOne("Domain.Entities.WorkoutProgram", null)
+                    b.HasOne("Domain.Entities.WorkoutProgram", "WorkoutProgram")
                         .WithMany("Workouts")
-                        .HasForeignKey("WorkoutProgramId");
+                        .HasForeignKey("ProgramId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("WorkoutProgram");
                 });
 
             modelBuilder.Entity("Domain.Entities.WorkoutDay", b =>

@@ -19,59 +19,59 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Exercise>>> GetExercises()
-        {
-            var exercises = await _exerciseRepository.GetAll();
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Exercise>>> GetExercises()
+        //{
+        //    var exercises = await _exerciseRepository.GetAll();
 
-            var mapped = _mapper.Map<IEnumerable<ExerciseDTO>>(exercises);
+        //    var mapped = _mapper.Map<IEnumerable<ExerciseDTO>>(exercises);
 
-            return Ok(mapped);
-        }
+        //    return Ok(mapped);
+        //}
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Exercise>> GetExercise(long id)
-        {
-            var exercise = await _exerciseRepository.Get(id);
+        //[HttpGet("{id}")]
+        //public async Task<ActionResult<Exercise>> GetExercise(long id)
+        //{
+        //    var exercise = await _exerciseRepository.Get(id);
 
-            if (exercise == null)
-            {
-                return NotFound();
-            }
+        //    if (exercise == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var mapped = _mapper.Map<ExerciseDTO>(exercise);
+        //    var mapped = _mapper.Map<ExerciseDTO>(exercise);
 
-            return Ok(mapped);
-        }
+        //    return Ok(mapped);
+        //}
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutExercise(long id, Exercise exercise)
+        public async Task<IActionResult> PutExercise(long id, UpdateExerciseDTO exercise)
         {
-            if (id != exercise.Id)
-            {
-                return BadRequest();
-            }
-            if (_exerciseRepository.Get(id) == null)
+            var exerciseFromDB = await _exerciseRepository.Get(id);
+
+            if (exerciseFromDB == null)
             {
                 return NotFound();
             }
 
-            var updatedExercise = await _exerciseRepository.Update(exercise);
+            _mapper.Map(exercise, exerciseFromDB);
 
-            return Ok(updatedExercise);
+            var updatedExercise = await _exerciseRepository.Update(exerciseFromDB);
+
+            return Ok(_mapper.Map<ExerciseDTO>(updatedExercise));
         }
 
-        [HttpPost]
-        public async Task<ActionResult<Exercise>> PostExercise(ExerciseDTO exerciseDTO, long workoutId)
-        {
-            var exercise = _mapper.Map<Exercise>(exerciseDTO);
+        //[HttpPost]
+        //public async Task<ActionResult<Exercise>> PostExercise(ExerciseDTO exerciseDTO, long workoutId)
+        //{
+        //    var exercise = _mapper.Map<Exercise>(exerciseDTO);
 
-            exercise.WorkoutId = workoutId;
+        //    exercise.WorkoutId = workoutId;
 
-            var exerciseFromDb = await _exerciseRepository.Add(exercise); 
+        //    var exerciseFromDb = await _exerciseRepository.Add(exercise); 
 
-            return CreatedAtAction(nameof(GetExercise), new { workoutId, id = exerciseFromDb.Id }, _mapper.Map<ExerciseDTO>(exerciseFromDb));
-        }
+        //    return CreatedAtAction(nameof(GetExercise), new { workoutId, id = exerciseFromDb.Id }, _mapper.Map<ExerciseDTO>(exerciseFromDb));
+        //}
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteExercise(long id)
