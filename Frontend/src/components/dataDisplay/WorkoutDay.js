@@ -7,13 +7,13 @@ import editIcon from '../../assets/icons/edit.svg';
 import deleteIcon from '../../assets/icons/x.svg';
 import saveIcon from '../../assets/icons/checkmark.svg';
 import ProgramContext from '../../Context';
-import API from '../../API/API';
 import EditableExercise from './EditableExercise';
+import { exerciseService } from '../../services/ExerciseService';
 
 const WorkoutDay = ({ workout }) => {
   const { program, setProgram } = useContext(ProgramContext);
 
-  const saveExercise = async (editedExercise, exerciseId) => {
+  const updateExercise = async (editedExercise, exerciseId) => {
     const newProgram = program;
     const workoutIndex = newProgram.workouts
       .findIndex((w) => w.id === workout.id);
@@ -23,7 +23,7 @@ const WorkoutDay = ({ workout }) => {
       .exercises[exerciseIndex] = editedExercise;
     setProgram({ ...newProgram });
     const { id, ...newExercise } = editedExercise;
-    await API.put(`/workouts/${workout.id}/exercises/${exerciseId}`, newExercise);
+    await exerciseService.updateExerciseAPI(workout.id, exerciseId, newExercise);
   };
 
   const deleteExercise = async (exerciseId) => {
@@ -32,7 +32,7 @@ const WorkoutDay = ({ workout }) => {
     newExercisesArray.splice(newExercisesArray.findIndex((e) => e.id === exerciseId), 1);
     newProgram.workouts.find((w) => w.id === workout.id).exercises = newExercisesArray;
     setProgram({ ...newProgram });
-    await API.delete(`/workouts/${workout.id}/exercises/${exerciseId}`);
+    await exerciseService.deleteExerciseAPI(workout.id, exerciseId);
   };
 
   return (
@@ -50,11 +50,12 @@ const WorkoutDay = ({ workout }) => {
         <TableBody>
           {workout.exercises.map((e) => (
             <EditableExercise
+              key={e.id}
               exercise={e}
               imgSrcEdit={editIcon}
               imgSrcSave={saveIcon}
               imgSrcDelete={deleteIcon}
-              saveExercise={saveExercise}
+              updateExercise={updateExercise}
               deleteExercise={deleteExercise}
             />
           ))}
@@ -74,7 +75,7 @@ WorkoutDay.propTypes = {
         name: PropTypes.string,
         sets: PropTypes.number,
         reps: PropTypes.string,
-        rest: PropTypes.string,
+        rest: PropTypes.number,
       }),
     ).isRequired,
   }).isRequired,

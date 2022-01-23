@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Button, Container, TextField,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import API from '../API/API';
+import { authenticationService } from '../services/AuthenticationService';
 
 const loginFields = [
   { name: 'email', label: 'Email', type: 'text' },
@@ -17,7 +17,6 @@ const validationSchema = yup.object({
 });
 
 const Login = () => {
-  const [error, setError] = useState('');
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -25,9 +24,7 @@ const Login = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      await API.post('/login', values)
-        .then((results) => console.log(results.data)) // to be changed
-        .catch(() => setError('Wrong login credentials'));
+      await authenticationService.loginAPI(values);
     },
   });
   return (
@@ -46,7 +43,6 @@ const Login = () => {
             helperText={formik.touched[login.name] && formik.errors[login.name]}
           />
         ))}
-        {error && <div>{error}</div>}
         <Button sx={{ margin: '10px' }} variant="contained" size="large" type="submit">Login</Button>
       </form>
     </Container>

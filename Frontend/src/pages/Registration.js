@@ -3,7 +3,7 @@ import {
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import API from '../API/API';
+import { authenticationService } from '../services/AuthenticationService';
 
 const registationFields = [
   { name: 'firstName', label: 'First Name', type: 'text' },
@@ -32,8 +32,7 @@ const Registration = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      await API.post('/users', values)
-        .then((results) => console.log(results.data)); // to be changed
+      await authenticationService.registerAPI(values);
     },
   });
   return (

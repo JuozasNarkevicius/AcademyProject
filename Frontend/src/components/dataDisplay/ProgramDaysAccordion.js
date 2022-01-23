@@ -4,17 +4,18 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import WorkoutDay from './WorkoutDay';
-import API from '../../API/API';
 import ProgramContext from '../../Context';
 import editIcon from '../../assets/icons/edit.svg';
 import saveIcon from '../../assets/icons/checkmark.svg';
 import EditableName from './EditableName';
+import { programService } from '../../services/ProgramService';
+import { workoutService } from '../../services/WorkoutService';
 
 const ProgramDaysAccordion = () => {
   const { program, setProgram } = useContext(ProgramContext);
 
   const updateProgramName = async (newName) => {
-    await API.put(`/users/1/programs/${program.id}`, { name: newName });
+    await programService.updateProgramNameAPI(program.id, newName);
     setProgram({ ...program, name: newName });
   };
 
@@ -22,7 +23,7 @@ const ProgramDaysAccordion = () => {
     const newProgram = program;
     newProgram.workouts.find((w) => w.id === workoutId).name = newName;
     setProgram({ ...newProgram });
-    await API.put(`/programs/${program.id}}/workouts/${workoutId}`, { name: newName });
+    await workoutService.updateWorkoutNameAPI(program.id, workoutId, newName);
   };
 
   return (

@@ -5,7 +5,7 @@ import {
 import PropTypes from 'prop-types';
 
 const EditableExercise = ({
-  exercise, imgSrcEdit, imgSrcSave, imgSrcDelete, saveExercise, deleteExercise,
+  exercise, imgSrcEdit, imgSrcSave, imgSrcDelete, updateExercise, deleteExercise,
 }) => {
   const [editedExercise, setEditedExercise] = useState({});
   return (
@@ -24,7 +24,7 @@ const EditableExercise = ({
           <IconButton
             title="Save exercise"
             onClick={() => {
-              saveExercise(editedExercise, exercise.id);
+              updateExercise(editedExercise, exercise.id);
               setEditedExercise({});
             }}
           >
@@ -73,12 +73,12 @@ EditableExercise.propTypes = {
     name: PropTypes.string,
     sets: PropTypes.number,
     reps: PropTypes.string,
-    rest: PropTypes.string,
+    rest: PropTypes.number,
   }).isRequired,
   imgSrcEdit: PropTypes.string.isRequired,
   imgSrcSave: PropTypes.string.isRequired,
   imgSrcDelete: PropTypes.string.isRequired,
-  saveExercise: PropTypes.func.isRequired,
+  updateExercise: PropTypes.func.isRequired,
   deleteExercise: PropTypes.func.isRequired,
 };
 

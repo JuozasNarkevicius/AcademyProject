@@ -4,7 +4,7 @@ import {
   Button, FormControl, TextField, Container,
 } from '@mui/material';
 import WorkoutDay from './WorkoutDay';
-import API from '../../API/API';
+import { programService } from '../../services/ProgramService';
 
 const ProgramForm = () => {
   const [program, setProgram] = useState({ name: '', workouts: [] });
@@ -50,7 +50,7 @@ const ProgramForm = () => {
   };
 
   const handleProgramSubmit = async () => {
-    await API.post('/users/3/programs', program);
+    await programService.submitProgramAPI(program);
   };
 
   return (
