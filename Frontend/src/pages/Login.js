@@ -7,6 +7,11 @@ import axios from 'axios';
 import * as yup from 'yup';
 import baseAdress from '../API/BaseAddress';
 
+const loginFields = [
+  { name: 'email', label: 'Email', type: 'text' },
+  { name: 'password', label: 'Password', type: 'password' },
+];
+
 const validationSchema = yup.object({
   email: yup.string().required('Enter your email'),
   password: yup.string().required('Enter your password'),
@@ -29,27 +34,19 @@ const Login = () => {
   return (
     <Container>
       <form sx={{ mt: '20%' }} onSubmit={formik.handleSubmit}>
-        <TextField
-          sx={{ margin: '10px' }}
-          name="email"
-          label="Email"
-          variant="outlined"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
-        />
-        <TextField
-          sx={{ margin: '10px' }}
-          name="password"
-          label="Password"
-          variant="outlined"
-          type="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={formik.touched.password && formik.errors.password}
-        />
+        {loginFields.map((login) => (
+          <TextField
+            sx={{ m: '10px' }}
+            key={login.name}
+            name={login.name}
+            label={login.label}
+            type={login.type}
+            value={formik.values[login.name]}
+            onChange={formik.handleChange}
+            error={formik.touched[login.name] && Boolean(formik.errors[login.name])}
+            helperText={formik.touched[login.name] && formik.errors[login.name]}
+          />
+        ))}
         {error && <div>{error}</div>}
         <Button sx={{ margin: '10px' }} variant="contained" size="large" type="submit">Login</Button>
       </form>

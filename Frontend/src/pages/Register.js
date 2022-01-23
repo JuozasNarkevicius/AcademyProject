@@ -6,6 +6,14 @@ import axios from 'axios';
 import * as yup from 'yup';
 import baseAdress from '../API/BaseAddress';
 
+const registationFields = [
+  { name: 'firstName', label: 'First Name', type: 'text' },
+  { name: 'lastName', label: 'Last Name', type: 'text' },
+  { name: 'age', label: 'Age', type: 'number' },
+  { name: 'email', label: 'Email', type: 'text' },
+  { name: 'password', label: 'Password', type: 'password' },
+];
+
 const validationSchema = yup.object({
   firstName: yup.string().required('Enter your first name'),
   lastName: yup.string().required('Enter your last name'),
@@ -32,53 +40,19 @@ const Register = () => {
   return (
     <Container sx={{ width: '20%', mt: '10%' }}>
       <form onSubmit={formik.handleSubmit}>
-        <TextField
-          sx={{ margin: '10px' }}
-          name="firstName"
-          label="First Name"
-          value={formik.values.firstName}
-          onChange={formik.handleChange}
-          error={formik.touched.firstName && Boolean(formik.errors.firstName)}
-          helperText={formik.touched.firstName && formik.errors.firstName}
-        />
-        <TextField
-          sx={{ margin: '10px' }}
-          name="lastName"
-          label="Last Name"
-          value={formik.values.lastName}
-          onChange={formik.handleChange}
-          error={formik.touched.lastName && Boolean(formik.errors.lastName)}
-          helperText={formik.touched.lastName && formik.errors.lastName}
-        />
-        <TextField
-          sx={{ margin: '10px' }}
-          name="age"
-          label="Age"
-          type="number"
-          value={formik.values.age}
-          onChange={formik.handleChange}
-          error={formik.touched.age && Boolean(formik.errors.age)}
-          helperText={formik.touched.age && formik.errors.age}
-        />
-        <TextField
-          sx={{ margin: '10px' }}
-          name="email"
-          label="Email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={formik.touched.email && formik.errors.email}
-        />
-        <TextField
-          sx={{ margin: '10px' }}
-          name="password"
-          label="Password"
-          type="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={formik.touched.password && formik.errors.password}
-        />
+        {registationFields.map((r) => (
+          <TextField
+            sx={{ m: '10px' }}
+            key={r.name}
+            name={r.name}
+            label={r.label}
+            type={r.type}
+            value={formik.values[r.name]}
+            onChange={formik.handleChange}
+            error={formik.touched[r.name] && Boolean(formik.errors[r.name])}
+            helperText={formik.touched[r.name] && formik.errors[r.name]}
+          />
+        ))}
         <Button sx={{ margin: '10px' }} variant="contained" size="large" type="submit">Register</Button>
       </form>
     </Container>
