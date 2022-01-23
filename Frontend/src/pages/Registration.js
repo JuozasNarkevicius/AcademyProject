@@ -2,9 +2,8 @@ import {
   Button, Container, TextField,
 } from '@mui/material';
 import { useFormik } from 'formik';
-import axios from 'axios';
 import * as yup from 'yup';
-import baseAdress from '../API/BaseAddress';
+import API from '../API/API';
 
 const registationFields = [
   { name: 'firstName', label: 'First Name', type: 'text' },
@@ -22,7 +21,7 @@ const validationSchema = yup.object({
   password: yup.string().min(4).required('Enter your password'),
 });
 
-const Register = () => {
+const Registration = () => {
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -33,7 +32,7 @@ const Register = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      await axios.post(`${baseAdress}/users`, values)
+      await API.post('/users', values)
         .then((results) => console.log(results.data)); // to be changed
     },
   });
@@ -59,4 +58,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Registration;

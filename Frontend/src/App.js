@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Navigation from './components/layout/Navigation';
 import {
-  Home, Sport, Login, Register, ProgramCreation, ProgramView,
+  Home, Sport, Login, Registration, ProgramCreation, ProgramView,
 } from './pages';
 import ROUTES from './constants/Routes';
 import './App.css';
@@ -14,7 +14,7 @@ const App = () => (
       <Route path={ROUTES.SPORT} element={<Sport />} />
       <Route path={ROUTES.MY_PROGRAMS} element={<ProgramView />} />
       <Route path={ROUTES.LOGIN} element={<Login />} />
-      <Route path={ROUTES.REGISTER} element={<Register />} />
+      <Route path={ROUTES.REGISTER} element={<Registration />} />
       <Route path={ROUTES.CREATE_PROGRAM} element={<ProgramCreation />} />
     </Routes>
   </div>

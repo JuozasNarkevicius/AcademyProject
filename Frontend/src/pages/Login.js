@@ -3,9 +3,8 @@ import {
   Button, Container, TextField,
 } from '@mui/material';
 import { useFormik } from 'formik';
-import axios from 'axios';
 import * as yup from 'yup';
-import baseAdress from '../API/BaseAddress';
+import API from '../API/API';
 
 const loginFields = [
   { name: 'email', label: 'Email', type: 'text' },
@@ -26,7 +25,7 @@ const Login = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      await axios.post(`${baseAdress}/login`, values, { withCredentials: true })
+      await API.post('/login', values)
         .then((results) => console.log(results.data)) // to be changed
         .catch(() => setError('Wrong login credentials'));
     },

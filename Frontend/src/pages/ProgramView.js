@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import axios from 'axios';
 import { Container, Typography } from '@mui/material';
 import ProgramListDrawer from '../components/dataDisplay/ProgramListDrawer';
-import baseAdress from '../API/BaseAddress';
+import API from '../API/API';
 import ProgramDaysAccordion from '../components/dataDisplay/ProgramDaysAccordion';
 import ProgramContext from '../Context';
 
@@ -13,12 +12,12 @@ const ProgramView = () => {
   const programMemo = useMemo(() => ({ program, setProgram }), [program]);
 
   const handleDrawerButtonClick = async (id) => {
-    await axios.get(`${baseAdress}/users/1/programs/${id}`, { withCredentials: true })
+    await API.get(`/users/1/programs/${id}`)
       .then((result) => setProgram(result.data));
   };
 
   useEffect(async () => {
-    await axios.get(`${baseAdress}/users/1/programs`, { withCredentials: true })
+    await API.get('/users/1/programs')
       .then((result) => {
         setProgramNames(result.data);
       });

@@ -3,9 +3,8 @@ import {
   Accordion, AccordionSummary, AccordionDetails, Typography, Container,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import axios from 'axios';
 import WorkoutDay from './WorkoutDay';
-import baseAdress from '../../API/BaseAddress';
+import API from '../../API/API';
 import ProgramContext from '../../Context';
 import editIcon from '../../assets/icons/edit.svg';
 import saveIcon from '../../assets/icons/checkmark.svg';
@@ -15,7 +14,7 @@ const ProgramDaysAccordion = () => {
   const { program, setProgram } = useContext(ProgramContext);
 
   const updateProgramName = async (newName) => {
-    await axios.put(`${baseAdress}/users/1/programs/${program.id}`, { name: newName });
+    await API.put(`/users/1/programs/${program.id}`, { name: newName });
     setProgram({ ...program, name: newName });
   };
 
@@ -23,7 +22,7 @@ const ProgramDaysAccordion = () => {
     const newProgram = program;
     newProgram.workouts.find((w) => w.id === workoutId).name = newName;
     setProgram({ ...newProgram });
-    await axios.put(`${baseAdress}/programs/${program.id}}/workouts/${workoutId}`, { name: newName });
+    await API.put(`/programs/${program.id}}/workouts/${workoutId}`, { name: newName });
   };
 
   return (

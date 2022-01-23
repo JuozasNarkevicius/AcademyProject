@@ -2,13 +2,12 @@ import React, { useContext } from 'react';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
 } from '@mui/material';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import editIcon from '../../assets/icons/edit.svg';
 import deleteIcon from '../../assets/icons/x.svg';
 import saveIcon from '../../assets/icons/checkmark.svg';
 import ProgramContext from '../../Context';
-import baseAdress from '../../API/BaseAddress';
+import API from '../../API/API';
 import EditableExercise from './EditableExercise';
 
 const WorkoutDay = ({ workout }) => {
@@ -24,7 +23,7 @@ const WorkoutDay = ({ workout }) => {
       .exercises[exerciseIndex] = editedExercise;
     setProgram({ ...newProgram });
     const { id, ...newExercise } = editedExercise;
-    await axios.put(`${baseAdress}/workouts/${workout.id}/exercises/${exerciseId}`, newExercise);
+    await API.put(`/workouts/${workout.id}/exercises/${exerciseId}`, newExercise);
   };
 
   const deleteExercise = async (exerciseId) => {
@@ -33,7 +32,7 @@ const WorkoutDay = ({ workout }) => {
     newExercisesArray.splice(newExercisesArray.findIndex((e) => e.id === exerciseId), 1);
     newProgram.workouts.find((w) => w.id === workout.id).exercises = newExercisesArray;
     setProgram({ ...newProgram });
-    await axios.delete(`${baseAdress}/workouts/${workout.id}/exercises/${exerciseId}`);
+    await API.delete(`/workouts/${workout.id}/exercises/${exerciseId}`);
   };
 
   return (
