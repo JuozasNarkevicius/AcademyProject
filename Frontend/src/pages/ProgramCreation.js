@@ -1,5 +1,5 @@
 import React from 'react';
-import ProgramForm from '../components/ProgramForm';
+import ProgramForm from '../components/dataInput/ProgramForm';
 
 const ProgramCreation = () => (
   <div>

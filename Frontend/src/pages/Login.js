@@ -21,7 +21,7 @@ const Login = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      await axios.post(`${baseAdress}/users/authenticate`, values)
+      await axios.post(`${baseAdress}/login`, values, { withCredentials: true })
         .then((results) => console.log(results.data)) // to be changed
         .catch(() => setError('Wrong login credentials'));
     },

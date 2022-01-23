@@ -5,7 +5,7 @@ import {
   Button, FormControl, TextField, Container,
 } from '@mui/material';
 import WorkoutDay from './WorkoutDay';
-import BaseAdress from '../API/BaseAddress';
+import BaseAdress from '../../API/BaseAddress';
 
 const ProgramForm = () => {
   const [program, setProgram] = useState({ name: '', workouts: [] });
@@ -51,7 +51,7 @@ const ProgramForm = () => {
   };
 
   const handleProgramSubmit = async () => {
-    await axios.post(`${BaseAdress}/users/1/programs`, program);
+    await axios.post(`${BaseAdress}/users/3/programs`, program);
   };
 
   return (
