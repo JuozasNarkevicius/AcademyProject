@@ -3,7 +3,9 @@ import {
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 import { authenticationService } from '../services/AuthenticationService';
+import ROUTES from '../constants/Routes';
 
 const registationFields = [
   { name: 'firstName', label: 'First Name', type: 'text' },
@@ -22,6 +24,8 @@ const validationSchema = yup.object({
 });
 
 const Registration = () => {
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -33,6 +37,7 @@ const Registration = () => {
     validationSchema,
     onSubmit: async (values) => {
       await authenticationService.registerAPI(values);
+      navigate(ROUTES.LOGIN, { replace: true });
     },
   });
   return (

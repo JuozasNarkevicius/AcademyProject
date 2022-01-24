@@ -4,7 +4,9 @@ import {
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 import { authenticationService } from '../services/AuthenticationService';
+import ROUTES from '../constants/Routes';
 
 const loginFields = [
   { name: 'email', label: 'Email', type: 'text' },
@@ -17,6 +19,7 @@ const validationSchema = yup.object({
 });
 
 const Login = () => {
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -25,6 +28,7 @@ const Login = () => {
     validationSchema,
     onSubmit: async (values) => {
       await authenticationService.loginAPI(values);
+      navigate(ROUTES.SPORT, { replace: true });
     },
   });
   return (

@@ -5,7 +5,7 @@ export const updateProgramNameAPI = async (programId, newName) => {
 };
 
 export const submitProgramAPI = async (program) => {
-  await API.post('/users/3/programs', program);
+  await API.post('/users/1/programs', program);
 };
 
 export const getProgramAPI = async (programId) => {

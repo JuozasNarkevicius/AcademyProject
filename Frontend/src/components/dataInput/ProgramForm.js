@@ -3,11 +3,14 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   Button, FormControl, TextField, Container,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import WorkoutDay from './WorkoutDay';
 import { programService } from '../../services/ProgramService';
+import ROUTES from '../../constants/Routes';
 
 const ProgramForm = () => {
   const [program, setProgram] = useState({ name: '', workouts: [] });
+  const navigate = useNavigate();
 
   const addWorkout = () => {
     const newProgram = program;
@@ -51,6 +54,7 @@ const ProgramForm = () => {
 
   const handleProgramSubmit = async () => {
     await programService.submitProgramAPI(program);
+    navigate(ROUTES.SPORT, { replace: true });
   };
 
   return (
