@@ -4,7 +4,7 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import WorkoutDay from './WorkoutDay';
-import ProgramContext from '../../Context';
+import { ProgramContext } from '../../Context';
 import editIcon from '../../assets/icons/edit.svg';
 import saveIcon from '../../assets/icons/checkmark.svg';
 import EditableName from './EditableName';

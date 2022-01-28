@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import editIcon from '../../assets/icons/edit.svg';
 import deleteIcon from '../../assets/icons/x.svg';
 import saveIcon from '../../assets/icons/checkmark.svg';
-import ProgramContext from '../../Context';
+import { ProgramContext } from '../../Context';
 import EditableExercise from './EditableExercise';
 import { exerciseService } from '../../services/ExerciseService';
 

@@ -1,5 +1,4 @@
 import { createContext } from 'react';
 
-const ProgramContext = createContext();
-
-export default ProgramContext;
+export const ProgramContext = createContext();
+export const AuthorizationContext = createContext();

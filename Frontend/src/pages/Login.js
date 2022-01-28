@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Button, Container, TextField,
 } from '@mui/material';
@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { authenticationService } from '../services/AuthenticationService';
 import ROUTES from '../constants/Routes';
+import { AuthorizationContext } from '../Context';
 
 const loginFields = [
   { name: 'email', label: 'Email', type: 'text' },
@@ -19,6 +20,8 @@ const validationSchema = yup.object({
 });
 
 const Login = () => {
+  const { setIsLoggedIn } = useContext(AuthorizationContext);
+
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
@@ -28,7 +31,9 @@ const Login = () => {
     validationSchema,
     onSubmit: async (values) => {
       await authenticationService.loginAPI(values);
-      navigate(ROUTES.SPORT, { replace: true });
+      sessionStorage.setItem('auth', 'true');
+      setIsLoggedIn(JSON.parse(sessionStorage.getItem('auth')));
+      navigate(ROUTES.HOME, { replace: true });
     },
   });
   return (

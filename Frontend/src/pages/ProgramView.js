@@ -2,8 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Container, Typography } from '@mui/material';
 import ProgramListDrawer from '../components/dataDisplay/ProgramListDrawer';
 import ProgramDaysAccordion from '../components/dataDisplay/ProgramDaysAccordion';
-import ProgramContext from '../Context';
 import { programService } from '../services/ProgramService';
+import { ProgramContext } from '../Context';
 
 const ProgramView = () => {
   const [programNames, setProgramNames] = useState([]);
@@ -25,9 +25,9 @@ const ProgramView = () => {
     <Container>
       <ProgramListDrawer programs={programNames} handleClick={handleDrawerButtonClick} />
       <ProgramContext.Provider value={programMemo}>
-        {!program
-          ? <Typography>Choose a program!</Typography>
-          : <ProgramDaysAccordion />}
+        {program
+          ? <ProgramDaysAccordion />
+          : <Typography>Choose a program!</Typography>}
       </ProgramContext.Provider>
     </Container>
   );
