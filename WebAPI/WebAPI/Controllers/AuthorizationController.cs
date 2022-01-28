@@ -42,14 +42,19 @@ namespace WebAPI.Controllers
             return Ok();
         }
 
-        private void setTokenCookie(string token)
+        [HttpPost]
+        [Route("logout")]
+        public async Task<ActionResult> Logout()
         {
-            var cookieOptions = new CookieOptions
+            try
             {
-                HttpOnly = true,
-                Expires = DateTime.UtcNow.AddDays(7)
-            };
-            Response.Cookies.Append("refreshToken", token, cookieOptions);
+                await HttpContext.SignOutAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
         }
     }
 }
