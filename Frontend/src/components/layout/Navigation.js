@@ -17,7 +17,7 @@ const Navigation = () => {
           <Typography variant="h6" component="div" sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
             Logo
           </Typography>
-          {isLoggedIn ? (
+          {isLoggedIn === 'true' ? (
             <>
               <Button color="inherit" component={Link} to={ROUTES.CREATE_PROGRAM}>New program</Button>
               <Button color="inherit" component={Link} to={ROUTES.MY_PROGRAMS}>My programs</Button>
@@ -25,7 +25,8 @@ const Navigation = () => {
                 color="inherit"
                 onClick={() => {
                   authenticationService.logoutAPI();
-                  setIsLoggedIn(JSON.parse(sessionStorage.getItem('auth')));
+                  sessionStorage.setItem('auth', 'false');
+                  setIsLoggedIn(sessionStorage.getItem('auth'));
                   navigate(ROUTES.LOGIN, { replace: true });
                 }}
               >

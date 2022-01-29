@@ -8,6 +8,8 @@ const EditableExercise = ({
   exercise, imgSrcEdit, imgSrcSave, imgSrcDelete, updateExercise, deleteExercise,
 }) => {
   const [editedExercise, setEditedExercise] = useState({});
+
+  const isString = (id) => typeof id === 'string';
   return (
     editedExercise.id && editedExercise.id === exercise.id ? (
       <TableRow
@@ -21,17 +23,31 @@ const EditableExercise = ({
         <TableCell align="right"><Input value={editedExercise.reps} onChange={(event) => { setEditedExercise({ ...editedExercise, reps: event.target.value }); }} /></TableCell>
         <TableCell align="right"><Input value={editedExercise.rest} onChange={(event) => { setEditedExercise({ ...editedExercise, rest: event.target.value }); }} /></TableCell>
         <TableCell align="right">
-          <IconButton
-            title="Save exercise"
-            onClick={() => {
-              updateExercise(editedExercise, exercise.id);
-              setEditedExercise({});
-            }}
-          >
-            <Icon>
-              <img src={imgSrcSave} height={25} width={25} alt="k" />
-            </Icon>
-          </IconButton>
+          {isString(exercise.id) ? (
+            <IconButton
+              title="Submit exercise"
+              onClick={() => {
+                updateExercise(editedExercise, exercise.id, true);
+                setEditedExercise({});
+              }}
+            >
+              <Icon>
+                <img src={imgSrcSave} height={25} width={25} alt="k" />
+              </Icon>
+            </IconButton>
+          ) : (
+            <IconButton
+              title="Save exercise"
+              onClick={() => {
+                updateExercise(editedExercise, exercise.id, false);
+                setEditedExercise({});
+              }}
+            >
+              <Icon>
+                <img src={imgSrcSave} height={25} width={25} alt="k" />
+              </Icon>
+            </IconButton>
+          )}
           <IconButton title="Delete exercise" onClick={() => deleteExercise(exercise.id)}>
             <Icon>
               <img src={imgSrcDelete} height={20} width={20} alt="k" />
@@ -69,11 +85,20 @@ const EditableExercise = ({
 
 EditableExercise.propTypes = {
   exercise: PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
     name: PropTypes.string,
-    sets: PropTypes.number,
+    sets: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
     reps: PropTypes.string,
-    rest: PropTypes.number,
+    rest: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
   }).isRequired,
   imgSrcEdit: PropTypes.string.isRequired,
   imgSrcSave: PropTypes.string.isRequired,

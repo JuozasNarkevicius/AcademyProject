@@ -9,7 +9,6 @@ export const registerAPI = async (values) => {
 };
 
 export const logoutAPI = async () => {
-  sessionStorage.setItem('auth', 'false');
   await API.post('/logout');
 };
 

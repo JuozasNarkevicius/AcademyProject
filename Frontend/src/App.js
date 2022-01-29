@@ -10,7 +10,7 @@ import './App.css';
 import { AuthorizationContext } from './Context';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState();
+  const [isLoggedIn, setIsLoggedIn] = useState(sessionStorage.getItem('auth'));
 
   return (
     <div className="App">

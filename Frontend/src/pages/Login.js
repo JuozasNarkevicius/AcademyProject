@@ -32,7 +32,7 @@ const Login = () => {
     onSubmit: async (values) => {
       await authenticationService.loginAPI(values);
       sessionStorage.setItem('auth', 'true');
-      setIsLoggedIn(JSON.parse(sessionStorage.getItem('auth')));
+      setIsLoggedIn(sessionStorage.getItem('auth'));
       navigate(ROUTES.HOME, { replace: true });
     },
   });

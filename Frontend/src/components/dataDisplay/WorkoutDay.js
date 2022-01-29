@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper,
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button,
 } from '@mui/material';
 import PropTypes from 'prop-types';
+import { v4 as uuidv4 } from 'uuid';
 import editIcon from '../../assets/icons/edit.svg';
 import deleteIcon from '../../assets/icons/x.svg';
 import saveIcon from '../../assets/icons/checkmark.svg';
@@ -13,7 +14,21 @@ import { exerciseService } from '../../services/ExerciseService';
 const WorkoutDay = ({ workout }) => {
   const { program, setProgram } = useContext(ProgramContext);
 
-  const updateExercise = async (editedExercise, exerciseId) => {
+  const addBlankExercise = () => {
+    const exercise = {
+      id: uuidv4(), name: '', sets: '', reps: '', rest: '',
+    };
+    const newProgram = program;
+    newProgram.workouts.find((w) => w.id === workout.id).exercises.push(exercise);
+    setProgram({ ...newProgram });
+  };
+
+  // const postExercise = async (exercise) => {
+  //   const { id, ...exerciseWithoutId } = exercise;
+  //   await exerciseService.addExerciseAPI(workout.id, exerciseWithoutId);
+  // };
+
+  const updateExercise = async (editedExercise, exerciseId, isNewExercise) => {
     const newProgram = program;
     const workoutIndex = newProgram.workouts
       .findIndex((w) => w.id === workout.id);
@@ -22,8 +37,12 @@ const WorkoutDay = ({ workout }) => {
     newProgram.workouts[workoutIndex]
       .exercises[exerciseIndex] = editedExercise;
     setProgram({ ...newProgram });
-    const { id, ...newExercise } = editedExercise;
-    await exerciseService.updateExerciseAPI(workout.id, exerciseId, newExercise);
+    const { id, ...exerciseWithoutId } = editedExercise;
+    if (isNewExercise) {
+      await exerciseService.addExerciseAPI(workout.id, exerciseWithoutId);
+    } else {
+      await exerciseService.updateExerciseAPI(workout.id, exerciseId, exerciseWithoutId);
+    }
   };
 
   const deleteExercise = async (exerciseId) => {
@@ -36,32 +55,35 @@ const WorkoutDay = ({ workout }) => {
   };
 
   return (
-    <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Exercise name</TableCell>
-            <TableCell align="right">Sets</TableCell>
-            <TableCell align="right">Reps</TableCell>
-            <TableCell align="right">Rest</TableCell>
-            <TableCell />
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {workout.exercises.map((e) => (
-            <EditableExercise
-              key={e.id}
-              exercise={e}
-              imgSrcEdit={editIcon}
-              imgSrcSave={saveIcon}
-              imgSrcDelete={deleteIcon}
-              updateExercise={updateExercise}
-              deleteExercise={deleteExercise}
-            />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Exercise name</TableCell>
+              <TableCell align="right">Sets</TableCell>
+              <TableCell align="right">Reps</TableCell>
+              <TableCell align="right">Rest</TableCell>
+              <TableCell />
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {workout.exercises.map((e) => (
+              <EditableExercise
+                key={e.id}
+                exercise={e}
+                imgSrcEdit={editIcon}
+                imgSrcSave={saveIcon}
+                imgSrcDelete={deleteIcon}
+                updateExercise={updateExercise}
+                deleteExercise={deleteExercise}
+              />
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Button sx={{ m: '15px', float: 'left' }} variant="contained" onClick={addBlankExercise}>New exercise</Button>
+    </>
   );
 };
 
@@ -71,11 +93,20 @@ WorkoutDay.propTypes = {
     name: PropTypes.string,
     exercises: PropTypes.arrayOf(
       PropTypes.shape({
-        id: PropTypes.number,
+        id: PropTypes.oneOfType([
+          PropTypes.number,
+          PropTypes.string,
+        ]),
         name: PropTypes.string,
-        sets: PropTypes.number,
+        sets: PropTypes.oneOfType([
+          PropTypes.number,
+          PropTypes.string,
+        ]),
         reps: PropTypes.string,
-        rest: PropTypes.number,
+        rest: PropTypes.oneOfType([
+          PropTypes.number,
+          PropTypes.string,
+        ]),
       }),
     ).isRequired,
   }).isRequired,
