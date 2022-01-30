@@ -24,11 +24,6 @@ const WorkoutDay = ({ workout }) => {
     setProgram({ ...newProgram });
   };
 
-  // const postExercise = async (exercise) => {
-  //   const { id, ...exerciseWithoutId } = exercise;
-  //   await exerciseService.addExerciseAPI(workout.id, exerciseWithoutId);
-  // };
-
   const updateExercise = async (editedExercise, exerciseId) => {
     const newProgram = program;
     const workoutIndex = newProgram.workouts
@@ -86,17 +81,11 @@ const WorkoutDay = ({ workout }) => {
 
 WorkoutDay.propTypes = {
   workout: PropTypes.shape({
-    id: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
+    id: PropTypes.number,
     name: PropTypes.string,
     exercises: PropTypes.arrayOf(
       PropTypes.shape({
-        id: PropTypes.oneOfType([
-          PropTypes.number,
-          PropTypes.string,
-        ]),
+        id: PropTypes.number,
         name: PropTypes.string,
         sets: PropTypes.oneOfType([
           PropTypes.number,

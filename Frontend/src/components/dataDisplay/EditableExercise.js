@@ -69,10 +69,7 @@ const EditableExercise = ({
 
 EditableExercise.propTypes = {
   exercise: PropTypes.shape({
-    id: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.string,
-    ]),
+    id: PropTypes.number,
     name: PropTypes.string,
     sets: PropTypes.oneOfType([
       PropTypes.number,

@@ -1,14 +1,13 @@
-/* eslint-disable react/prop-types */
 import React, { useContext } from 'react';
 import {
   Accordion, AccordionSummary, AccordionDetails, Container, Button,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import PropTypes from 'prop-types';
 import WorkoutDay from './WorkoutDay';
 import { ProgramContext } from '../../Context';
 import editIcon from '../../assets/icons/edit.svg';
 import saveIcon from '../../assets/icons/checkmark.svg';
-import deleteIcon from '../../assets/icons/x.svg';
 import EditableName from './EditableName';
 import { programService } from '../../services/ProgramService';
 import { workoutService } from '../../services/WorkoutService';
@@ -51,9 +50,9 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
       <EditableName
         imgSrcEdit={editIcon}
         imgSrcSave={saveIcon}
-        imgSrcDelete={deleteIcon}
         nameField={program.name}
         objectId={program.id}
+        objectType="program"
         saveNewName={updateProgramName}
         deleteObject={deleteProgram}
       />
@@ -67,9 +66,9 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
             <EditableName
               imgSrcEdit={editIcon}
               imgSrcSave={saveIcon}
-              imgSrcDelete={deleteIcon}
               nameField={w.name}
               objectId={w.id}
+              objectType="workout"
               saveNewName={updateWorkoutName}
               deleteObject={deleteWorkout}
             />
@@ -82,6 +81,10 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
       <Button sx={{ m: '15px' }} variant="contained" onClick={createWorkout}>New workout</Button>
     </Container>
   );
+};
+
+ProgramDaysAccordion.propTypes = {
+  deleteProgram: PropTypes.func.isRequired,
 };
 
 export default ProgramDaysAccordion;

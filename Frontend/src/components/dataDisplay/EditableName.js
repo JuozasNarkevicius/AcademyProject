@@ -3,22 +3,17 @@ import {
   IconButton, Input, Icon,
 } from '@mui/material';
 import PropTypes from 'prop-types';
+import AlertDialog from './Modal';
+import imgSrcDelete from '../../assets/icons/x.svg';
 
 const EditableName = ({
-  imgSrcEdit, imgSrcSave, imgSrcDelete, nameField, saveNewName, objectId, deleteObject,
+  imgSrcEdit, imgSrcSave, nameField, saveNewName, objectId, deleteObject, objectType,
 }) => {
   const [newName, setNewName] = useState(null);
   const [isUpdated, setIsUpdated] = useState(false);
 
-  // const isString = (id) => typeof id === 'string';
-
   const save = (e) => {
     e.stopPropagation();
-    // if (isString(objectId)) {
-    //   saveNewName(newName, objectId, true);
-    // } else {
-    //   saveNewName(newName, objectId, false);
-    // }
     saveNewName(newName, objectId);
     setNewName(null);
     setIsUpdated(false);
@@ -40,12 +35,23 @@ const EditableName = ({
               <img src={imgSrcEdit} height={23} width={23} alt="k" />
             </Icon>
           </IconButton>
-          <IconButton title="Delete" onClick={() => deleteObject(objectId)}>
-            <Icon>
-              <img src={imgSrcDelete} height={23} width={23} alt="k" />
-            </Icon>
-          </IconButton>
-
+          {objectType === 'program'
+            ? (
+              <AlertDialog
+                deleteObject={deleteObject}
+                id={objectId}
+                objectType={objectType}
+                imgSrcDelete={imgSrcDelete}
+              />
+            )
+            : (
+              <AlertDialog
+                deleteObject={deleteObject}
+                id={objectId}
+                objectType={objectType}
+                imgSrcDelete={imgSrcDelete}
+              />
+            )}
         </>
       ) : (
         <>
@@ -71,18 +77,11 @@ const EditableName = ({
 EditableName.propTypes = {
   imgSrcEdit: PropTypes.string.isRequired,
   imgSrcSave: PropTypes.string.isRequired,
-  imgSrcDelete: PropTypes.string.isRequired,
   nameField: PropTypes.string.isRequired,
   saveNewName: PropTypes.func.isRequired,
-  objectId: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string,
-  ]),
+  objectId: PropTypes.number.isRequired,
+  objectType: PropTypes.string.isRequired,
   deleteObject: PropTypes.func.isRequired,
-};
-
-EditableName.defaultProps = {
-  objectId: null,
 };
 
 export default EditableName;
