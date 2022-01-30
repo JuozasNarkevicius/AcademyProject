@@ -6,10 +6,28 @@ import { programService } from '../services/ProgramService';
 import { ProgramContext } from '../Context';
 
 const ProgramView = () => {
-  const [programNames, setProgramNames] = useState([]);
+  const [programList, setProgramList] = useState([]);
   const [program, setProgram] = useState(null);
 
   const programMemo = useMemo(() => ({ program, setProgram }), [program]);
+
+  const createProgram = async () => {
+    const newProgram = {
+      name: 'New Program',
+    };
+    const response = await programService.postProgramAPI(newProgram.name);
+    newProgram.id = response.data.id;
+    setProgramList([...programList, newProgram]);
+  };
+
+  const deleteProgram = async (programId) => {
+    await programService.deleteProgramAPI(programId);
+    const newProgramList = programList;
+    const programIndex = newProgramList.findIndex((p) => p.id === programId);
+    newProgramList.splice(programIndex, 1);
+    setProgramList([...newProgramList]);
+    setProgram(null);
+  };
 
   const handleDrawerButtonClick = async (id) => {
     const response = await programService.getProgramAPI(id);
@@ -18,15 +36,19 @@ const ProgramView = () => {
 
   useEffect(async () => {
     const response = await programService.getAllProgramsAPI();
-    setProgramNames(response.data);
+    setProgramList(response.data);
   }, [program]);
 
   return (
     <Container>
-      <ProgramListDrawer programs={programNames} handleClick={handleDrawerButtonClick} />
+      <ProgramListDrawer
+        programs={programList}
+        createProgram={createProgram}
+        handleClick={handleDrawerButtonClick}
+      />
       <ProgramContext.Provider value={programMemo}>
         {program
-          ? <ProgramDaysAccordion />
+          ? <ProgramDaysAccordion deleteProgram={deleteProgram} />
           : <Typography>Choose a program!</Typography>}
       </ProgramContext.Provider>
     </Container>

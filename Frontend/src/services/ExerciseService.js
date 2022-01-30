@@ -1,11 +1,12 @@
 import API from './API';
 
-export const addExerciseAPI = async (workoutId, newExercise) => {
-  await API.post(`/workouts/${workoutId}/exercises`, newExercise);
+export const postExerciseAPI = async (workoutId, exercise) => {
+  const response = await API.post(`/workouts/${workoutId}/exercises`, exercise);
+  return response;
 };
 
-export const updateExerciseAPI = async (workoutId, exerciseId, updatedExercise) => {
-  await API.put(`/workouts/${workoutId}/exercises/${exerciseId}`, updatedExercise);
+export const updateExerciseAPI = async (workoutId, exerciseId, exercise) => {
+  await API.put(`/workouts/${workoutId}/exercises/${exerciseId}`, exercise);
 };
 
 export const deleteExerciseAPI = async (workoutId, exerciseId) => {
@@ -15,5 +16,5 @@ export const deleteExerciseAPI = async (workoutId, exerciseId) => {
 export const exerciseService = {
   updateExerciseAPI,
   deleteExerciseAPI,
-  addExerciseAPI,
+  postExerciseAPI,
 };

@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  Box, Drawer, CssBaseline, Toolbar, List, ListItem, ListItemText,
+  Box, Drawer, CssBaseline, Toolbar, List, ListItem, ListItemText, Button,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
-const drawerWidth = 240;
+const drawerWidth = 200;
 
-const ProgramListDrawer = ({ programs, handleClick }) => (
+const ProgramListDrawer = ({ programs, handleClick, createProgram }) => (
   <Box sx={{ display: 'flex' }}>
     <CssBaseline />
     <Drawer
@@ -26,6 +26,7 @@ const ProgramListDrawer = ({ programs, handleClick }) => (
             </ListItem>
           ))}
         </List>
+        <Button sx={{ m: '15px', float: 'left' }} variant="contained" onClick={createProgram}>New program</Button>
       </Box>
     </Drawer>
   </Box>
@@ -39,6 +40,7 @@ ProgramListDrawer.propTypes = {
     }),
   ).isRequired,
   handleClick: PropTypes.func.isRequired,
+  createProgram: PropTypes.func.isRequired,
 };
 
 export default ProgramListDrawer;

@@ -3,7 +3,6 @@ import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import { v4 as uuidv4 } from 'uuid';
 import editIcon from '../../assets/icons/edit.svg';
 import deleteIcon from '../../assets/icons/x.svg';
 import saveIcon from '../../assets/icons/checkmark.svg';
@@ -14,10 +13,12 @@ import { exerciseService } from '../../services/ExerciseService';
 const WorkoutDay = ({ workout }) => {
   const { program, setProgram } = useContext(ProgramContext);
 
-  const addBlankExercise = () => {
+  const createExercise = async () => {
     const exercise = {
-      id: uuidv4(), name: '', sets: '', reps: '', rest: '',
+      name: 'New exercise', sets: '4', reps: '12, 12, 12, 12', rest: '60',
     };
+    const response = await exerciseService.postExerciseAPI(workout.id, exercise);
+    exercise.id = response.data.id;
     const newProgram = program;
     newProgram.workouts.find((w) => w.id === workout.id).exercises.push(exercise);
     setProgram({ ...newProgram });
@@ -28,7 +29,7 @@ const WorkoutDay = ({ workout }) => {
   //   await exerciseService.addExerciseAPI(workout.id, exerciseWithoutId);
   // };
 
-  const updateExercise = async (editedExercise, exerciseId, isNewExercise) => {
+  const updateExercise = async (editedExercise, exerciseId) => {
     const newProgram = program;
     const workoutIndex = newProgram.workouts
       .findIndex((w) => w.id === workout.id);
@@ -38,11 +39,7 @@ const WorkoutDay = ({ workout }) => {
       .exercises[exerciseIndex] = editedExercise;
     setProgram({ ...newProgram });
     const { id, ...exerciseWithoutId } = editedExercise;
-    if (isNewExercise) {
-      await exerciseService.addExerciseAPI(workout.id, exerciseWithoutId);
-    } else {
-      await exerciseService.updateExerciseAPI(workout.id, exerciseId, exerciseWithoutId);
-    }
+    await exerciseService.updateExerciseAPI(workout.id, exerciseId, exerciseWithoutId);
   };
 
   const deleteExercise = async (exerciseId) => {
@@ -82,14 +79,17 @@ const WorkoutDay = ({ workout }) => {
           </TableBody>
         </Table>
       </TableContainer>
-      <Button sx={{ m: '15px', float: 'left' }} variant="contained" onClick={addBlankExercise}>New exercise</Button>
+      <Button sx={{ m: '15px', float: 'left' }} variant="contained" onClick={createExercise}>New exercise</Button>
     </>
   );
 };
 
 WorkoutDay.propTypes = {
   workout: PropTypes.shape({
-    id: PropTypes.number,
+    id: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.string,
+    ]),
     name: PropTypes.string,
     exercises: PropTypes.arrayOf(
       PropTypes.shape({
