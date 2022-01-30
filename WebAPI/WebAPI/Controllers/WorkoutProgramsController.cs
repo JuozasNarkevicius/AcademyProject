@@ -50,10 +50,25 @@ namespace WebAPI.Controllers
             return Ok(mapped);
         }
 
+        [HttpGet("{id}/name")]
+        public async Task<ActionResult<WorkoutProgram>> GetProgramName(long id)
+        {
+            var program = await _workoutProgramRepository.Get(id);
+
+            if (program == null)
+            {
+                return NotFound();
+            }
+
+            var mapped = _mapper.Map<UpdateProgramNameDTO>(program);
+
+            return Ok(mapped);
+        }
+
         [HttpPut("{id}")]
         public async Task<ActionResult<WorkoutProgramNamesDTO>> UpdateProgram(long id, UpdateProgramNameDTO program)
         {
-            var programFromDB = await _workoutProgramRepository.GetProgramName(id);
+            var programFromDB = await _workoutProgramRepository.Get(id);
 
             if (programFromDB == null)
             {
@@ -65,6 +80,18 @@ namespace WebAPI.Controllers
             var updatedProgram = await _workoutProgramRepository.Update(programFromDB);
 
             return Ok(_mapper.Map<UpdateProgramNameDTO>(updatedProgram));
+        }
+
+        [HttpPost]
+        [Route("name")]
+        public async Task<ActionResult<UpdateProgramNameDTO>> PostProgramName(long userId, UpdateProgramNameDTO programDTO)
+        {
+            var program = _mapper.Map<WorkoutProgram>(programDTO);
+
+            program.UserId = userId;
+            var programFromDB = await _workoutProgramRepository.Add(program);
+
+            return CreatedAtAction("GetProgramName", new { userId, id = programFromDB.Id }, _mapper.Map<WorkoutProgramNamesDTO>(programFromDB));
         }
 
         [HttpPost]
@@ -88,6 +115,21 @@ namespace WebAPI.Controllers
                 }
             }
             return CreatedAtAction(nameof(GetProgram), new { userId, id = programFromDb.Id }, _mapper.Map<WorkoutProgramDTO>(programFromDb));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteProgram(long id)
+        {
+            var program = await _workoutProgramRepository.Get(id);
+
+            if (program == null)
+            {
+                return NotFound();
+            }
+
+            await _workoutProgramRepository.Delete(program);
+
+            return NoContent();
         }
     }
 }

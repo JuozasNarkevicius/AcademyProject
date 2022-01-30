@@ -49,7 +49,9 @@ namespace WebAPI.DTO_s
             CreateMap<WorkoutProgram, WorkoutProgramNamesDTO>();
 
 
-
+            //CreateMap<WorkoutDay, CreateWorkoutDayDTO>()
+            //    .ForMember(dest => dest.Exercises, opt => 
+            //    opt.Ignore());
             CreateMap<CreateWorkoutDayDTO, WorkoutDay>()
                 .ForMember(dest => dest.Exercises,
                 opt => opt.Ignore());

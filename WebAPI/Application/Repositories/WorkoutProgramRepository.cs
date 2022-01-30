@@ -9,8 +9,9 @@ namespace Application.Repositories
         public Task<IEnumerable<WorkoutProgram>> GetAll(long userId);
         public Task<WorkoutProgram> Get(long id, long userId);
         public Task<WorkoutProgram> Add(WorkoutProgram program);
-        public Task<WorkoutProgram> GetProgramName(long id);
+        public Task<WorkoutProgram> Get(long id);
         public Task<WorkoutProgram> Update(WorkoutProgram program);
+        public Task Delete(WorkoutProgram program);
     }
     public class WorkoutProgramRepository : IWorkoutProgramRepository
     {
@@ -38,7 +39,7 @@ namespace Application.Repositories
             return program;
         }
 
-        public async Task<WorkoutProgram> GetProgramName(long id)
+        public async Task<WorkoutProgram> Get(long id)
         {
             var program = await _context.Programs
                 .FirstOrDefaultAsync(p => p.Id == id);
@@ -58,6 +59,12 @@ namespace Application.Repositories
             _context.Programs.Add(program);
             await _context.SaveChangesAsync();
             return program;
+        }
+
+        public async Task Delete(WorkoutProgram program)
+        {
+            _context.Programs.Remove(program);
+            await _context.SaveChangesAsync();
         }
     }
 }

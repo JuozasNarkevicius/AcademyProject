@@ -62,7 +62,7 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Exercise>> PostExercise(ExerciseDTO exerciseDTO, long workoutId)
+        public async Task<ActionResult<Exercise>> PostExercise(UpdateExerciseDTO exerciseDTO, long workoutId)
         {
             var exercise = _mapper.Map<Exercise>(exerciseDTO);
 
