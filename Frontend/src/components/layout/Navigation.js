@@ -12,7 +12,7 @@ const Navigation = () => {
   const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="relative" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
+      <AppBar position="relative" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} color="primary">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
             Logo
@@ -21,7 +21,9 @@ const Navigation = () => {
             <>
               <Button color="inherit" component={Link} to={ROUTES.CREATE_PROGRAM}>New program</Button>
               <Button color="inherit" component={Link} to={ROUTES.MY_PROGRAMS}>My programs</Button>
+              <Box sx={{ flexGrow: 1 }} />
               <Button
+                sx={{ p: 0 }}
                 color="inherit"
                 onClick={() => {
                   authenticationService.logoutAPI();

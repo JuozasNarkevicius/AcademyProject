@@ -42,8 +42,8 @@ const AlertDialog = ({
           ?
         </DialogTitle>
         <DialogActions>
-          <Button onClick={handleClose}>No</Button>
-          <Button onClick={() => deleteObject(id)} autoFocus>
+          <Button color="secondary" onClick={handleClose}>No</Button>
+          <Button color="secondary" onClick={() => deleteObject(id)} autoFocus>
             Yes
           </Button>
         </DialogActions>

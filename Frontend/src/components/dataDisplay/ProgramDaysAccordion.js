@@ -78,7 +78,7 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
           </AccordionDetails>
         </Accordion>
       ))}
-      <Button sx={{ m: '15px' }} variant="contained" onClick={createWorkout}>New workout</Button>
+      <Button sx={{ m: '15px' }} variant="contained" color="secondary" onClick={createWorkout}>New workout</Button>
     </Container>
   );
 };

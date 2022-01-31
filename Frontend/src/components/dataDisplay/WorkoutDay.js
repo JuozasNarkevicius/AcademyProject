@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button,
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Typography,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import editIcon from '../../assets/icons/edit.svg';
@@ -49,32 +49,34 @@ const WorkoutDay = ({ workout }) => {
   return (
     <>
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Exercise name</TableCell>
-              <TableCell align="right">Sets</TableCell>
-              <TableCell align="right">Reps</TableCell>
-              <TableCell align="right">Rest</TableCell>
-              <TableCell />
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {workout.exercises.map((e) => (
-              <EditableExercise
-                key={e.id}
-                exercise={e}
-                imgSrcEdit={editIcon}
-                imgSrcSave={saveIcon}
-                imgSrcDelete={deleteIcon}
-                updateExercise={updateExercise}
-                deleteExercise={deleteExercise}
-              />
-            ))}
-          </TableBody>
-        </Table>
+        {workout.exercises.length ? (
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Exercise name</TableCell>
+                <TableCell align="right">Sets</TableCell>
+                <TableCell align="right">Reps</TableCell>
+                <TableCell align="right">Rest</TableCell>
+                <TableCell />
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {workout.exercises.map((e) => (
+                <EditableExercise
+                  key={e.id}
+                  exercise={e}
+                  imgSrcEdit={editIcon}
+                  imgSrcSave={saveIcon}
+                  imgSrcDelete={deleteIcon}
+                  updateExercise={updateExercise}
+                  deleteExercise={deleteExercise}
+                />
+              ))}
+            </TableBody>
+          </Table>
+        ) : <Typography>This workout has no exercises.</Typography>}
       </TableContainer>
-      <Button sx={{ m: '15px', float: 'left' }} variant="contained" onClick={createExercise}>New exercise</Button>
+      <Button sx={{ m: '15px', float: 'left' }} variant="contained" color="secondary" onClick={createExercise}>New exercise</Button>
     </>
   );
 };

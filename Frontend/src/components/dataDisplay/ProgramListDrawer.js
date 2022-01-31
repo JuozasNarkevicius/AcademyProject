@@ -26,7 +26,7 @@ const ProgramListDrawer = ({ programs, handleClick, createProgram }) => (
             </ListItem>
           ))}
         </List>
-        <Button sx={{ m: '15px', float: 'left' }} variant="contained" onClick={createProgram}>New program</Button>
+        <Button sx={{ m: '15px', float: 'left' }} variant="contained" onClick={createProgram} color="secondary">New program</Button>
       </Box>
     </Drawer>
   </Box>
