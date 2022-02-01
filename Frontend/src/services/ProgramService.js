@@ -1,30 +1,36 @@
 import API from './API';
 
 export const updateProgramAPI = async (programId, newName) => {
-  await API.put(`/users/1/programs/${programId}`, { name: newName });
+  const userId = sessionStorage.getItem('id');
+  await API.put(`/users/${userId}/programs/${programId}`, { name: newName });
 };
 
 export const submitProgramAPI = async (program) => {
-  await API.post('/users/1/programs', program);
+  const userId = sessionStorage.getItem('id');
+  await API.post(`/users/${userId}/programs`, program);
 };
 
 export const postProgramAPI = async (name) => {
-  const response = await API.post('/users/1/programs/name', { name });
+  const userId = sessionStorage.getItem('id');
+  const response = await API.post(`/users/${userId}/programs/name`, { name });
   return response;
 };
 
 export const getProgramAPI = async (programId) => {
-  const response = await API.get(`/users/1/programs/${programId}`);
+  const userId = sessionStorage.getItem('id');
+  const response = await API.get(`/users/${userId}/programs/${programId}`);
   return response;
 };
 
 export const getAllProgramsAPI = async () => {
-  const response = await API.get('/users/1/programs');
+  const userId = sessionStorage.getItem('id');
+  const response = await API.get(`/users/${userId}/programs`);
   return response;
 };
 
 export const deleteProgramAPI = async (programId) => {
-  await API.delete(`/users/1/programs/${programId}`);
+  const userId = sessionStorage.getItem('id');
+  await API.delete(`/users/${userId}/programs/${programId}`);
 };
 
 export const programService = {

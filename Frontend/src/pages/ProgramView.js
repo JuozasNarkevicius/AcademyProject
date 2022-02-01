@@ -49,7 +49,7 @@ const ProgramView = () => {
       <ProgramContext.Provider value={programMemo}>
         {program
           ? <ProgramDaysAccordion deleteProgram={deleteProgram} />
-          : <Typography>Choose a program!</Typography>}
+          : <Typography variant="h4" sx={{ mt: '8rem' }}>Choose a program!</Typography>}
       </ProgramContext.Provider>
     </Container>
   );

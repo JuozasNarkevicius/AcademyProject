@@ -54,9 +54,9 @@ const WorkoutDay = ({ workout }) => {
             <TableHead>
               <TableRow>
                 <TableCell>Exercise name</TableCell>
-                <TableCell align="right">Sets</TableCell>
-                <TableCell align="right">Reps</TableCell>
-                <TableCell align="right">Rest</TableCell>
+                <TableCell>Sets</TableCell>
+                <TableCell>Reps</TableCell>
+                <TableCell>Rest (seconds)</TableCell>
                 <TableCell />
               </TableRow>
             </TableHead>

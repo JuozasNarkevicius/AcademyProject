@@ -30,14 +30,15 @@ const Login = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      await authenticationService.loginAPI(values);
+      const response = await authenticationService.loginAPI(values);
       sessionStorage.setItem('auth', 'true');
+      sessionStorage.setItem('id', response.data.id);
       setIsLoggedIn(sessionStorage.getItem('auth'));
-      navigate(ROUTES.HOME, { replace: true });
+      navigate(ROUTES.MY_PROGRAMS, { replace: true });
     },
   });
   return (
-    <Container>
+    <Container sx={{ width: '20rem', mt: '7rem' }}>
       <form sx={{ mt: '20%' }} onSubmit={formik.handleSubmit}>
         {loginFields.map((login) => (
           <TextField

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  IconButton, Input, Icon,
+  IconButton, Input, Icon, Box,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import AlertDialog from './Modal';
@@ -20,7 +20,7 @@ const EditableName = ({
   };
 
   return (
-    <div>
+    <Box>
       {!newName && isUpdated === false ? (
         <>
           {nameField}
@@ -62,6 +62,7 @@ const EditableName = ({
               setNewName(e.target.value);
               setIsUpdated(true);
             }}
+            onKeyPress={(e) => (e.key === 'Enter' && save(e))}
           />
           <IconButton title="Save" onClick={save}>
             <Icon>
@@ -70,7 +71,7 @@ const EditableName = ({
           </IconButton>
         </>
       )}
-    </div>
+    </Box>
   );
 };
 

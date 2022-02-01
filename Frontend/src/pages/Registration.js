@@ -18,7 +18,7 @@ const registationFields = [
 const validationSchema = yup.object({
   firstName: yup.string().required('Enter your first name'),
   lastName: yup.string().required('Enter your last name'),
-  age: yup.number().min(1).required('Enter your age'),
+  age: yup.number().min(0, 'Age must be a positive number').required('Enter your age'),
   email: yup.string().email('Enter a valid email').required('Enter your email'),
   password: yup.string().min(4).required('Enter your password'),
 });
@@ -41,7 +41,7 @@ const Registration = () => {
     },
   });
   return (
-    <Container sx={{ width: '20%', mt: '10%' }}>
+    <Container sx={{ width: '20rem', mt: '7rem' }}>
       <form onSubmit={formik.handleSubmit}>
         {registationFields.map((r) => (
           <TextField

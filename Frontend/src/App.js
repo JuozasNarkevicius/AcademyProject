@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-no-constructed-context-values */
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core';
 import Navigation from './components/layout/Navigation';
@@ -14,9 +13,11 @@ import theme from './styles/theme';
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(sessionStorage.getItem('auth'));
 
+  const isLoggedInMemo = useMemo(() => ({ isLoggedIn, setIsLoggedIn }), [isLoggedIn]);
+
   return (
     <div className="App">
-      <AuthorizationContext.Provider value={{ isLoggedIn, setIsLoggedIn }}>
+      <AuthorizationContext.Provider value={isLoggedInMemo}>
         <ThemeProvider theme={theme}>
           <Navigation />
           <Routes>

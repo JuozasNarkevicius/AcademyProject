@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import {
-  Accordion, AccordionSummary, AccordionDetails, Container, Button,
+  Accordion, AccordionSummary, AccordionDetails, Container, Button, Box,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PropTypes from 'prop-types';
@@ -46,16 +46,18 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
   };
 
   return (
-    <Container sx={{ mt: '100px' }}>
-      <EditableName
-        imgSrcEdit={editIcon}
-        imgSrcSave={saveIcon}
-        nameField={program.name}
-        objectId={program.id}
-        objectType="program"
-        saveNewName={updateProgramName}
-        deleteObject={deleteProgram}
-      />
+    <Container sx={{ ml: 5, mt: '8rem' }}>
+      <Box sx={{ mb: '30px' }}>
+        <EditableName
+          imgSrcEdit={editIcon}
+          imgSrcSave={saveIcon}
+          nameField={program.name}
+          objectId={program.id}
+          objectType="program"
+          saveNewName={updateProgramName}
+          deleteObject={deleteProgram}
+        />
+      </Box>
       {program.workouts.map((w) => (
         <Accordion key={w.id}>
           <AccordionSummary

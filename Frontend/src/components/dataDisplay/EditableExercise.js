@@ -8,6 +8,11 @@ const EditableExercise = ({
   exercise, imgSrcEdit, imgSrcSave, imgSrcDelete, updateExercise, deleteExercise,
 }) => {
   const [editedExercise, setEditedExercise] = useState({});
+
+  const submitUpdatedExercise = () => {
+    updateExercise(editedExercise, exercise.id);
+    setEditedExercise({});
+  };
   return (
     editedExercise.id && editedExercise.id === exercise.id ? (
       <TableRow
@@ -15,18 +20,60 @@ const EditableExercise = ({
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
       >
         <TableCell component="th" scope="row">
-          <Input type="text" value={editedExercise.name} onChange={(event) => { setEditedExercise({ ...editedExercise, name: event.target.value }); }} />
+          <Input
+            onKeyPress={(e) => (e.key === 'Enter' && submitUpdatedExercise())}
+            value={editedExercise.name}
+            onChange={(event) => {
+              setEditedExercise({
+                ...editedExercise,
+                name: event.target.value,
+              });
+            }}
+          />
         </TableCell>
-        <TableCell align="right"><Input value={editedExercise.sets} onChange={(event) => { setEditedExercise({ ...editedExercise, sets: event.target.value }); }} /></TableCell>
-        <TableCell align="right"><Input value={editedExercise.reps} onChange={(event) => { setEditedExercise({ ...editedExercise, reps: event.target.value }); }} /></TableCell>
-        <TableCell align="right"><Input value={editedExercise.rest} onChange={(event) => { setEditedExercise({ ...editedExercise, rest: event.target.value }); }} /></TableCell>
+        <TableCell>
+          <Input
+            onKeyPress={(e) => (e.key === 'Enter' && submitUpdatedExercise())}
+            value={editedExercise.sets}
+            onChange={(event) => {
+              setEditedExercise({
+                ...editedExercise,
+                sets: event.target.value,
+              });
+            }}
+          />
+
+        </TableCell>
+        <TableCell>
+          <Input
+            onKeyPress={(e) => (e.key === 'Enter' && submitUpdatedExercise())}
+            value={editedExercise.reps}
+            onChange={(event) => {
+              setEditedExercise({
+                ...editedExercise,
+                reps: event.target.value,
+              });
+            }}
+          />
+
+        </TableCell>
+        <TableCell>
+          <Input
+            onKeyPress={(e) => (e.key === 'Enter' && submitUpdatedExercise())}
+            value={editedExercise.rest}
+            onChange={(event) => {
+              setEditedExercise({
+                ...editedExercise,
+                rest: event.target.value,
+              });
+            }}
+          />
+
+        </TableCell>
         <TableCell align="right">
           <IconButton
             title="Submit exercise"
-            onClick={() => {
-              updateExercise(editedExercise, exercise.id);
-              setEditedExercise({});
-            }}
+            onClick={submitUpdatedExercise}
           >
             <Icon>
               <img src={imgSrcSave} height={25} width={25} alt="k" />
@@ -44,12 +91,12 @@ const EditableExercise = ({
         key={exercise.id}
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
       >
-        <TableCell component="th" scope="row">
+        <TableCell sx={{ width: '22%' }} component="th" scope="row">
           {exercise.name}
         </TableCell>
-        <TableCell align="right">{exercise.sets}</TableCell>
-        <TableCell align="right">{exercise.reps}</TableCell>
-        <TableCell align="right">{exercise.rest}</TableCell>
+        <TableCell sx={{ width: '22%' }} align="left">{exercise.sets}</TableCell>
+        <TableCell sx={{ width: '22%' }}>{exercise.reps}</TableCell>
+        <TableCell sx={{ width: '22%' }}>{exercise.rest}</TableCell>
         <TableCell align="right">
           <IconButton title="Edit exercise" onClick={() => setEditedExercise(exercise)}>
             <Icon>
