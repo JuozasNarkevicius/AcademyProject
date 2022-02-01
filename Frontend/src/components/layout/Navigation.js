@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import {
-  AppBar, Box, Toolbar, Typography, Button,
+  AppBar, Box, Toolbar, Button,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import ROUTES from '../../constants/Routes';
@@ -14,9 +14,6 @@ const Navigation = () => {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, m: 0 }} color="primary">
         <Toolbar>
-          <Typography variant="h6" component="div" sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}>
-            Logo
-          </Typography>
           {isLoggedIn === 'true' ? (
             <>
               <Button color="inherit" component={Link} to={ROUTES.MY_PROGRAMS}>My programs</Button>

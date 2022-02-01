@@ -43,8 +43,7 @@ const EditableName = ({
                 objectType={objectType}
                 imgSrcDelete={imgSrcDelete}
               />
-            )
-            : (
+            ) : (
               <AlertDialog
                 deleteObject={deleteObject}
                 id={objectId}

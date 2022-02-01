@@ -41,12 +41,12 @@ const ProgramView = () => {
 
   return (
     <Container>
-      <ProgramListDrawer
-        programs={programList}
-        createProgram={createProgram}
-        handleClick={handleDrawerButtonClick}
-      />
       <ProgramContext.Provider value={programMemo}>
+        <ProgramListDrawer
+          programs={programList}
+          createProgram={createProgram}
+          handleClick={handleDrawerButtonClick}
+        />
         {program
           ? <ProgramDaysAccordion deleteProgram={deleteProgram} />
           : <Typography variant="h4" sx={{ mt: '8rem' }}>Choose a program!</Typography>}

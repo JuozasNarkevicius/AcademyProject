@@ -3,9 +3,10 @@ import {
   TableCell, TableRow, IconButton, Icon, Input,
 } from '@mui/material';
 import PropTypes from 'prop-types';
+import AlertDialog from './Modal';
 
 const EditableExercise = ({
-  exercise, imgSrcEdit, imgSrcSave, imgSrcDelete, updateExercise, deleteExercise,
+  exercise, imgSrcEdit, imgSrcSave, imgSrcDelete, updateExercise, deleteExercise, objectType,
 }) => {
   const [editedExercise, setEditedExercise] = useState({});
 
@@ -79,11 +80,12 @@ const EditableExercise = ({
               <img src={imgSrcSave} height={25} width={25} alt="k" />
             </Icon>
           </IconButton>
-          <IconButton title="Delete exercise" onClick={() => deleteExercise(exercise.id)}>
-            <Icon>
-              <img src={imgSrcDelete} height={20} width={20} alt="k" />
-            </Icon>
-          </IconButton>
+          <AlertDialog
+            deleteObject={deleteExercise}
+            id={exercise.id}
+            objectType={objectType}
+            imgSrcDelete={imgSrcDelete}
+          />
         </TableCell>
       </TableRow>
     ) : (
@@ -103,11 +105,12 @@ const EditableExercise = ({
               <img src={imgSrcEdit} height={23} width={23} alt="k" />
             </Icon>
           </IconButton>
-          <IconButton title="Delete exercise" onClick={() => deleteExercise(exercise.id)}>
-            <Icon>
-              <img src={imgSrcDelete} height={20} width={20} alt="k" />
-            </Icon>
-          </IconButton>
+          <AlertDialog
+            deleteObject={deleteExercise}
+            id={exercise.id}
+            objectType={objectType}
+            imgSrcDelete={imgSrcDelete}
+          />
         </TableCell>
       </TableRow>
     )
@@ -132,6 +135,7 @@ EditableExercise.propTypes = {
   imgSrcSave: PropTypes.string.isRequired,
   imgSrcDelete: PropTypes.string.isRequired,
   updateExercise: PropTypes.func.isRequired,
+  objectType: PropTypes.string.isRequired,
   deleteExercise: PropTypes.func.isRequired,
 };
 

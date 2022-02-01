@@ -68,6 +68,7 @@ const WorkoutDay = ({ workout }) => {
                   imgSrcEdit={editIcon}
                   imgSrcSave={saveIcon}
                   imgSrcDelete={deleteIcon}
+                  objectType="exercise"
                   updateExercise={updateExercise}
                   deleteExercise={deleteExercise}
                 />
