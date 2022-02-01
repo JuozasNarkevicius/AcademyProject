@@ -7,6 +7,7 @@ using WebAPI.DTO_s;
 
 namespace WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/users/{userId}/programs")]
     [ApiController]
     public class WorkoutProgramsController : ControllerBase

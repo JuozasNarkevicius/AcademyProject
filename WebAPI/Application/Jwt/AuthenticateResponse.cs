@@ -2,12 +2,13 @@
 {
     public class AuthenticateResponse
     {
-        public string Token { get; set; }
+        public long Id { get; set; }
+        //public string Token { get; set; }
 
 
-        public AuthenticateResponse(string token)
+        public AuthenticateResponse(long id)
         {
-            Token = token;
+            Id = id;
         }
     }
 }

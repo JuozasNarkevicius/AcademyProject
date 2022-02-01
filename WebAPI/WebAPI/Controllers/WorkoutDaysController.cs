@@ -1,11 +1,13 @@
 ﻿using Application.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DTO_s;
 
 namespace WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/programs/{programId}/workouts")]
     [ApiController]
     public class WorkoutDaysController : ControllerBase

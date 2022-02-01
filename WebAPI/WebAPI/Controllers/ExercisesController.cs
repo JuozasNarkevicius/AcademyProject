@@ -3,9 +3,11 @@ using AutoMapper;
 using Application.Repositories;
 using Domain.Entities;
 using WebAPI.DTO_s;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/workouts/{workoutId}/[Controller]")]
     [ApiController]
     public class ExercisesController : ControllerBase

@@ -30,8 +30,6 @@ namespace WebAPI.Controllers
                 return Unauthorized();
             }
 
-            var user = _userRepository.Get(request.Email);
-
             var claimsIdentity = new ClaimsIdentity(new[]
             {
                 new Claim(ClaimTypes.Email, request.Email),
@@ -39,7 +37,10 @@ namespace WebAPI.Controllers
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
             await Request.HttpContext.SignInAsync("Cookies", claimsPrincipal);
 
-            return Ok();
+            var user = await _userRepository.Get(request.Email);
+            Console.WriteLine(user.Id);
+
+            return Ok(new AuthenticateResponse(user.Id));
         }
 
         [HttpPost]
