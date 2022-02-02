@@ -4,7 +4,7 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
-const drawerWidth = 220;
+const drawerWidth = '12rem';
 
 const ProgramListDrawer = ({ programs, handleClick, createProgram }) => {
   const [selectedProgramId, setSelectedProgramId] = useState();
@@ -34,7 +34,7 @@ const ProgramListDrawer = ({ programs, handleClick, createProgram }) => {
                   <ListItemText sx={{ textAlign: 'center' }} primary={program.name} />
                 </ListItem>
               ) : (
-                <ListItem key={program.id} onClick={() => selectProgram(program.id)}>
+                <ListItem sx={{ '&:hover': { backgroundColor: '#dbdbdb' } }} key={program.id} onClick={() => selectProgram(program.id)}>
                   <ListItemText sx={{ textAlign: 'center' }} primary={program.name} />
                 </ListItem>
               )

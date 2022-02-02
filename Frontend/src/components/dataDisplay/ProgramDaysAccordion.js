@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import {
-  Accordion, AccordionSummary, AccordionDetails, Container, Button, Box,
+  Accordion, AccordionSummary, AccordionDetails, Button, Box,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PropTypes from 'prop-types';
@@ -46,7 +46,7 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
   };
 
   return (
-    <Container sx={{ ml: 5, mt: '8rem' }}>
+    <Box sx={{ ml: 8, mt: '8rem', mr: -10 }}>
       <Box sx={{ mb: '30px' }}>
         <EditableName
           imgSrcEdit={editIcon}
@@ -81,7 +81,7 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
         </Accordion>
       ))}
       <Button sx={{ m: '15px' }} variant="contained" color="secondary" onClick={createWorkout}>New workout</Button>
-    </Container>
+    </Box>
   );
 };
 

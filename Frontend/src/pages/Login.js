@@ -1,6 +1,6 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
-  Button, Container, TextField,
+  Button, Container, TextField, Typography,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -21,6 +21,7 @@ const validationSchema = yup.object({
 
 const Login = () => {
   const { setIsLoggedIn } = useContext(AuthorizationContext);
+  const [error, setError] = useState('');
 
   const navigate = useNavigate();
   const formik = useFormik({
@@ -30,7 +31,7 @@ const Login = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      const response = await authenticationService.loginAPI(values);
+      const response = await authenticationService.loginAPI(values).catch(() => setError('Wrong login credentials'));
       sessionStorage.setItem('auth', 'true');
       sessionStorage.setItem('id', response.data.id);
       setIsLoggedIn(sessionStorage.getItem('auth'));
@@ -53,6 +54,7 @@ const Login = () => {
             helperText={formik.touched[login.name] && formik.errors[login.name]}
           />
         ))}
+        <Typography sx={{ color: 'red' }}>{error}</Typography>
         <Button sx={{ margin: '10px' }} variant="contained" size="large" type="submit">Login</Button>
       </form>
     </Container>

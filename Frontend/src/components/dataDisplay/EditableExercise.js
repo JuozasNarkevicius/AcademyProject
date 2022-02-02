@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  TableCell, TableRow, IconButton, Icon, Input,
+  TableCell, TableRow, IconButton, Icon, TextField,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import AlertDialog from './Modal';
@@ -21,9 +21,11 @@ const EditableExercise = ({
         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
       >
         <TableCell component="th" scope="row">
-          <Input
+          <TextField
+            variant="standard"
             onKeyPress={(e) => (e.key === 'Enter' && submitUpdatedExercise())}
             value={editedExercise.name}
+            type="text"
             onChange={(event) => {
               setEditedExercise({
                 ...editedExercise,
@@ -33,7 +35,12 @@ const EditableExercise = ({
           />
         </TableCell>
         <TableCell>
-          <Input
+          <TextField
+            type="number"
+            variant="standard"
+            InputProps={{
+              inputProps: { min: 1 },
+            }}
             onKeyPress={(e) => (e.key === 'Enter' && submitUpdatedExercise())}
             value={editedExercise.sets}
             onChange={(event) => {
@@ -46,9 +53,11 @@ const EditableExercise = ({
 
         </TableCell>
         <TableCell>
-          <Input
+          <TextField
+            variant="standard"
             onKeyPress={(e) => (e.key === 'Enter' && submitUpdatedExercise())}
             value={editedExercise.reps}
+            type="text"
             onChange={(event) => {
               setEditedExercise({
                 ...editedExercise,
@@ -59,9 +68,15 @@ const EditableExercise = ({
 
         </TableCell>
         <TableCell>
-          <Input
+          <TextField
+            required
+            variant="standard"
             onKeyPress={(e) => (e.key === 'Enter' && submitUpdatedExercise())}
             value={editedExercise.rest}
+            type="number"
+            InputProps={{
+              inputProps: { min: 1 },
+            }}
             onChange={(event) => {
               setEditedExercise({
                 ...editedExercise,

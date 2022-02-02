@@ -1,6 +1,6 @@
 const ROUTES = {
   SPORT: '/sport',
-  MY_PROGRAMS: '/sport/myPrograms',
+  MY_PROGRAMS: '/myPrograms',
   LOGIN: '/',
   REGISTER: '/register',
   CREATE_PROGRAM: '/sport/create',
