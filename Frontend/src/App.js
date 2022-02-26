@@ -1,9 +1,12 @@
 import { useState, useMemo } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core';
+import { StyledEngineProvider } from '@mui/material/styles';
 import Navigation from './components/layout/Navigation';
 import {
-  Sport, Login, Registration, ProgramCreation, ProgramView,
+  Sport, Login, Registration,
+  ProgramCreation, ProgramView, SharedPrograms,
+  PublicProgramView, Trainers, TrainerProfile,
 } from './pages';
 import ROUTES from './constants/Routes';
 import './App.css';
@@ -17,18 +20,24 @@ const App = () => {
 
   return (
     <div className="App">
-      <AuthorizationContext.Provider value={isLoggedInMemo}>
-        <ThemeProvider theme={theme}>
-          <Navigation />
-          <Routes>
-            <Route path={ROUTES.SPORT} element={<Sport />} />
-            <Route path={ROUTES.MY_PROGRAMS} element={<ProgramView />} />
-            <Route path={ROUTES.LOGIN} element={<Login />} />
-            <Route path={ROUTES.REGISTER} element={<Registration />} />
-            <Route path={ROUTES.CREATE_PROGRAM} element={<ProgramCreation />} />
-          </Routes>
-        </ThemeProvider>
-      </AuthorizationContext.Provider>
+      <StyledEngineProvider injectFirst>
+        <AuthorizationContext.Provider value={isLoggedInMemo}>
+          <ThemeProvider theme={theme}>
+            <Navigation />
+            <Routes>
+              <Route path={ROUTES.SPORT} element={<Sport />} />
+              <Route path={ROUTES.MY_PROGRAMS} element={<ProgramView />} />
+              <Route path={ROUTES.LOGIN} element={<Login />} />
+              <Route path={ROUTES.REGISTER} element={<Registration />} />
+              <Route path={ROUTES.CREATE_PROGRAM} element={<ProgramCreation />} />
+              <Route path={ROUTES.BROWSE_PROGRAMS} element={<SharedPrograms />} />
+              <Route path={`${ROUTES.PUBLIC_PROGRAM}/:id`} element={<PublicProgramView />} />
+              <Route path={ROUTES.TRAINERS} element={<Trainers />} />
+              <Route path={ROUTES.TRAINER_PROFILE} element={<TrainerProfile />} />
+            </Routes>
+          </ThemeProvider>
+        </AuthorizationContext.Provider>
+      </StyledEngineProvider>
     </div>
   );
 };

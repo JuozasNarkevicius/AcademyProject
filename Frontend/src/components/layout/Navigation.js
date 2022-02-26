@@ -12,11 +12,15 @@ const Navigation = () => {
   const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, m: 0 }} color="primary">
+      <AppBar position="sticky" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, m: 0 }} color="primary">
         <Toolbar>
           {isLoggedIn === 'true' ? (
             <>
               <Button color="inherit" component={Link} to={ROUTES.MY_PROGRAMS}>My programs</Button>
+              <Button color="inherit" component={Link} to={ROUTES.BROWSE_PROGRAMS}>Browse programs</Button>
+              <Button color="inherit" component={Link} to={ROUTES.BROWSE_PROGRAMS}>Browse workouts</Button>
+              <Button color="inherit" component={Link} to={ROUTES.TRAINERS}>Trainers</Button>
+              <Button color="inherit" component={Link} to={ROUTES.BROWSE_PROGRAMS}>Gyms</Button>
               <Box sx={{ flexGrow: 1 }} />
               <Button
                 sx={{ p: 0 }}

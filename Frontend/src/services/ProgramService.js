@@ -17,14 +17,19 @@ export const postProgramAPI = async (name) => {
 };
 
 export const getProgramAPI = async (programId) => {
-  const userId = sessionStorage.getItem('id');
-  const response = await API.get(`/users/${userId}/programs/${programId}`);
+  const response = await API.get(`/programs/${programId}`);
   return response;
 };
 
 export const getAllProgramsAPI = async () => {
   const userId = sessionStorage.getItem('id');
   const response = await API.get(`/users/${userId}/programs`);
+  return response;
+};
+
+export const getAllPublicProgramsAPI = async () => {
+  const userId = sessionStorage.getItem('id');
+  const response = await API.get(`/users/${userId}/programs/public`);
   return response;
 };
 
@@ -38,6 +43,7 @@ export const programService = {
   submitProgramAPI,
   getProgramAPI,
   getAllProgramsAPI,
+  getAllPublicProgramsAPI,
   postProgramAPI,
   deleteProgramAPI,
 };

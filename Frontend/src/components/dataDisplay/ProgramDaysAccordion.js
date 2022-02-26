@@ -4,7 +4,7 @@ import {
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PropTypes from 'prop-types';
-import WorkoutDay from './WorkoutDay';
+import EditableWorkoutDay from './EditableWorkoutDay';
 import { ProgramContext } from '../../Context';
 import editIcon from '../../assets/icons/edit.svg';
 import saveIcon from '../../assets/icons/checkmark.svg';
@@ -76,7 +76,7 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
             />
           </AccordionSummary>
           <AccordionDetails>
-            <WorkoutDay workout={w} />
+            <EditableWorkoutDay workout={w} />
           </AccordionDetails>
         </Accordion>
       ))}

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const BASE_URL = 'http://localhost:5025/api';
-const BASE_URL = 'https://sportsplatformapi.azurewebsites.net/api';
+const BASE_URL = 'http://localhost:5025/api';
+// const BASE_URL = 'https://sportsplatformapi.azurewebsites.net/api';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,

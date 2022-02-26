@@ -4,3 +4,7 @@ export { default as ProgramCreation } from './ProgramCreation';
 export { default as Registration } from './Registration';
 export { default as Sport } from './Sport';
 export { default as ProgramView } from './ProgramView';
+export { default as SharedPrograms } from './SharedPrograms';
+export { default as PublicProgramView } from './PublicProgramView';
+export { default as Trainers } from './Trainers';
+export { default as TrainerProfile } from './TrainerProfile';
