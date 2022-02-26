@@ -7,9 +7,10 @@ namespace Application.Repositories
     public interface IWorkoutProgramRepository
     {
         public Task<IEnumerable<WorkoutProgram>> GetAll(long userId);
-        public Task<WorkoutProgram> Get(long id, long userId);
-        public Task<WorkoutProgram> Add(WorkoutProgram program);
+        public Task<IEnumerable<WorkoutProgram>> GetAllPublic();
         public Task<WorkoutProgram> Get(long id);
+        public Task<WorkoutProgram> Add(WorkoutProgram program);
+        public Task<WorkoutProgram> GetName(long id);
         public Task<WorkoutProgram> Update(WorkoutProgram program);
         public Task Delete(WorkoutProgram program);
     }
@@ -28,18 +29,25 @@ namespace Application.Repositories
             return programs;
         }
 
-        public async Task<WorkoutProgram> Get(long id, long userId)
+        public async Task<IEnumerable<WorkoutProgram>> GetAllPublic()
+        {
+            var programs = await _context.Programs.Where(p => p.IsPublic == true).ToListAsync();
+
+            return programs;
+        }
+
+        public async Task<WorkoutProgram> Get(long id)
         {
             var program = await _context.Programs
-                .Where(p => p.UserId == userId)
+                .Where(p => p.Id == id)
                 .Include(p => p.Workouts)
                 .ThenInclude(w => w.Exercises)
-                .FirstOrDefaultAsync(p => p.Id == id);
+                .FirstOrDefaultAsync();
 
             return program;
         }
 
-        public async Task<WorkoutProgram> Get(long id)
+        public async Task<WorkoutProgram> GetName(long id)
         {
             var program = await _context.Programs
                 .FirstOrDefaultAsync(p => p.Id == id);

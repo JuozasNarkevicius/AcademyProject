@@ -36,10 +36,21 @@ namespace WebAPI.Controllers
             return Ok(mapped);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<WorkoutProgram>> GetProgram(long id, long userId)
+        [Authorize]
+        [HttpGet("public")]
+        public async Task<ActionResult<IEnumerable<WorkoutProgram>>> GetPublicPrograms()
         {
-            var program = await _workoutProgramRepository.Get(id, userId);
+            var programs = await _workoutProgramRepository.GetAllPublic();
+
+            var mapped = _mapper.Map<IEnumerable<WorkoutProgramNamesDTO>>(programs);
+
+            return Ok(mapped);
+        }
+
+        [HttpGet("/api/programs/{id}")]
+        public async Task<ActionResult<WorkoutProgram>> GetProgram(long id)
+        {
+            var program = await _workoutProgramRepository.Get(id);
 
             if (program == null)
             {
@@ -54,7 +65,7 @@ namespace WebAPI.Controllers
         [HttpGet("{id}/name")]
         public async Task<ActionResult<WorkoutProgram>> GetProgramName(long id)
         {
-            var program = await _workoutProgramRepository.Get(id);
+            var program = await _workoutProgramRepository.GetName(id);
 
             if (program == null)
             {
