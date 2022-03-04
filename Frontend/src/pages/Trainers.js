@@ -58,7 +58,7 @@ const Trainers = () => {
   const navigate = useNavigate();
   return (
     <Container>
-      <Button variant="contained">Become trainer</Button>
+      <Button variant="contained" onClick={() => navigate(ROUTES.TRAINER_APPLICATION, { replace: true })}>Become trainer</Button>
       <Grid container spacing={2}>
         {trainers.map((trainer) => (
           <Grid item xs={4}>

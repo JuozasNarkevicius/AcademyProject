@@ -8,3 +8,7 @@ export { default as SharedPrograms } from './SharedPrograms';
 export { default as PublicProgramView } from './PublicProgramView';
 export { default as Trainers } from './Trainers';
 export { default as TrainerProfile } from './TrainerProfile';
+export { default as Gyms } from './Gyms';
+export { default as TrainerApplication } from './TrainerApplication';
+export { default as TrainerApplicationList } from './TrainerApplicationList';
+export { default as TrainerApplicationView } from './TrainerApplicationView';

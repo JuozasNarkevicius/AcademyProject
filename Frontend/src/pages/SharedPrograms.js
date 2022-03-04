@@ -9,7 +9,6 @@ import ROUTES from '../constants/Routes';
 const SharedPrograms = () => {
   const [programs, setPrograms] = useState();
   const [isLoading, setIsLoading] = useState(true);
-
   const navigate = useNavigate();
 
   const getPrograms = async () => {
@@ -34,7 +33,7 @@ const SharedPrograms = () => {
           <ListItem key={program.id}>
             <ListItemButton onClick={() => navigate(`${ROUTES.PUBLIC_PROGRAM}/${program.id}`, { replace: true })}>
               <Typography>{program.name}</Typography>
-              <Chip label="gay" color="success" variant="outlined" sx={{ ml: '20px' }} />
+              <Chip label="test" color="success" variant="outlined" sx={{ ml: '20px' }} />
             </ListItemButton>
           </ListItem>
         ))}

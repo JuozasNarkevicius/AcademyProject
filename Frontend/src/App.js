@@ -4,9 +4,11 @@ import { ThemeProvider } from '@material-ui/core';
 import { StyledEngineProvider } from '@mui/material/styles';
 import Navigation from './components/layout/Navigation';
 import {
-  Sport, Login, Registration,
+  Home, Sport, Login, Registration,
   ProgramCreation, ProgramView, SharedPrograms,
-  PublicProgramView, Trainers, TrainerProfile,
+  PublicProgramView, Trainers, TrainerProfile, Gyms,
+  TrainerApplication, TrainerApplicationList,
+  TrainerApplicationView,
 } from './pages';
 import ROUTES from './constants/Routes';
 import './App.css';
@@ -25,6 +27,7 @@ const App = () => {
           <ThemeProvider theme={theme}>
             <Navigation />
             <Routes>
+              <Route path={ROUTES.HOME} element={<Home />} />
               <Route path={ROUTES.SPORT} element={<Sport />} />
               <Route path={ROUTES.MY_PROGRAMS} element={<ProgramView />} />
               <Route path={ROUTES.LOGIN} element={<Login />} />
@@ -34,6 +37,10 @@ const App = () => {
               <Route path={`${ROUTES.PUBLIC_PROGRAM}/:id`} element={<PublicProgramView />} />
               <Route path={ROUTES.TRAINERS} element={<Trainers />} />
               <Route path={ROUTES.TRAINER_PROFILE} element={<TrainerProfile />} />
+              <Route path={ROUTES.GYMS} element={<Gyms />} />
+              <Route path={ROUTES.TRAINER_APPLICATION} element={<TrainerApplication />} />
+              <Route path={ROUTES.TRAINER_APPLICATION_LIST} element={<TrainerApplicationList />} />
+              <Route path={`${ROUTES.TRAINER_APPLICATION_VIEW}/:id`} element={<TrainerApplicationView />} />
             </Routes>
           </ThemeProvider>
         </AuthorizationContext.Provider>
