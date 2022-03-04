@@ -58,6 +58,16 @@ namespace WebAPI.DTO_s
             CreateMap<CreateWorkoutProgramDTO, WorkoutProgram>()
                 .ForMember(dest => dest.Workouts,
                 opt => opt.Ignore());
+
+            CreateMap<TrainerApplication, TrainerApplicationDTO>();
+            CreateMap<TrainerApplicationDTO, TrainerApplication>()
+                .ForMember(dest => dest.Id,
+                opt => opt.Ignore());
+
+            CreateMap<TrainerApplication, CreateTrainerApplicationDTO>();
+            CreateMap<CreateTrainerApplicationDTO, TrainerApplication>()
+                .ForMember(dest => dest.Id,
+                opt => opt.Ignore());
         }
     }
 }
