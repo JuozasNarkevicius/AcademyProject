@@ -17,13 +17,16 @@ import theme from './styles/theme';
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(sessionStorage.getItem('auth'));
+  const [role, setRole] = useState(sessionStorage.getItem('role'));
 
-  const isLoggedInMemo = useMemo(() => ({ isLoggedIn, setIsLoggedIn }), [isLoggedIn]);
+  const LoginInformation = useMemo(() => ({
+    isLoggedIn, setIsLoggedIn, role, setRole,
+  }), [isLoggedIn, role]);
 
   return (
     <div className="App">
       <StyledEngineProvider injectFirst>
-        <AuthorizationContext.Provider value={isLoggedInMemo}>
+        <AuthorizationContext.Provider value={LoginInformation}>
           <ThemeProvider theme={theme}>
             <Navigation />
             <Routes>

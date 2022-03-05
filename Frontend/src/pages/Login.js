@@ -20,7 +20,7 @@ const validationSchema = yup.object({
 });
 
 const Login = () => {
-  const { setIsLoggedIn } = useContext(AuthorizationContext);
+  const { setIsLoggedIn, setRole } = useContext(AuthorizationContext);
   const [error, setError] = useState('');
 
   const navigate = useNavigate();
@@ -34,7 +34,9 @@ const Login = () => {
       const response = await authenticationService.loginAPI(values).catch(() => setError('Wrong login credentials'));
       sessionStorage.setItem('auth', 'true');
       sessionStorage.setItem('id', response.data.id);
+      sessionStorage.setItem('role', response.data.role);
       setIsLoggedIn(sessionStorage.getItem('auth'));
+      setRole(sessionStorage.getItem('role'));
       navigate(ROUTES.MY_PROGRAMS, { replace: true });
     },
   });

@@ -8,7 +8,7 @@ import { authenticationService } from '../../services/AuthenticationService';
 import { AuthorizationContext } from '../../Context';
 
 const Navigation = () => {
-  const { isLoggedIn, setIsLoggedIn } = useContext(AuthorizationContext);
+  const { isLoggedIn, setIsLoggedIn, role } = useContext(AuthorizationContext);
   const navigate = useNavigate();
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -22,7 +22,8 @@ const Navigation = () => {
               <Button color="inherit" component={Link} to={ROUTES.BROWSE_PROGRAMS}>Browse workouts</Button>
               <Button color="inherit" component={Link} to={ROUTES.TRAINERS}>Trainers</Button>
               <Button color="inherit" component={Link} to={ROUTES.GYMS}>Gyms</Button>
-              <Button color="inherit" component={Link} to={ROUTES.TRAINER_APPLICATION_LIST}>Trainer applications</Button>
+              {role === 'admin'
+              && <Button color="inherit" component={Link} to={ROUTES.TRAINER_APPLICATION_LIST}>Trainer applications</Button>}
               <Box sx={{ flexGrow: 1 }} />
               <Button
                 sx={{ p: 0 }}
