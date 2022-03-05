@@ -40,7 +40,7 @@ namespace WebAPI.Controllers
             var user = await _userRepository.Get(request.Email);
             Console.WriteLine(user.Id);
 
-            return Ok(new AuthenticateResponse(user.Id));
+            return Ok(new AuthenticateResponse(user.Id, user.Role));
         }
 
         [HttpPost]
