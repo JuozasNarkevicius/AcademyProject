@@ -31,7 +31,7 @@ const TrainerApplicationList = () => {
         {applications.map((application) => (
           <ListItem key={application.id}>
             <ListItemButton onClick={() => navigate(`${ROUTES.TRAINER_APPLICATION_VIEW}/${application.id}`)}>
-              <Typography>{application.description}</Typography>
+              <Typography>{`${application.firstName} ${application.lastName}`}</Typography>
               <Chip label="test" color="success" variant="outlined" sx={{ ml: '20px' }} />
             </ListItemButton>
           </ListItem>
