@@ -20,7 +20,7 @@ const WorkoutDay = ({ workout }) => (
         </TableHead>
         <TableBody>
           {workout.exercises.map((exercise) => (
-            <Exercise exercise={exercise} />
+            <Exercise key={exercise.id} exercise={exercise} />
           ))}
         </TableBody>
       </Table>
