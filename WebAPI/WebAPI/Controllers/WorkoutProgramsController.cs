@@ -14,14 +14,16 @@ namespace WebAPI.Controllers
     {
         private readonly IMapper _mapper;
         private readonly IWorkoutProgramRepository _workoutProgramRepository;
+        private readonly IRatingRepository _ratingRepository;
         private readonly IWorkoutDayRepository _workoutDayRepository;
         private readonly IExerciseRepository _exerciseRepository;
 
-        public WorkoutProgramsController(IWorkoutProgramRepository workoutProgramRepository, IWorkoutDayRepository workoutDayRepository, IExerciseRepository exerciseRepository, IMapper mapper)
+        public WorkoutProgramsController(IWorkoutProgramRepository workoutProgramRepository, IWorkoutDayRepository workoutDayRepository, IExerciseRepository exerciseRepository, IRatingRepository ratingRepository, IMapper mapper)
         {
             _workoutProgramRepository = workoutProgramRepository;
             _workoutDayRepository = workoutDayRepository;
             _exerciseRepository = exerciseRepository;
+            _ratingRepository = ratingRepository;
             _mapper = mapper;
         }
 
@@ -52,12 +54,16 @@ namespace WebAPI.Controllers
         {
             var program = await _workoutProgramRepository.Get(id);
 
+            var rating = await _ratingRepository.GetAverage(id);
+
             if (program == null)
             {
                 return NotFound();
             }
 
             var mapped = _mapper.Map<WorkoutProgramDTO>(program);
+
+            mapped.Rating = rating;
 
             return Ok(mapped);
         }

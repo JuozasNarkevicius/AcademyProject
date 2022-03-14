@@ -21,6 +21,7 @@ namespace Application.DatabaseContext
         public DbSet<WorkoutDay> Workouts { get; set; }
         public DbSet<WorkoutProgram> Programs { get; set; }
         public DbSet<TrainerApplication> Applications { get; set; }
+        public DbSet<ProgramRating> Ratings { get; set; }
 
     }
 }

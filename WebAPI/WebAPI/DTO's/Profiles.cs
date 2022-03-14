@@ -68,6 +68,20 @@ namespace WebAPI.DTO_s
             CreateMap<CreateTrainerApplicationDTO, TrainerApplication>()
                 .ForMember(dest => dest.Id,
                 opt => opt.Ignore());
+
+            CreateMap<ProgramRating, UpdateRatingDTO>();
+            CreateMap<UpdateRatingDTO, ProgramRating>()
+                .ForMember(dest => dest.Id,
+                opt => opt.Ignore())
+                .ForMember(dest => dest.UserId,
+                opt => opt.Ignore())
+                .ForMember(dest => dest.ProgramId,
+                opt => opt.Ignore());
+
+            CreateMap<ProgramRating, CreateRatingDTO>();
+            CreateMap<CreateRatingDTO, ProgramRating>()
+                .ForMember(dest => dest.Id,
+                opt => opt.Ignore());
         }
     }
 }

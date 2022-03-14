@@ -35,6 +35,7 @@ builder.Services.AddScoped<IWorkoutProgramRepository, WorkoutProgramRepository>(
 builder.Services.AddScoped<IAuthorizationService, AuthorizationService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITrainerApplicationRepository, TrainerApplicationRepository>();
+builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 
 builder.Services.AddAuthentication(options => {
     options.DefaultScheme = "Cookies";
