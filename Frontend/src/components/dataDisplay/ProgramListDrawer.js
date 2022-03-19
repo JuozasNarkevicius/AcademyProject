@@ -1,16 +1,18 @@
 import React, { useState } from 'react';
 import {
-  Box, Drawer, CssBaseline, Toolbar, List, ListItem, ListItemText, Button,
+  Box, Drawer, CssBaseline, Toolbar, List, ListItem, ListItemText, Button, Divider,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 
 const drawerWidth = '12rem';
 
-const ProgramListDrawer = ({ programs, handleClick, createProgram }) => {
+const ProgramListDrawer = ({
+  programs, savedPrograms, handleClick, createProgram,
+}) => {
   const [selectedProgramId, setSelectedProgramId] = useState();
 
-  const selectProgram = (programId) => {
-    handleClick(programId);
+  const selectProgram = (programId, programType) => {
+    handleClick(programId, programType);
     setSelectedProgramId(programId);
   };
 
@@ -30,17 +32,31 @@ const ProgramListDrawer = ({ programs, handleClick, createProgram }) => {
           <List>
             {programs.map((program) => (
               (program.id === selectedProgramId) ? (
-                <ListItem selected key={program.id} onClick={() => selectProgram(program.id)}>
+                <ListItem selected key={program.id} onClick={() => selectProgram(program.id, 'owned')}>
                   <ListItemText sx={{ textAlign: 'center' }} primary={program.name} />
                 </ListItem>
               ) : (
-                <ListItem sx={{ '&:hover': { backgroundColor: '#dbdbdb' } }} key={program.id} onClick={() => selectProgram(program.id)}>
+                <ListItem sx={{ '&:hover': { backgroundColor: '#dbdbdb' } }} key={program.id} onClick={() => selectProgram(program.id, 'owned')}>
                   <ListItemText sx={{ textAlign: 'center' }} primary={program.name} />
                 </ListItem>
               )
             ))}
           </List>
           <Button sx={{ m: '10px', float: 'middle' }} variant="contained" onClick={createProgram} color="secondary">New program</Button>
+          <Divider />
+          <List>
+            {savedPrograms.map((program) => (
+              (program.id === selectedProgramId) ? (
+                <ListItem selected key={program.id} onClick={() => selectProgram(program.id, 'saved')}>
+                  <ListItemText sx={{ textAlign: 'center' }} primary={program.name} />
+                </ListItem>
+              ) : (
+                <ListItem sx={{ '&:hover': { backgroundColor: '#dbdbdb' } }} key={program.id} onClick={() => selectProgram(program.id, 'saved')}>
+                  <ListItemText sx={{ textAlign: 'center' }} primary={program.name} />
+                </ListItem>
+              )
+            ))}
+          </List>
         </Box>
       </Drawer>
     </Box>
@@ -49,6 +65,12 @@ const ProgramListDrawer = ({ programs, handleClick, createProgram }) => {
 
 ProgramListDrawer.propTypes = {
   programs: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      name: PropTypes.string,
+    }),
+  ).isRequired,
+  savedPrograms: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number,
       name: PropTypes.string,

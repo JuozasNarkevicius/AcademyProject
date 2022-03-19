@@ -47,7 +47,7 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
 
   return (
     <Box sx={{ ml: 8, mt: '8rem', mr: -10 }}>
-      <Box sx={{ mb: '30px' }}>
+      <Box sx={{ mb: '2rem' }}>
         <EditableName
           imgSrcEdit={editIcon}
           imgSrcSave={saveIcon}
@@ -62,8 +62,6 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
         <Accordion key={w.id}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel1a-content"
-            id="panel1a-header"
           >
             <EditableName
               imgSrcEdit={editIcon}

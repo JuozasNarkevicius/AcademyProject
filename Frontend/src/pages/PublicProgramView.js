@@ -1,15 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Accordion, AccordionSummary, AccordionDetails,
   Container, Typography, CircularProgress, Button,
 } from '@mui/material';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useParams } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
 import { programService } from '../services/ProgramService';
-import WorkoutDay from '../components/dataDisplay/WorkoutDay';
 import ratingService from '../services/Rating';
+import ProgramAccordion from '../components/dataDisplay/ProgramAccordion';
 
 const PublicProgramView = () => {
   const [program, setProgram] = useState();
@@ -24,6 +22,10 @@ const PublicProgramView = () => {
     setProgram(programResponse.data);
     setPersonalRating(ratingResponse.data);
     setIsLoading(false);
+  };
+
+  const saveProgram = async () => {
+    await programService.saveProgramAPI(program.id);
   };
 
   const handleRatingChange = async (value) => {
@@ -45,19 +47,7 @@ const PublicProgramView = () => {
 
   return (
     <Container sx={{ mt: '4rem' }}>
-      <Typography>{program.name}</Typography>
-      {program.workouts.map((w) => (
-        <Accordion key={w.id}>
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-          >
-            <Typography>{w.name}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <WorkoutDay workout={w} />
-          </AccordionDetails>
-        </Accordion>
-      ))}
+      <ProgramAccordion program={program} />
       <Rating
         sx={{ display: 'flex', float: 'left', mt: '1rem' }}
         value={program.rating}
@@ -71,6 +61,7 @@ const PublicProgramView = () => {
       <Button
         sx={{ float: 'left', ml: '1.5rem' }}
         variant="contained"
+        onClick={saveProgram}
       >
         Add program to Library
       </Button>
