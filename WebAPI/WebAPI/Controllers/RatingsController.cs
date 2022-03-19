@@ -37,7 +37,7 @@ namespace WebAPI.Controllers
         [HttpGet("/api/myRatings")]
         public async Task<ActionResult<ProgramRating>> GetMyRating(long userId, long programId)
         {
-            var myRating = await _ratingRepository.GetMyRating(userId, programId);
+            var myRating = await _ratingRepository.GetMyRating(programId, userId);
 
             return Ok(myRating);
         }

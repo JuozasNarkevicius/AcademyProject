@@ -39,6 +39,32 @@ namespace WebAPI.Controllers
         }
 
         [Authorize]
+        [HttpGet("~/api/users/{userId}/savedPrograms/")]
+        public async Task<ActionResult<IEnumerable<WorkoutProgram>>> GetSavedPrograms(long userId)
+        {
+            var savedPrograms = await _workoutProgramRepository.GetAllSaved(userId);
+
+            var mapped = _mapper.Map<IEnumerable<WorkoutProgramNamesDTO>>(savedPrograms);
+
+            return Ok(mapped);
+        }
+
+        [HttpPost]
+        [Route("~/api/users/{userId}/savedPrograms/")]
+        public async Task<ActionResult<UpdateProgramNameDTO>> SaveProgram(CreateSavedProgramDTO programDTO, long userId)
+        {
+            var program = _mapper.Map<SavedProgram>(programDTO);
+
+            program.UserId = userId;
+
+            var programFromDB = await _workoutProgramRepository.SaveProgram(program);
+
+            var savedProgram = _mapper.Map<CreateSavedProgramDTO>(programFromDB);
+
+            return Ok(savedProgram);
+        }
+
+        [Authorize]
         [HttpGet("public")]
         public async Task<ActionResult<IEnumerable<WorkoutProgram>>> GetPublicPrograms()
         {
@@ -133,6 +159,21 @@ namespace WebAPI.Controllers
                 }
             }
             return CreatedAtAction(nameof(GetProgram), new { userId, id = programFromDb.Id }, _mapper.Map<WorkoutProgramDTO>(programFromDb));
+        }
+
+        [HttpDelete("~/api/users/{userId}/savedPrograms/{programId}")]
+        public async Task<IActionResult> DeleteSavedProgram(long userId, long programId)
+        {
+            var savedProgram = await _workoutProgramRepository.GetSaved(userId, programId);
+
+            if (savedProgram == null)
+            {
+                return NotFound();
+            }
+
+            await _workoutProgramRepository.DeleteSavedProgram(savedProgram);
+
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
