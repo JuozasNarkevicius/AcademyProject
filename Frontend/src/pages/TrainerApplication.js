@@ -34,7 +34,7 @@ const TrainerApplication = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
-      const response = await userService.getUserAPI();
+      const response = await userService.getCurrentUserAPI();
       await applicationService.postApplicationAPI({
         firstName: response.data.firstName,
         lastName: response.data.lastName,

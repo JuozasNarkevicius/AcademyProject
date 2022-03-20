@@ -4,6 +4,7 @@ import {
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import applicationService from '../services/ApplicationService';
+import userService from '../services/UserService';
 
 const TrainerApplicationView = () => {
   const [application, setApplication] = useState();
@@ -14,6 +15,11 @@ const TrainerApplicationView = () => {
     const response = await applicationService.getApplicationAPI(id);
     setApplication(response.data);
     setIsLoading(false);
+  };
+
+  const approveTrainer = async () => {
+    await userService.changeUserRoleAPI(application.userId, 'trainer');
+    await applicationService.changeApplicationStatusAPI(application.id, 'verified');
   };
 
   useEffect(() => {
@@ -52,7 +58,7 @@ const TrainerApplicationView = () => {
           </Typography>
         </CardContent>
       </Card>
-      <Button variant="contained">Approve</Button>
+      <Button variant="contained" onClick={approveTrainer}>Approve</Button>
       <Button variant="contained">Dismiss</Button>
     </Container>
   );

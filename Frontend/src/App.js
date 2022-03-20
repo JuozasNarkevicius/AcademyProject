@@ -39,7 +39,7 @@ const App = () => {
               <Route path={ROUTES.BROWSE_PROGRAMS} element={<SharedPrograms />} />
               <Route path={`${ROUTES.PUBLIC_PROGRAM}/:id`} element={<PublicProgramView />} />
               <Route path={ROUTES.TRAINERS} element={<Trainers />} />
-              <Route path={ROUTES.TRAINER_PROFILE} element={<TrainerProfile />} />
+              <Route path={`${ROUTES.TRAINER_PROFILE}/:id`} element={<TrainerProfile />} />
               <Route path={ROUTES.GYMS} element={<Gyms />} />
               <Route path={ROUTES.TRAINER_APPLICATION} element={<TrainerApplication />} />
               <Route path={ROUTES.TRAINER_APPLICATION_LIST} element={<TrainerApplicationList />} />
