@@ -30,6 +30,32 @@ namespace WebAPI.Controllers
 
             return Ok(mapped);
         }
+        [HttpPut("~/api/applications/{id}/status")]
+        public async Task<IActionResult> PutUserRole(long id, [FromBody] string status)
+        {
+            var applicationFromDB = await _applicationRepository.Get(id);
+
+            if (applicationFromDB == null)
+            {
+                return NotFound();
+            }
+
+            applicationFromDB.Status = status;
+
+            await _applicationRepository.Update(applicationFromDB);
+
+            return Ok();
+        }
+
+        [HttpGet("~/api/verifiedApplications/")]
+        public async Task<ActionResult<IEnumerable<TrainerApplication>>> GetVerifiedApplications()
+        {
+            var applications = await _applicationRepository.GetAllVerified();
+
+            var mapped = _mapper.Map<IEnumerable<TrainerApplicationDTO>>(applications);
+
+            return Ok(mapped);
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<TrainerApplication>> GetApplication(long id)

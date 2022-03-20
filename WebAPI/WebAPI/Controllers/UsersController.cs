@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
         {
             var users = await _userRepository.GetAll();
 
-            var mapped = _mapper.Map<IEnumerable<UserDTO>>(users);
+            var mapped = _mapper.Map<IEnumerable<CreateUserDTO>>(users);
 
             return Ok(mapped);
         }
@@ -41,37 +41,54 @@ namespace WebAPI.Controllers
                 return NotFound();
             }
 
-            var mapped = _mapper.Map<UserDTO>(user);
+            var mapped = _mapper.Map<CreateUserDTO>(user);
 
             return Ok(mapped);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(long id, User user)
+        public async Task<IActionResult> PutUser(long id, UpdateUserDTO userDTO)
         {
-            if (id != user.Id)
-            {
-                return BadRequest();
-            }
-            if (_userRepository.Get(id) == null)
+            var userFromDB = await _userRepository.Get(id);
+
+            if (userFromDB == null)
             {
                 return NotFound();
             }
 
-            var updatedUser = await _userRepository.Update(user);
+            _mapper.Map(userDTO, userFromDB);
 
-            return Ok(updatedUser);
+            await _userRepository.Update(userFromDB);
+
+            return Ok();
+        }
+
+        [HttpPut("~/api/users/{id}/role")]
+        public async Task<IActionResult> PutUserRole(long id, [FromBody] string role)
+        {
+            var userFromDB = await _userRepository.Get(id);
+
+            if (userFromDB == null)
+            {
+                return NotFound();
+            }
+
+            userFromDB.Role = role;
+
+            await _userRepository.Update(userFromDB);
+
+            return Ok();
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult<User>> PostUser(UserDTO userDTO)
+        public async Task<ActionResult<User>> PostUser(CreateUserDTO userDTO)
         {
             var user = _mapper.Map<User>(userDTO);
 
             var userFromDb = await _userRepository.Add(user);
 
-            return CreatedAtAction(nameof(GetUser), new { id = userFromDb.Id }, _mapper.Map<UserDTO>(userFromDb));
+            return CreatedAtAction(nameof(GetUser), new { id = userFromDb.Id }, _mapper.Map<CreateUserDTO>(userFromDb));
         }
 
         [HttpDelete("{id}")]

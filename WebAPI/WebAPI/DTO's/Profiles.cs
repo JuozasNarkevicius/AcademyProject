@@ -40,8 +40,13 @@ namespace WebAPI.DTO_s
                 .ForMember(dest => dest.ProgramId,
                 opt => opt.Ignore());
 
-            CreateMap<User, UserDTO>();
-            CreateMap<UserDTO, User>()
+            CreateMap<User, CreateUserDTO>();
+            CreateMap<CreateUserDTO, User>()
+                .ForMember(dest => dest.Id,
+                opt => opt.Ignore());
+
+            CreateMap<User, UpdateUserDTO>();
+            CreateMap<UpdateUserDTO, User>()
                 .ForMember(dest => dest.Id,
                 opt => opt.Ignore());
 
@@ -60,9 +65,7 @@ namespace WebAPI.DTO_s
                 opt => opt.Ignore());
 
             CreateMap<TrainerApplication, TrainerApplicationDTO>();
-            CreateMap<TrainerApplicationDTO, TrainerApplication>()
-                .ForMember(dest => dest.Id,
-                opt => opt.Ignore());
+            CreateMap<TrainerApplicationDTO, TrainerApplication>();
 
             CreateMap<TrainerApplication, CreateTrainerApplicationDTO>();
             CreateMap<CreateTrainerApplicationDTO, TrainerApplication>()
