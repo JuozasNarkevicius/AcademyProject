@@ -58,14 +58,22 @@ namespace WebAPI.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<TrainerApplication>> GetApplication(long id)
+        public async Task<ActionResult<TrainerApplication>> GetApplication(long id, bool isUserId)
         {
-            var application = await _applicationRepository.Get(id);
-
-            if (application == null)
+            TrainerApplication application;
+            if(isUserId)
             {
-                return NotFound();
+                application = await _applicationRepository.GetByUserId(id);
+            } 
+            else
+            {
+                application = await _applicationRepository.Get(id);
             }
+
+            //if (application == null)
+            //{
+            //    return NotFound();
+            //}
 
             var mapped = _mapper.Map<TrainerApplicationDTO>(application);
 
@@ -77,9 +85,43 @@ namespace WebAPI.Controllers
         {
             var application = _mapper.Map<TrainerApplication>(applicationDTO);
 
+            application.Status = "pending";
+
             var applicationFromDb = await _applicationRepository.Add(application);
 
             return CreatedAtAction(nameof(GetApplication), new { id = applicationFromDb.Id }, _mapper.Map<TrainerApplicationDTO>(applicationFromDb));
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<TrainerApplication>> PutApplication(long id, UpdateTrainerApplicationDTO applicationDTO)
+        {
+            var applicationFromDB = await _applicationRepository.Get(id);
+
+            if (applicationFromDB == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(applicationDTO, applicationFromDB);
+
+            var updatedApplication = await _applicationRepository.Update(applicationFromDB);
+
+            return Ok(_mapper.Map<TrainerApplicationDTO>(updatedApplication));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteApplication(long id)
+        {
+            var application = await _applicationRepository.Get(id);
+
+            if (application == null)
+            {
+                return NotFound();
+            }
+
+            await _applicationRepository.Delete(application);
+
+            return NoContent();
         }
     }
 }

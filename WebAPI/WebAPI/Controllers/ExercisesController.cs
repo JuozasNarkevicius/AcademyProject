@@ -63,8 +63,51 @@ namespace WebAPI.Controllers
             return Ok(_mapper.Map<ExerciseDTO>(updatedExercise));
         }
 
+        [HttpPut("~/api/workouts/{workoutId}/exercisePositions")]
+        public async Task<ActionResult<IEnumerable<ExerciseDTO>>> PutPositions(long workoutId, [FromBody] List<int> positions)
+        {
+            var exercises = await _exerciseRepository.GetExercisesByWorkout(workoutId);
+
+            if (positions[0] <= positions[1])
+            {
+                for (int i = positions[0]; i <= positions[1]; i++)
+                {
+                    if (i == positions[0])
+                    {
+                        exercises.ElementAt(i).Position = positions[1];
+                    }
+                    else
+                    {
+                        exercises.ElementAt(i).Position--;
+                    }
+                }
+            } 
+            else
+            {
+                for (int i = positions[0]; i >= positions[1]; i--)
+                {
+                    if (i == positions[0])
+                    {
+                        exercises.ElementAt(i).Position = positions[1];
+
+                    }
+                    else
+                    {
+                        exercises.ElementAt(i).Position++;
+                    }
+                }
+            }
+
+            foreach (var exercise in exercises)
+            {
+                await _exerciseRepository.Update(exercise);
+            }
+
+            return Ok();
+        }
+
         [HttpPost]
-        public async Task<ActionResult<Exercise>> PostExercise(UpdateExerciseDTO exerciseDTO, long workoutId)
+        public async Task<ActionResult<Exercise>> PostExercise(CreateExerciseDTO exerciseDTO, long workoutId)
         {
             var exercise = _mapper.Map<Exercise>(exerciseDTO);
 
@@ -80,12 +123,25 @@ namespace WebAPI.Controllers
         {
             var exercise = await _exerciseRepository.Get(id);
 
+            var position = exercise.Position;
+
             if (exercise == null)
             {
                 return NotFound();
             }
 
             await _exerciseRepository.Delete(exercise);
+
+            var exercises = await _exerciseRepository.GetExercisesByWorkout(exercise.WorkoutId);
+
+            foreach (var exe in exercises)
+            {
+                if (exe.Position > position)
+                {
+                    exe.Position--;
+                    await _exerciseRepository.Update(exe);
+                }
+            }
 
             return NoContent();
         }

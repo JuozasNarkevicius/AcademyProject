@@ -9,6 +9,7 @@ namespace Domain.Entities
         public int Sets { get; set; }
         public string Reps { get; set; }
         public int Rest { get; set; }
+        public int Position { get; set; }
 
         [ForeignKey("WorkoutDay")]
         public long WorkoutId { get; set; }

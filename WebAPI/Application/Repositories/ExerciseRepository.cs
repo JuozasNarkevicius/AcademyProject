@@ -7,6 +7,7 @@ namespace Application.Repositories
     public interface IExerciseRepository
     {
         public Task<IEnumerable<Exercise>> GetAll();
+        public Task<IEnumerable<Exercise>> GetExercisesByWorkout(long workoutId);
         public Task<Exercise> Get(long id);
         public Task<Exercise> Update(Exercise exercise);
         public Task<Exercise> Add(Exercise exercise);
@@ -32,6 +33,16 @@ namespace Application.Repositories
             var exercise = await context.Exercises.FindAsync(id);
 
             return exercise;
+        }
+
+        public async Task<IEnumerable<Exercise>> GetExercisesByWorkout(long workoutId)
+        {
+            var exercises = await context.Exercises
+                .Where(e => e.WorkoutId == workoutId)
+                .OrderBy(e => e.Position)
+                .ToListAsync();
+
+            return exercises;
         }
 
         public async Task<Exercise> Update(Exercise exercise)

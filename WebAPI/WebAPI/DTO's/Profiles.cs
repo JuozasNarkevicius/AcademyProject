@@ -12,6 +12,13 @@ namespace WebAPI.DTO_s
                 .ForMember(dest => dest.WorkoutId,
                 opt => opt.Ignore());
 
+            CreateMap<Exercise, CreateExerciseDTO>();
+            CreateMap<CreateExerciseDTO, Exercise>()
+                .ForMember(dest => dest.WorkoutId,
+                opt => opt.Ignore())
+                .ForMember(dest => dest.Id,
+                opt => opt.Ignore());
+
             CreateMap<Exercise, UpdateExerciseDTO>();
             CreateMap<UpdateExerciseDTO, Exercise>()
                 .ForMember(dest => dest.Id,
@@ -91,6 +98,19 @@ namespace WebAPI.DTO_s
                 .ForMember(dest => dest.Id,
                 opt => opt.Ignore())
                 .ForMember(dest => dest.UserId,
+                opt => opt.Ignore());
+
+            CreateMap<TrainerApplication, UpdateTrainerApplicationDTO>();
+            CreateMap<UpdateTrainerApplicationDTO, TrainerApplication>()
+                .ForMember(dest => dest.Id,
+                opt => opt.Ignore())
+                .ForMember(dest => dest.UserId,
+                opt => opt.Ignore())
+                .ForMember(dest => dest.FirstName,
+                opt => opt.Ignore())
+                .ForMember(dest => dest.LastName,
+                opt => opt.Ignore())
+                .ForMember(dest => dest.Email,
                 opt => opt.Ignore());
         }
     }
