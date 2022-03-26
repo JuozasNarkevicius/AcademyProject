@@ -33,8 +33,7 @@ const SharedPrograms = () => {
           <ListItem key={program.id}>
             <ListItemButton onClick={() => navigate(`${ROUTES.PUBLIC_PROGRAM}/${program.id}`, { replace: true })}>
               <Typography>{program.name}</Typography>
-              <Chip label="test" color="success" variant="outlined" sx={{ ml: '20px' }} />
-              <Typography>{program.rating || 'No rating yet'}</Typography>
+              <Chip label="category" color="success" variant="outlined" sx={{ ml: '20px' }} />
             </ListItemButton>
           </ListItem>
         ))}

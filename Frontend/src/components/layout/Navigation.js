@@ -19,7 +19,6 @@ const Navigation = () => {
               <Button color="inherit" component={Link} to={ROUTES.HOME}>Logo</Button>
               <Button color="inherit" component={Link} to={ROUTES.MY_PROGRAMS}>My programs</Button>
               <Button color="inherit" component={Link} to={ROUTES.BROWSE_PROGRAMS}>Browse programs</Button>
-              <Button color="inherit" component={Link} to={ROUTES.BROWSE_PROGRAMS}>Browse workouts</Button>
               <Button color="inherit" component={Link} to={ROUTES.TRAINERS}>Trainers</Button>
               <Button color="inherit" component={Link} to={ROUTES.GYMS}>Gyms</Button>
               {role === 'admin'

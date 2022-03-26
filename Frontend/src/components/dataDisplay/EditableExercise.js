@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  TableCell, TableRow, IconButton, Icon, TextField,
+  TableCell, IconButton, Icon, TextField,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import AlertDialog from './Modal';
@@ -16,10 +16,7 @@ const EditableExercise = ({
   };
   return (
     editedExercise.id && editedExercise.id === exercise.id ? (
-      <TableRow
-        key={exercise.id}
-        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-      >
+      <>
         <TableCell component="th" scope="row">
           <TextField
             variant="standard"
@@ -102,12 +99,9 @@ const EditableExercise = ({
             imgSrcDelete={imgSrcDelete}
           />
         </TableCell>
-      </TableRow>
+      </>
     ) : (
-      <TableRow
-        key={exercise.id}
-        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-      >
+      <>
         <TableCell sx={{ width: '22%' }} component="th" scope="row">
           {exercise.name}
         </TableCell>
@@ -127,7 +121,7 @@ const EditableExercise = ({
             imgSrcDelete={imgSrcDelete}
           />
         </TableCell>
-      </TableRow>
+      </>
     )
   );
 };

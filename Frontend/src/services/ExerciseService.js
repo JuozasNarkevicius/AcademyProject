@@ -13,8 +13,14 @@ export const deleteExerciseAPI = async (workoutId, exerciseId) => {
   await API.delete(`/workouts/${workoutId}/exercises/${exerciseId}`);
 };
 
+export const updateExercisePositionsAPI = async (workoutId, positions) => {
+  const response = await API.put(`/workouts/${workoutId}/exercisePositions`, positions);
+  return response;
+};
+
 export const exerciseService = {
   updateExerciseAPI,
   deleteExerciseAPI,
   postExerciseAPI,
+  updateExercisePositionsAPI,
 };

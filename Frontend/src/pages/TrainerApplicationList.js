@@ -5,6 +5,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import applicationService from '../services/ApplicationService';
 import ROUTES from '../constants/Routes';
+import STATUS_COLORS from '../constants/statusColors';
 
 const TrainerApplicationList = () => {
   const [applications, setApplications] = useState();
@@ -32,7 +33,12 @@ const TrainerApplicationList = () => {
           <ListItem key={application.id}>
             <ListItemButton onClick={() => navigate(`${ROUTES.TRAINER_APPLICATION_VIEW}/${application.id}`)}>
               <Typography>{`${application.firstName} ${application.lastName}`}</Typography>
-              <Chip label="test" color="success" variant="outlined" sx={{ ml: '20px' }} />
+              <Chip
+                sx={{ ml: 1 }}
+                label={application.status}
+                color={STATUS_COLORS[application.status]}
+                variant="outlined"
+              />
             </ListItemButton>
           </ListItem>
         ))}
