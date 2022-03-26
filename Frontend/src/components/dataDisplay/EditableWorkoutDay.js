@@ -80,12 +80,7 @@ const EditableWorkoutDay = ({ workout }) => {
               </TableRow>
             </TableHead>
             <DragDropContext onDragEnd={handleOnDragEnd}>
-              <Droppable
-                droppableId="exercises"
-                sx={{
-                  position: 'absolute', pointerEvents: 'none', height: '100%', width: '100%',
-                }}
-              >
+              <Droppable droppableId="exercises" type="innerItem">
                 {(provided) => (
                   <TableBody {...provided.droppableProps} ref={provided.innerRef}>
                     {workout.exercises.sort((a, b) => (a.position > b.position ? 1 : -1))
