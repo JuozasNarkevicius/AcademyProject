@@ -6,6 +6,7 @@ namespace Domain.Entities
     {
         public long Id { get; set; }
         public string Name { get; set; }
+        public int Position { get; set; }
 
         public List<Exercise> Exercises { get; set; }
 

@@ -8,6 +8,7 @@ namespace Application.Repositories
     {
         public Task<IEnumerable<WorkoutDay>> GetAll();
         public Task<WorkoutDay> Get(long id);
+        public Task<IEnumerable<WorkoutDay>> GetWorkoutsByProgram(long programId);
         public Task<WorkoutDay> Update(WorkoutDay workout);
         public Task<WorkoutDay> Add(WorkoutDay workout);
         public Task Delete(WorkoutDay workout);
@@ -38,6 +39,16 @@ namespace Application.Repositories
                 .FirstOrDefaultAsync(w => w.Id == id);
 
             return workout;
+        }
+
+        public async Task<IEnumerable<WorkoutDay>> GetWorkoutsByProgram(long programId)
+        {
+            var workouts = await _context.Workouts
+                .Where(w => w.ProgramId == programId)
+                .OrderBy(w => w.Position)
+                .ToListAsync();
+
+            return workouts;
         }
 
         public async Task<WorkoutDay> Update(WorkoutDay workout)

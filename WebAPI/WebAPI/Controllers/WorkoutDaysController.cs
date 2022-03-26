@@ -63,6 +63,49 @@ namespace WebAPI.Controllers
             return Ok(_mapper.Map<UpdateWorkoutNameDTO>(updatedWorkout));
         }
 
+        [HttpPut("~/api/programs/{programId}/workoutPositions")]
+        public async Task<ActionResult<IEnumerable<UpdateWorkoutNameDTO>>> PutPositions(long programId, [FromBody] List<int> positions)
+        {
+            var workouts = await _workoutRepository.GetWorkoutsByProgram(programId);
+
+            if (positions[0] <= positions[1])
+            {
+                for (int i = positions[0]; i <= positions[1]; i++)
+                {
+                    if (i == positions[0])
+                    {
+                        workouts.ElementAt(i).Position = positions[1];
+                    }
+                    else
+                    {
+                        workouts.ElementAt(i).Position--;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = positions[0]; i >= positions[1]; i--)
+                {
+                    if (i == positions[0])
+                    {
+                        workouts.ElementAt(i).Position = positions[1];
+
+                    }
+                    else
+                    {
+                        workouts.ElementAt(i).Position++;
+                    }
+                }
+            }
+
+            foreach (var workout in workouts)
+            {
+                await _workoutRepository.Update(workout);
+            }
+
+            return Ok();
+        }
+
         [HttpPost]
         public async Task<ActionResult<WorkoutDay>> PostWorkout(long programId, CreateWorkoutDayDTO workoutDTO)
         {
@@ -82,12 +125,25 @@ namespace WebAPI.Controllers
         {
             var workout = await _workoutRepository.Get(id);
 
+            var position = workout.Position;
+
             if (workout == null)
             {
                 return NotFound();
             }
 
             await _workoutRepository.Delete(workout);
+
+            var workouts = await _workoutRepository.GetWorkoutsByProgram(workout.ProgramId);
+
+            foreach (var work in workouts)
+            {
+                if (work.Position > position)
+                {
+                    work.Position--;
+                    await _workoutRepository.Update(work);
+                }
+            }
 
             return NoContent();
         }
