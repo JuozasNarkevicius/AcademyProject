@@ -18,9 +18,15 @@ export const updateExercisePositionsAPI = async (workoutId, positions) => {
   return response;
 };
 
+export const getExerciseNamesAPI = async () => {
+  const response = await API.get('/exerciseNames');
+  return response;
+};
+
 export const exerciseService = {
   updateExerciseAPI,
   deleteExerciseAPI,
   postExerciseAPI,
   updateExercisePositionsAPI,
+  getExerciseNamesAPI,
 };

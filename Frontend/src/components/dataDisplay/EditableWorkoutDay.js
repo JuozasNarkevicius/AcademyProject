@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
-  Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button, Typography,
+  Table, TableBody, TableCell, Backdrop, TableContainer,
+  TableHead, TableRow, Paper, Button, Typography,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -10,9 +11,11 @@ import saveIcon from '../../assets/icons/checkmark.svg';
 import { ProgramContext } from '../../Context';
 import EditableExercise from './EditableExercise';
 import { exerciseService } from '../../services/ExerciseService';
+import ExerciseForm from '../dataInput/ExerciseForm';
 
-const EditableWorkoutDay = ({ workout }) => {
+const EditableWorkoutDay = ({ workout, setIsDraggable }) => {
   const { program, setProgram } = useContext(ProgramContext);
+  const [isBackdropOpen, setIsBackdropOpen] = useState(false);
 
   const handleOnDragEnd = async (result) => {
     const positions = [];
@@ -31,16 +34,15 @@ const EditableWorkoutDay = ({ workout }) => {
     await exerciseService.updateExercisePositionsAPI(workout.id, positions);
   };
 
-  const createExercise = async () => {
+  const createExercise = async (exercise) => {
     const newProgram = program;
-    const exerciseCount = newProgram.workouts.find((w) => w.id === workout.id).exercises.length;
-    const exercise = {
-      name: 'New exercise', sets: '4', reps: '12, 12, 12, 12', rest: '60', position: exerciseCount,
-    };
+    exercise.position = newProgram.workouts.find((w) => w.id === workout.id).exercises.length;
     const response = await exerciseService.postExerciseAPI(workout.id, exercise);
     exercise.id = response.data.id;
     newProgram.workouts.find((w) => w.id === workout.id).exercises.push(exercise);
     setProgram({ ...newProgram });
+    setIsBackdropOpen(false);
+    setIsDraggable(true);
   };
 
   const updateExercise = async (editedExercise, exerciseId) => {
@@ -114,7 +116,28 @@ const EditableWorkoutDay = ({ workout }) => {
           </Table>
         ) : <Typography>This workout has no exercises.</Typography>}
       </TableContainer>
-      <Button sx={{ m: '15px', float: 'left' }} variant="contained" color="secondary" onClick={createExercise}>New exercise</Button>
+      <Button
+        sx={{ m: '15px', float: 'left' }}
+        variant="contained"
+        color="secondary"
+        onClick={() => {
+          setIsBackdropOpen(true);
+          setIsDraggable(false);
+        }}
+      >
+        New exercise
+
+      </Button>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={isBackdropOpen}
+      >
+        <ExerciseForm
+          createExercise={createExercise}
+          setIsBackdropOpen={setIsBackdropOpen}
+          setIsDraggable={setIsDraggable}
+        />
+      </Backdrop>
     </>
   );
 };
@@ -139,6 +162,7 @@ EditableWorkoutDay.propTypes = {
       }),
     ).isRequired,
   }).isRequired,
+  setIsDraggable: PropTypes.func.isRequired,
 };
 
 export default EditableWorkoutDay;

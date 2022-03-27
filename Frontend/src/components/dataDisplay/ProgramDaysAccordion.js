@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Accordion, AccordionSummary, AccordionDetails, Button, Box,
 } from '@mui/material';
@@ -15,6 +15,7 @@ import { workoutService } from '../../services/WorkoutService';
 
 const ProgramDaysAccordion = ({ deleteProgram }) => {
   const { program, setProgram } = useContext(ProgramContext);
+  const [isDraggable, setIsDraggable] = useState(true);
 
   const createWorkout = async () => {
     const newProgram = program;
@@ -83,7 +84,12 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
             <Box {...provided.droppableProps} ref={provided.innerRef}>
               {program.workouts.sort((a, b) => (a.position > b.position ? 1 : -1))
                 .map((w, index) => (
-                  <Draggable key={w.id} draggableId={String(w.id)} index={index}>
+                  <Draggable
+                    key={w.id}
+                    draggableId={String(w.id)}
+                    index={index}
+                    isDragDisabled={!isDraggable}
+                  >
                     {(provided) => (
                       <Accordion
                         {...provided.draggableProps}
@@ -104,7 +110,7 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
                           />
                         </AccordionSummary>
                         <AccordionDetails>
-                          <EditableWorkoutDay workout={w} />
+                          <EditableWorkoutDay workout={w} setIsDraggable={setIsDraggable} />
                         </AccordionDetails>
                       </Accordion>
                     )}
