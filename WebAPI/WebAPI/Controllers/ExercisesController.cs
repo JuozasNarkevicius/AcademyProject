@@ -21,15 +21,13 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<Exercise>>> GetExercises()
-        //{
-        //    var exercises = await _exerciseRepository.GetAll();
+        [HttpGet("~/api/exerciseNames")]
+        public async Task<ActionResult<IEnumerable<Exercise>>> GetExerciseNames()
+        {
+            var exerciseNames = await _exerciseRepository.GetExerciseNames();
 
-        //    var mapped = _mapper.Map<IEnumerable<ExerciseDTO>>(exercises);
-
-        //    return Ok(mapped);
-        //}
+            return Ok(exerciseNames);
+        }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<Exercise>> GetExercise(long id)

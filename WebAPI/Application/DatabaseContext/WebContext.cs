@@ -23,6 +23,7 @@ namespace Application.DatabaseContext
         public DbSet<TrainerApplication> Applications { get; set; }
         public DbSet<ProgramRating> Ratings { get; set; }
         public DbSet<SavedProgram> SavedPrograms { get; set; }
+        public DbSet<ExerciseName> ExerciseNames { get; set; }
 
     }
 }
