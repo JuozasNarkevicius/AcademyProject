@@ -86,6 +86,8 @@ namespace WebAPI.Controllers
         {
             var user = _mapper.Map<User>(userDTO);
 
+            user.Role = "user";
+
             var userFromDb = await _userRepository.Add(user);
 
             return CreatedAtAction(nameof(GetUser), new { id = userFromDb.Id }, _mapper.Map<CreateUserDTO>(userFromDb));
