@@ -2,14 +2,16 @@ import React, { useEffect, useState } from 'react';
 import {
   Container, Card, CardContent, Typography, CircularProgress, Button,
 } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import applicationService from '../services/ApplicationService';
 import userService from '../services/UserService';
+import ROUTES from '../constants/Routes';
 
 const TrainerApplicationView = () => {
   const [application, setApplication] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const getApplication = async () => {
     const response = await applicationService.getApplicationAPI(id);
@@ -20,6 +22,7 @@ const TrainerApplicationView = () => {
   const approveTrainer = async () => {
     await userService.changeUserRoleAPI(application.userId, 'trainer');
     await applicationService.changeApplicationStatusAPI(application.id, 'verified');
+    navigate(ROUTES.TRAINER_APPLICATION_LIST);
   };
 
   useEffect(() => {

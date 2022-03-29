@@ -39,7 +39,7 @@ const TrainerApplicationList = () => {
   }
 
   return (
-    <Container sx={{ mt: '5rem' }}>
+    <Container sx={{ mt: '2.5rem' }}>
       <Typography variant="h5">Trainer profile applications</Typography>
       <SearchBar
         elements={applications}
