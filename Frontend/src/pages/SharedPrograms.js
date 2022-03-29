@@ -1,15 +1,18 @@
 import {
   Container, Typography, List, ListItem, CircularProgress,
-  ListItemButton, Chip, Box, Pagination, Stack,
+  ListItemButton, Chip,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { programService } from '../services/ProgramService';
 import ROUTES from '../constants/Routes';
 import paginationService from '../services/genericServices/pagination';
+import Pagination from '../components/layout/Pagination';
+import SearchBar from '../components/dataInput/SearchBar';
 
 const SharedPrograms = () => {
   const [programs, setPrograms] = useState();
+  const [filteredPrograms, setfilteredPrograms] = useState();
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -18,6 +21,7 @@ const SharedPrograms = () => {
   const getPrograms = async () => {
     const response = await programService.getAllPublicProgramsAPI();
     setPrograms(response.data);
+    setfilteredPrograms(response.data);
     setIsLoading(false);
   };
 
@@ -35,9 +39,14 @@ const SharedPrograms = () => {
 
   return (
     <Container sx={{ mt: '5rem' }}>
-      <Typography>Okay</Typography>
+      <Typography variant="h5">Programs shared by other users</Typography>
+      <SearchBar
+        elements={programs}
+        setFilteredElements={setfilteredPrograms}
+        attribute="name"
+      />
       <List>
-        {paginationService.getElementsByPage(programs, page, pageSize).map((program) => (
+        {paginationService.getElementsByPage(filteredPrograms, page, pageSize).map((program) => (
           <ListItem key={program.id}>
             <ListItemButton onClick={() => navigate(`${ROUTES.PUBLIC_PROGRAM}/${program.id}`, { replace: true })}>
               <Typography>{program.name}</Typography>
@@ -46,11 +55,11 @@ const SharedPrograms = () => {
           </ListItem>
         ))}
       </List>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Stack spacing={2}>
-          <Pagination count={paginationService.getPageCount(programs, pageSize)} shape="rounded" onChange={handlePageChange} />
-        </Stack>
-      </Box>
+      <Pagination
+        elements={programs}
+        pageSize={pageSize}
+        handlePageChange={handlePageChange}
+      />
     </Container>
   );
 };

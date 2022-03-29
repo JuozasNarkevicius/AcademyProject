@@ -9,7 +9,7 @@ const getPageCount = (elements, pageSize) => {
   if (elements.length <= pageSize) {
     return 1;
   }
-  return elements.length / pageSize;
+  return Math.ceil(elements.length / pageSize);
 };
 
 const paginationService = {

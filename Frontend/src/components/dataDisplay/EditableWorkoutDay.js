@@ -87,13 +87,17 @@ const EditableWorkoutDay = ({ workout, setIsDraggable }) => {
                   <TableBody {...provided.droppableProps} ref={provided.innerRef}>
                     {workout.exercises.sort((a, b) => (a.position > b.position ? 1 : -1))
                       .map((e, index) => (
-                        <Draggable key={e.id} draggableId={String(e.id)} index={index}>
+                        <Draggable
+                          key={e.id}
+                          draggableId={String(e.id)}
+                          index={index}
+                        >
                           {(provided) => (
                             <TableRow
-                              sx={{ flexGrow: 1, flexBasis: 1 }}
                               {...provided.draggableProps}
                               {...provided.dragHandleProps}
                               ref={provided.innerRef}
+                              onMouseEnter={() => setIsDraggable(false)}
                             >
                               <EditableExercise
                                 exercise={e}

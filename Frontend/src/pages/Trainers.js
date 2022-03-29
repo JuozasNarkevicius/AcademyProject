@@ -2,15 +2,17 @@ import React, { useEffect, useState } from 'react';
 import {
   Card, Container, CardActions, CardContent,
   Button, Typography, Grid, CircularProgress,
-  Box, Pagination, Stack,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../constants/Routes';
 import applicationService from '../services/ApplicationService';
 import paginationService from '../services/genericServices/pagination';
+import SearchBar from '../components/dataInput/SearchBar';
+import Pagination from '../components/layout/Pagination';
 
 const Trainers = () => {
   const [trainers, setTrainers] = useState();
+  const [filteredTrainers, setFilteredTrainers] = useState();
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
@@ -19,6 +21,7 @@ const Trainers = () => {
   const getTrainers = async () => {
     const response = await applicationService.getVerifiedApplicationsAPI();
     setTrainers(response.data);
+    setFilteredTrainers(response.data);
     setIsLoading(false);
   };
 
@@ -35,10 +38,15 @@ const Trainers = () => {
   }
 
   return (
-    <Container>
-      <Button variant="contained" onClick={() => navigate(ROUTES.TRAINER_APPLICATION, { replace: true })}>Become trainer</Button>
+    <Container sx={{ mt: '2.5rem' }}>
+      <Typography variant="h5">Registered trainers</Typography>
+      <SearchBar
+        elements={trainers}
+        setFilteredElements={setFilteredTrainers}
+        attribute="fullName"
+      />
       <Grid container spacing={2}>
-        {paginationService.getElementsByPage(trainers, page, pageSize).map((trainer) => (
+        {paginationService.getElementsByPage(filteredTrainers, page, pageSize).map((trainer) => (
           <Grid key={trainer.id} item xs={4}>
             <Card sx={{ margin: '1rem' }}>
               <CardContent>
@@ -51,17 +59,28 @@ const Trainers = () => {
               </CardContent>
               <CardActions>
                 <Button size="small">Share</Button>
-                <Button size="small" onClick={() => navigate(`${ROUTES.TRAINER_PROFILE}/${trainer.id}`)}>Learn More</Button>
+                <Button
+                  size="small"
+                  onClick={() => navigate(`${ROUTES.TRAINER_PROFILE}/${trainer.id}`)}
+                >
+                  Learn More
+                </Button>
               </CardActions>
             </Card>
           </Grid>
         ))}
       </Grid>
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-        <Stack spacing={2}>
-          <Pagination count={paginationService.getPageCount(trainers, pageSize)} shape="rounded" onChange={handlePageChange} />
-        </Stack>
-      </Box>
+      <Button
+        variant="contained"
+        onClick={() => navigate(ROUTES.TRAINER_APPLICATION, { replace: true })}
+      >
+        Become a trainer
+      </Button>
+      <Pagination
+        elements={trainers}
+        pageSize={pageSize}
+        handlePageChange={handlePageChange}
+      />
     </Container>
   );
 };

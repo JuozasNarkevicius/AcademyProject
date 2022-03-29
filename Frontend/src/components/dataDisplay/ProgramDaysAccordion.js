@@ -78,7 +78,7 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
           deleteObject={deleteProgram}
         />
       </Box>
-      <DragDropContext onDragEnd={handleOnDragEnd}>
+      <DragDropContext onDragEnd={handleOnDragEnd} onDragUpdate={() => setIsDraggable(true)}>
         <Droppable droppableId="workouts" type="outerItem">
           {(provided) => (
             <Box {...provided.droppableProps} ref={provided.innerRef}>
@@ -98,6 +98,7 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
                       >
                         <AccordionSummary
                           expandIcon={<ExpandMoreIcon />}
+                          onMouseEnter={() => !isDraggable && setIsDraggable(true)}
                         >
                           <EditableName
                             imgSrcEdit={editIcon}
@@ -110,7 +111,11 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
                           />
                         </AccordionSummary>
                         <AccordionDetails>
-                          <EditableWorkoutDay workout={w} setIsDraggable={setIsDraggable} />
+                          <EditableWorkoutDay
+                            workout={w}
+                            isDraggable={isDraggable}
+                            setIsDraggable={setIsDraggable}
+                          />
                         </AccordionDetails>
                       </Accordion>
                     )}
