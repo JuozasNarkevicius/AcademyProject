@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import WorkoutDay from './WorkoutDay';
 
 const ProgramAccordion = ({ program }) => (
-  <Box sx={{ ml: 8, mt: '8rem', mr: -10 }}>
+  <Box sx={{ mt: '8rem' }}>
     <Typography sx={{ mb: '2rem' }}>{program.name}</Typography>
     {program.workouts.map((w) => (
       <AccordionMUI key={w.id}>

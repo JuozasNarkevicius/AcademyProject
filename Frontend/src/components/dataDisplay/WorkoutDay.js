@@ -15,7 +15,6 @@ const WorkoutDay = ({ workout }) => (
             <TableCell>Sets</TableCell>
             <TableCell>Reps</TableCell>
             <TableCell>Rest (seconds)</TableCell>
-            <TableCell />
           </TableRow>
         </TableHead>
         <TableBody>
