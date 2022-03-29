@@ -58,7 +58,6 @@ const Trainers = () => {
                 </Typography>
               </CardContent>
               <CardActions>
-                <Button size="small">Share</Button>
                 <Button
                   size="small"
                   onClick={() => navigate(`${ROUTES.TRAINER_PROFILE}/${trainer.id}`)}

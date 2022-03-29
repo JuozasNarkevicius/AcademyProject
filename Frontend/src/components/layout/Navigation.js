@@ -20,7 +20,6 @@ const Navigation = () => {
               <Button color="inherit" component={Link} to={ROUTES.MY_PROGRAMS}>My programs</Button>
               <Button color="inherit" component={Link} to={ROUTES.BROWSE_PROGRAMS}>Browse programs</Button>
               <Button color="inherit" component={Link} to={ROUTES.TRAINERS}>Trainers</Button>
-              <Button color="inherit" component={Link} to={ROUTES.GYMS}>Gyms</Button>
               {role === 'admin'
               && <Button color="inherit" component={Link} to={ROUTES.TRAINER_APPLICATION_LIST}>Trainer applications</Button>}
               <Box sx={{ flexGrow: 1 }} />

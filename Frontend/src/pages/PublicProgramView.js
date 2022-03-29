@@ -60,7 +60,7 @@ const PublicProgramView = () => {
           }}
           emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
         />
-        <Typography sx={{ float: 'left', mt: '1.15rem', ml: '0.5rem' }}>{program.rating}</Typography>
+        <Typography sx={{ float: 'left', mt: '1.15rem', ml: '0.5rem' }}>{Math.round(program.rating * 2) / 2}</Typography>
         {personalRating && (
           <Typography sx={{ float: 'left', mt: '1.15rem', ml: '1.5rem' }}>
             Your rating:
