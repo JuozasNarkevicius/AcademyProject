@@ -1,11 +1,13 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import {
   Button, Dialog, DialogActions, DialogTitle, IconButton, Icon,
 } from '@mui/material';
 import PropTypes from 'prop-types';
+import deleteIcon from '../../assets/icons/x.svg';
 
 const AlertDialog = ({
-  deleteObject, id, objectType, imgSrcDelete,
+  deleteObject, id, objectType,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -19,14 +21,19 @@ const AlertDialog = ({
     setOpen(false);
   };
 
+  const handleConfirm = (e) => {
+    handleClose(e);
+    deleteObject();
+  };
   return (
     <>
       <IconButton
+        sx={{ float: 'right' }}
         title="Delete"
         onClick={handleClickOpen}
       >
         <Icon>
-          <img src={imgSrcDelete} height={23} width={23} alt="k" />
+          <img src={deleteIcon} height={23} width={23} alt="k" />
         </Icon>
       </IconButton>
       <Dialog
@@ -43,7 +50,7 @@ const AlertDialog = ({
         </DialogTitle>
         <DialogActions>
           <Button color="secondary" onClick={handleClose}>No</Button>
-          <Button color="secondary" onClick={() => deleteObject(id)} autoFocus>
+          <Button color="secondary" onClick={handleConfirm} autoFocus>
             Yes
           </Button>
         </DialogActions>
@@ -56,7 +63,6 @@ AlertDialog.propTypes = {
   deleteObject: PropTypes.func.isRequired,
   id: PropTypes.number.isRequired,
   objectType: PropTypes.string.isRequired,
-  imgSrcDelete: PropTypes.string.isRequired,
 };
 
 export default AlertDialog;

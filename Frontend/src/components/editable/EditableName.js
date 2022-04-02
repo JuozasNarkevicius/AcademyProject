@@ -3,7 +3,7 @@ import {
   IconButton, Input, Icon, Box,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import AlertDialog from './Modal';
+import AlertDialog from '../dataDisplay/Modal';
 import imgSrcDelete from '../../assets/icons/x.svg';
 
 const EditableName = ({
@@ -38,14 +38,14 @@ const EditableName = ({
           {objectType === 'program'
             ? (
               <AlertDialog
-                deleteObject={deleteObject}
+                deleteObject={() => deleteObject(objectId)}
                 id={objectId}
                 objectType={objectType}
                 imgSrcDelete={imgSrcDelete}
               />
             ) : (
               <AlertDialog
-                deleteObject={deleteObject}
+                deleteObject={() => deleteObject(objectId)}
                 id={objectId}
                 objectType={objectType}
                 imgSrcDelete={imgSrcDelete}

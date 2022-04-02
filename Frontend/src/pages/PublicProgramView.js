@@ -75,7 +75,7 @@ const PublicProgramView = () => {
           variant="contained"
           onClick={saveProgram}
         >
-          Add program to Library
+          Follow program
         </Button>
 
       </Box>

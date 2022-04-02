@@ -5,11 +5,11 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PropTypes from 'prop-types';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import EditableWorkoutDay from './EditableWorkoutDay';
+import EditableWorkoutDay from '../editable/EditableWorkoutDay';
 import { ProgramContext } from '../../Context';
 import editIcon from '../../assets/icons/edit.svg';
 import saveIcon from '../../assets/icons/checkmark.svg';
-import EditableName from './EditableName';
+import EditableName from '../editable/EditableName';
 import { programService } from '../../services/ProgramService';
 import { workoutService } from '../../services/WorkoutService';
 
@@ -46,6 +46,11 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
     newProgram.workouts.find((w) => w.id === workoutId).name = newName;
     setProgram({ ...newProgram });
     await workoutService.updateWorkoutAPI(program.id, workoutId, newName);
+  };
+
+  const updateProgramStatus = async (status) => {
+    await programService.updateProgramAPI(program.id, program.name, status);
+    setProgram({ ...program, isPublic: status });
   };
 
   const handleOnDragEnd = async (result) => {
@@ -126,7 +131,36 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
           )}
         </Droppable>
       </DragDropContext>
-      <Button sx={{ m: '15px' }} variant="contained" color="secondary" onClick={createWorkout}>New workout</Button>
+      <Button
+        sx={{ m: '15px', float: 'left' }}
+        variant="contained"
+        color="secondary"
+        onClick={createWorkout}
+      >
+        New workout
+      </Button>
+      {program.isPublic
+        && (
+          <Button
+            onClick={() => updateProgramStatus(false)}
+            sx={{ float: 'left' }}
+            variant="contained"
+            color="secondary"
+          >
+            Stop sharing program
+          </Button>
+        )}
+      {!program.isPublic
+        && (
+          <Button
+            onClick={() => updateProgramStatus(true)}
+            sx={{ float: 'left' }}
+            variant="contained"
+            color="secondary"
+          >
+            Share program
+          </Button>
+        )}
     </Box>
   );
 };

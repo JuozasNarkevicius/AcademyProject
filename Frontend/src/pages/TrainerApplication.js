@@ -132,7 +132,6 @@ const TrainerApplication = () => {
                 onClick={deleteApplication}
               >
                 Delete application
-
               </Button>
             </>
           )

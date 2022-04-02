@@ -17,7 +17,7 @@ const TrainerApplicationList = () => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const pageSize = 10;
+  const pageSize = 9;
 
   const getApplications = async () => {
     const response = await applicationService.getAllApplicationsAPI();

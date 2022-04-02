@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { useContext, useState } from 'react';
 import {
   Table, TableBody, TableCell, Backdrop, TableContainer,
@@ -6,16 +7,18 @@ import {
 import PropTypes from 'prop-types';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import editIcon from '../../assets/icons/edit.svg';
-import deleteIcon from '../../assets/icons/x.svg';
 import saveIcon from '../../assets/icons/checkmark.svg';
 import { ProgramContext } from '../../Context';
 import EditableExercise from './EditableExercise';
 import { exerciseService } from '../../services/ExerciseService';
 import ExerciseForm from '../dataInput/ExerciseForm';
+import EditableExerciseDetails from './EditableExerciseDetails';
 
 const EditableWorkoutDay = ({ workout, setIsDraggable }) => {
   const { program, setProgram } = useContext(ProgramContext);
-  const [isBackdropOpen, setIsBackdropOpen] = useState(false);
+  const [IsBackdropOpen, setIsBackdropOpen] = useState(false);
+  const [IsExerciseDetails, setIsExerciseDetails] = useState();
+  const [viewedExercise, setViewedExercise] = useState();
 
   const handleOnDragEnd = async (result) => {
     const positions = [];
@@ -34,6 +37,14 @@ const EditableWorkoutDay = ({ workout, setIsDraggable }) => {
     await exerciseService.updateExercisePositionsAPI(workout.id, positions);
   };
 
+  const handleBackdropOpen = (isOpen, isExerciseDetails, exercise) => {
+    setIsBackdropOpen(isOpen);
+    setIsExerciseDetails(isExerciseDetails);
+    if (exercise) {
+      setViewedExercise(exercise);
+    }
+  };
+
   const createExercise = async (exercise) => {
     const newProgram = program;
     exercise.position = newProgram.workouts.find((w) => w.id === workout.id).exercises.length;
@@ -41,7 +52,7 @@ const EditableWorkoutDay = ({ workout, setIsDraggable }) => {
     exercise.id = response.data.id;
     newProgram.workouts.find((w) => w.id === workout.id).exercises.push(exercise);
     setProgram({ ...newProgram });
-    setIsBackdropOpen(false);
+    handleBackdropOpen(false, false);
     setIsDraggable(true);
   };
 
@@ -65,6 +76,16 @@ const EditableWorkoutDay = ({ workout, setIsDraggable }) => {
     newProgram.workouts.find((w) => w.id === workout.id).exercises = newExercisesArray;
     setProgram({ ...newProgram });
     await exerciseService.deleteExerciseAPI(workout.id, exerciseId);
+  };
+
+  const deleteExerciseAttribute = async (exercise, attribute) => {
+    const newProgram = program;
+    const { id, ...exerciseWithoutId } = exercise;
+    exerciseWithoutId[attribute] = null;
+    newProgram.workouts.find((w) => w.id === workout.id)
+      .exercises.find((e) => e.id === id)[attribute] = null;
+    setProgram({ ...newProgram });
+    await exerciseService.updateExerciseAPI(workout.id, id, exerciseWithoutId);
   };
 
   return (
@@ -103,10 +124,10 @@ const EditableWorkoutDay = ({ workout, setIsDraggable }) => {
                                 exercise={e}
                                 imgSrcEdit={editIcon}
                                 imgSrcSave={saveIcon}
-                                imgSrcDelete={deleteIcon}
                                 objectType="exercise"
                                 updateExercise={updateExercise}
                                 deleteExercise={deleteExercise}
+                                handleBackdropOpen={handleBackdropOpen}
                               />
                             </TableRow>
                           )}
@@ -125,22 +146,31 @@ const EditableWorkoutDay = ({ workout, setIsDraggable }) => {
         variant="contained"
         color="secondary"
         onClick={() => {
-          setIsBackdropOpen(true);
+          handleBackdropOpen(true, false);
           setIsDraggable(false);
         }}
       >
         New exercise
-
       </Button>
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={isBackdropOpen}
+        open={IsBackdropOpen}
       >
-        <ExerciseForm
-          createExercise={createExercise}
-          setIsBackdropOpen={setIsBackdropOpen}
-          setIsDraggable={setIsDraggable}
-        />
+        {IsExerciseDetails ? (
+          <EditableExerciseDetails
+            exercise={viewedExercise}
+            setIsBackdropOpen={setIsBackdropOpen}
+            setIsDraggable={setIsDraggable}
+            deleteExerciseAttribute={deleteExerciseAttribute}
+            updateExercise={updateExercise}
+          />
+        ) : (
+          <ExerciseForm
+            createExercise={createExercise}
+            setIsBackdropOpen={setIsBackdropOpen}
+            setIsDraggable={setIsDraggable}
+          />
+        )}
       </Backdrop>
     </>
   );

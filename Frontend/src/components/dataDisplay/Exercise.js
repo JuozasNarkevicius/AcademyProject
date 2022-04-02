@@ -1,22 +1,35 @@
+/* eslint-disable no-unused-vars */
 import React from 'react';
 import {
-  TableCell, TableRow,
+  TableCell, TableRow, IconButton, Icon,
 } from '@mui/material';
 import PropTypes from 'prop-types';
+import detailsIcon from '../../assets/icons/description.svg';
 
 const Exercise = ({
-  exercise,
+  exercise, handleBackdropOpen,
 }) => (
   <TableRow
     key={exercise.id}
-    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
   >
     <TableCell sx={{ width: '22%' }} component="th" scope="row">
       {exercise.name}
     </TableCell>
     <TableCell sx={{ width: '22%' }} align="left">{exercise.sets}</TableCell>
     <TableCell sx={{ width: '22%' }}>{exercise.reps}</TableCell>
-    <TableCell sx={{ width: '22%' }}>{exercise.rest}</TableCell>
+    <TableCell sx={{ width: '26%' }}>{exercise.rest}</TableCell>
+    <TableCell sx={{ borderTop: 1, borderTopColor: '#e6e6e6' }}>
+      <IconButton
+        title="View details"
+        onClick={() => {
+          handleBackdropOpen(true, exercise);
+        }}
+      >
+        <Icon>
+          <img src={detailsIcon} height={25} width={25} alt="k" />
+        </Icon>
+      </IconButton>
+    </TableCell>
   </TableRow>
 );
 
@@ -36,4 +49,5 @@ Exercise.propTypes = {
       PropTypes.string,
     ]),
   }).isRequired,
+  handleBackdropOpen: PropTypes.func.isRequired,
 };

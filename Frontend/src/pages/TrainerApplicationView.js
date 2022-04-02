@@ -25,6 +25,11 @@ const TrainerApplicationView = () => {
     navigate(ROUTES.TRAINER_APPLICATION_LIST);
   };
 
+  const declineTrainer = async () => {
+    await applicationService.changeApplicationStatusAPI(application.id, 'declined');
+    navigate(ROUTES.TRAINER_APPLICATION_LIST);
+  };
+
   useEffect(() => {
     getApplication();
   }, []);
@@ -61,8 +66,14 @@ const TrainerApplicationView = () => {
           </Typography>
         </CardContent>
       </Card>
-      <Button variant="contained" onClick={approveTrainer}>Approve</Button>
-      <Button variant="contained">Dismiss</Button>
+      {application.status === 'pending' ? (
+        <>
+          <Button variant="contained" onClick={approveTrainer}>Approve</Button>
+          <Button variant="contained" onClick={declineTrainer}>Decline</Button>
+        </>
+      ) : (
+        <Button variant="contained" onClick={declineTrainer}>Take away trainer status</Button>
+      )}
     </Container>
   );
 };

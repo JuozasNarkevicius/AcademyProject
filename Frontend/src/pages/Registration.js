@@ -40,6 +40,7 @@ const Registration = () => {
       navigate(ROUTES.LOGIN, { replace: true });
     },
   });
+
   return (
     <Container sx={{ width: '20rem', mt: '7rem' }}>
       <form onSubmit={formik.handleSubmit}>

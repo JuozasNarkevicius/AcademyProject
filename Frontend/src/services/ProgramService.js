@@ -1,8 +1,8 @@
 import API from './API';
 
-export const updateProgramAPI = async (programId, newName) => {
+export const updateProgramAPI = async (programId, newName, status) => {
   const userId = sessionStorage.getItem('id');
-  await API.put(`/users/${userId}/programs/${programId}`, { name: newName });
+  await API.put(`/users/${userId}/programs/${programId}`, { name: newName, isPublic: status });
 };
 
 export const submitProgramAPI = async (program) => {

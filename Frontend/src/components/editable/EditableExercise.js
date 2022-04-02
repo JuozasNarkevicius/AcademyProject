@@ -3,10 +3,12 @@ import {
   TableCell, IconButton, Icon, TextField,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import AlertDialog from './Modal';
+import AlertDialog from '../dataDisplay/Modal';
+import detailsIcon from '../../assets/icons/description.svg';
 
 const EditableExercise = ({
-  exercise, imgSrcEdit, imgSrcSave, imgSrcDelete, updateExercise, deleteExercise, objectType,
+  exercise, imgSrcEdit, imgSrcSave,
+  updateExercise, deleteExercise, objectType, handleBackdropOpen,
 }) => {
   const [editedExercise, setEditedExercise] = useState({});
 
@@ -92,12 +94,6 @@ const EditableExercise = ({
               <img src={imgSrcSave} height={25} width={25} alt="k" />
             </Icon>
           </IconButton>
-          <AlertDialog
-            deleteObject={deleteExercise}
-            id={exercise.id}
-            objectType={objectType}
-            imgSrcDelete={imgSrcDelete}
-          />
         </TableCell>
       </>
     ) : (
@@ -107,18 +103,27 @@ const EditableExercise = ({
         </TableCell>
         <TableCell sx={{ width: '22%' }} align="left">{exercise.sets}</TableCell>
         <TableCell sx={{ width: '22%' }}>{exercise.reps}</TableCell>
-        <TableCell sx={{ width: '22%' }}>{exercise.rest}</TableCell>
+        <TableCell sx={{ width: '20%' }}>{exercise.rest}</TableCell>
         <TableCell align="right">
+          <IconButton
+            title="View details"
+            onClick={() => {
+              handleBackdropOpen(true, true, exercise);
+            }}
+          >
+            <Icon>
+              <img src={detailsIcon} height={25} width={25} alt="k" />
+            </Icon>
+          </IconButton>
           <IconButton title="Edit exercise" onClick={() => setEditedExercise(exercise)}>
             <Icon>
               <img src={imgSrcEdit} height={23} width={23} alt="k" />
             </Icon>
           </IconButton>
           <AlertDialog
-            deleteObject={deleteExercise}
+            deleteObject={() => deleteExercise(exercise.id)}
             id={exercise.id}
             objectType={objectType}
-            imgSrcDelete={imgSrcDelete}
           />
         </TableCell>
       </>
@@ -142,10 +147,10 @@ EditableExercise.propTypes = {
   }).isRequired,
   imgSrcEdit: PropTypes.string.isRequired,
   imgSrcSave: PropTypes.string.isRequired,
-  imgSrcDelete: PropTypes.string.isRequired,
   updateExercise: PropTypes.func.isRequired,
   objectType: PropTypes.string.isRequired,
   deleteExercise: PropTypes.func.isRequired,
+  handleBackdropOpen: PropTypes.func.isRequired,
 };
 
 export default EditableExercise;
