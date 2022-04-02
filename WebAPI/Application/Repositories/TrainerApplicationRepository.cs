@@ -25,7 +25,9 @@ namespace Application.Repositories
 
         public async Task<IEnumerable<TrainerApplication>> GetAll()
         {
-            var applications = await _context.Applications.ToListAsync();
+            var applications = await _context.Applications
+                .Where(appl => appl.Status != "declined")
+                .ToListAsync();
 
             return applications;
         }

@@ -27,25 +27,25 @@ namespace Application.DataSeed
                 new WorkoutDay { Id = 4, Name = "Workout nr4", ProgramId = 1 }
             );
             modelBuilder.Entity<Exercise>().HasData(
-                new Exercise { Id = 1, Name = "Exercise nr1", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, WorkoutId = 1 },
-                new Exercise { Id = 2, Name = "Exercise nr2", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, WorkoutId = 1 },
-                new Exercise { Id = 3, Name = "Exercise nr3", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, WorkoutId = 1 },
-                new Exercise { Id = 4, Name = "Exercise nr4", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, WorkoutId = 1 },
+                new Exercise { Id = 1, Name = "Exercise nr1", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, Description = null, VideoUrl = null, WorkoutId = 1 },
+                new Exercise { Id = 2, Name = "Exercise nr2", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, Description = null, VideoUrl = null, WorkoutId = 1 },
+                new Exercise { Id = 3, Name = "Exercise nr3", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, Description = null, VideoUrl = null, WorkoutId = 1 },
+                new Exercise { Id = 4, Name = "Exercise nr4", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, Description = null, VideoUrl = null, WorkoutId = 1 },
 
-                new Exercise { Id = 5, Name = "Exercise nr1", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, WorkoutId = 2 },
-                new Exercise { Id = 6, Name = "Exercise nr2", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, WorkoutId = 2 },
-                new Exercise { Id = 7, Name = "Exercise nr3", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, WorkoutId = 2 },
-                new Exercise { Id = 8, Name = "Exercise nr4", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, WorkoutId = 2 },
+                new Exercise { Id = 5, Name = "Exercise nr1", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, Description = null, VideoUrl = null, WorkoutId = 2 },
+                new Exercise { Id = 6, Name = "Exercise nr2", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, Description = null, VideoUrl = null, WorkoutId = 2 },
+                new Exercise { Id = 7, Name = "Exercise nr3", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, Description = null, VideoUrl = null, WorkoutId = 2 },
+                new Exercise { Id = 8, Name = "Exercise nr4", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, Description = null, VideoUrl = null, WorkoutId = 2 },
 
-                new Exercise { Id = 9, Name = "Exercise nr1", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, WorkoutId = 3 },
-                new Exercise { Id = 10, Name = "Exercise nr2", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, WorkoutId = 3 },
-                new Exercise { Id = 11, Name = "Exercise nr3", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, WorkoutId = 3 },
-                new Exercise { Id = 12, Name = "Exercise nr4", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, WorkoutId = 3 },
+                new Exercise { Id = 9, Name = "Exercise nr1", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, Description = null, VideoUrl = null, WorkoutId = 3 },
+                new Exercise { Id = 10, Name = "Exercise nr2", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, Description = null, VideoUrl = null, WorkoutId = 3 },
+                new Exercise { Id = 11, Name = "Exercise nr3", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, Description = null, VideoUrl = null, WorkoutId = 3 },
+                new Exercise { Id = 12, Name = "Exercise nr4", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, Description = null, VideoUrl = null, WorkoutId = 3 },
 
-                new Exercise { Id = 13, Name = "Exercise nr1", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, WorkoutId = 4 },
-                new Exercise { Id = 14, Name = "Exercise nr2", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, WorkoutId = 4 },
-                new Exercise { Id = 15, Name = "Exercise nr3", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, WorkoutId = 4 },
-                new Exercise { Id = 16, Name = "Exercise nr4", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, WorkoutId = 4 }
+                new Exercise { Id = 13, Name = "Exercise nr1", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, Description = null, VideoUrl = null, WorkoutId = 4 },
+                new Exercise { Id = 14, Name = "Exercise nr2", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, Description = null, VideoUrl = null, WorkoutId = 4 },
+                new Exercise { Id = 15, Name = "Exercise nr3", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, Description = null, VideoUrl = null, WorkoutId = 4 },
+                new Exercise { Id = 16, Name = "Exercise nr4", Sets = 4, Reps = "12, 12, 12, 12", Rest = 90, Description = null, VideoUrl = null, WorkoutId = 4 }
             );
         }
     }

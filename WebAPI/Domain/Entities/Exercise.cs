@@ -9,6 +9,8 @@ namespace Domain.Entities
         public int Sets { get; set; }
         public string Reps { get; set; }
         public int Rest { get; set; }
+        public string? Description { get; set; }
+        public string? VideoUrl { get; set; }
         public int Position { get; set; }
 
         [ForeignKey("WorkoutDay")]
