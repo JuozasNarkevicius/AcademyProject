@@ -23,9 +23,11 @@ namespace WebAPI.Utility
                                 <div class='header'><h2>{0}</h2></div>", program.Name);
             foreach (var workout in program.Workouts)
             {
-                sb.AppendFormat(@"
+                if (workout.Exercises.Count > 0)
+                {
+                    sb.AppendFormat(@"
                             <div><h4>{0}<h4>", workout.Name);
-                sb.Append(@"
+                    sb.Append(@"
                                 <table align='center'>
                                     <tr>
                                         <th width='42%'>Name</th>
@@ -33,17 +35,18 @@ namespace WebAPI.Utility
                                         <th width='20%'>Reps</th>
                                         <th width='22%'>Rest (seconds)</th>
                                     </tr>");
-                foreach (var exercise in workout.Exercises)
-                {
-                    sb.AppendFormat(@"<tr>
+                    foreach (var exercise in workout.Exercises)
+                    {
+                        sb.AppendFormat(@"<tr>
                                     <td>{0}</td>
                                     <td>{1}</td>
                                     <td>{2}</td>
                                     <td>{3}</td>
                                   </tr>", exercise.Name, exercise.Sets, exercise.Reps, exercise.Rest);
-                }
-                sb.Append(@"
+                    }
+                    sb.Append(@"
                                 </table></div>");
+                }
             }
             foreach (var workout in program.Workouts)
             {
