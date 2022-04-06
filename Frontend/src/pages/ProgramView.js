@@ -4,7 +4,7 @@ import {
 } from '@mui/material';
 import ProgramListDrawer from '../components/dataDisplay/ProgramListDrawer';
 import ProgramDaysAccordion from '../components/dataDisplay/ProgramDaysAccordion';
-import { programService } from '../services/ProgramService';
+import programService from '../services/ProgramService';
 import { ProgramContext } from '../Context';
 import ProgramAccordion from '../components/dataDisplay/ProgramAccordion';
 

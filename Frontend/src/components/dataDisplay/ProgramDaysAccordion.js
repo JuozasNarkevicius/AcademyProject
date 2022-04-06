@@ -10,7 +10,7 @@ import { ProgramContext } from '../../Context';
 import editIcon from '../../assets/icons/edit.svg';
 import saveIcon from '../../assets/icons/checkmark.svg';
 import EditableName from '../editable/EditableName';
-import { programService } from '../../services/ProgramService';
+import programService from '../../services/ProgramService';
 import { workoutService } from '../../services/WorkoutService';
 
 const ProgramDaysAccordion = ({ deleteProgram }) => {
@@ -68,6 +68,17 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
     newProgram.workouts = newWorkouts;
     setProgram({ ...newProgram });
     await workoutService.updateWorkoutPositionsAPI(program.id, positions);
+  };
+
+  const getProgramPdf = async () => {
+    await programService.getProgramPdfAPI(program.id, program.name);
+  };
+
+  // Todo: change so that the current user email is passed
+  const sendProgramPdfToEmail = async () => {
+    // const response = await userService.getCurrentUserAPI();
+    // await programService.sendProgramPdfToEmailAPI(program.id);
+    await programService.sendProgramPdfToEmailAPI('juoznark@gmail.com', program.id);
   };
 
   return (
@@ -161,6 +172,22 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
             Share program
           </Button>
         )}
+      <Button
+        onClick={getProgramPdf}
+        sx={{ float: 'left' }}
+        variant="contained"
+        color="secondary"
+      >
+        Download PDF
+      </Button>
+      <Button
+        onClick={sendProgramPdfToEmail}
+        sx={{ float: 'left' }}
+        variant="contained"
+        color="secondary"
+      >
+        Send PDF to email
+      </Button>
     </Box>
   );
 };

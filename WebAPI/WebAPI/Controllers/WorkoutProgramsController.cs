@@ -1,6 +1,7 @@
 ﻿using Application.Repositories;
 using AutoMapper;
 using Domain.Entities;
+using EmailService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.DTO_s;
@@ -17,15 +18,37 @@ namespace WebAPI.Controllers
         private readonly IRatingRepository _ratingRepository;
         private readonly IWorkoutDayRepository _workoutDayRepository;
         private readonly IExerciseRepository _exerciseRepository;
+        private readonly IEmailSender _emailSender;
 
-        public WorkoutProgramsController(IWorkoutProgramRepository workoutProgramRepository, IWorkoutDayRepository workoutDayRepository, IExerciseRepository exerciseRepository, IRatingRepository ratingRepository, IMapper mapper)
+        public WorkoutProgramsController(IWorkoutProgramRepository workoutProgramRepository, IWorkoutDayRepository workoutDayRepository, IExerciseRepository exerciseRepository, IRatingRepository ratingRepository, IMapper mapper, IEmailSender emailSender)
         {
             _workoutProgramRepository = workoutProgramRepository;
             _workoutDayRepository = workoutDayRepository;
             _exerciseRepository = exerciseRepository;
             _ratingRepository = ratingRepository;
             _mapper = mapper;
+            _emailSender = emailSender;
         }
+
+        //[HttpGet("~/api/email/")]
+        //public async Task<ActionResult<IEnumerable<WorkoutProgram>>> SendEmail()
+        //{
+        //    var message = new Message("juoznark@gmail.com", "Test email", "This is the content of the email");
+
+        //    _emailSender.SendEmail(message);
+
+        //    return Ok();
+        //}
+
+        //[HttpPost("~/api/email/")]
+        //public async Task<ActionResult<IEnumerable<WorkoutProgram>>> SendEmail()
+        //{
+        //    var message = new Message("juoznark@gmail.com", "Test email", "This is the content of the email");
+
+        //    _emailSender.SendEmail(message);
+
+        //    return Ok();
+        //}
 
         [Authorize]
         [HttpGet]

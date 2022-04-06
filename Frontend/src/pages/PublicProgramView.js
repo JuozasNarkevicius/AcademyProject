@@ -5,7 +5,7 @@ import {
 import { useParams } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
-import { programService } from '../services/ProgramService';
+import programService from '../services/ProgramService';
 import ratingService from '../services/Rating';
 import ProgramAccordion from '../components/dataDisplay/ProgramAccordion';
 
@@ -19,6 +19,7 @@ const PublicProgramView = () => {
   const getData = async () => {
     const programResponse = await programService.getProgramAPI(id);
     const ratingResponse = await ratingService.getMyRatingAPI(userId, id);
+    console.log(programResponse.data);
     setProgram(programResponse.data);
     setPersonalRating(ratingResponse.data);
     setIsLoading(false);
