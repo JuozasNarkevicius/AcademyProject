@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import WorkoutDay from './WorkoutDay';
-import { programService } from '../../services/ProgramService';
+import programService from '../../services/ProgramService';
 import ROUTES from '../../constants/Routes';
 
 const ProgramForm = () => {

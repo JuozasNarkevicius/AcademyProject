@@ -4,7 +4,7 @@ import {
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { programService } from '../services/ProgramService';
+import programService from '../services/ProgramService';
 import ROUTES from '../constants/Routes';
 import paginationService from '../services/genericServices/pagination';
 import Pagination from '../components/layout/Pagination';

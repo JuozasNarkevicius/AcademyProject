@@ -1,60 +1,75 @@
 import API from './API';
 
-export const updateProgramAPI = async (programId, newName, status) => {
+const updateProgramAPI = async (programId, newName, status) => {
   const userId = sessionStorage.getItem('id');
   await API.put(`/users/${userId}/programs/${programId}`, { name: newName, isPublic: status });
 };
 
-export const submitProgramAPI = async (program) => {
+const submitProgramAPI = async (program) => {
   const userId = sessionStorage.getItem('id');
   await API.post(`/users/${userId}/programs`, program);
 };
 
-export const postProgramAPI = async (name) => {
+const postProgramAPI = async (name) => {
   const userId = sessionStorage.getItem('id');
   const response = await API.post(`/users/${userId}/programs/name`, { name });
   return response;
 };
 
-export const getProgramAPI = async (programId) => {
+const getProgramAPI = async (programId) => {
   const response = await API.get(`/programs/${programId}`);
   return response;
 };
 
-export const getAllProgramsAPI = async () => {
+const getAllProgramsAPI = async () => {
   const userId = sessionStorage.getItem('id');
   const response = await API.get(`/users/${userId}/programs`);
   return response;
 };
 
-export const getAllSavedProgramsAPI = async () => {
+const getAllSavedProgramsAPI = async () => {
   const userId = sessionStorage.getItem('id');
   const response = await API.get(`/users/${userId}/savedPrograms`);
   return response;
 };
 
-export const getAllPublicProgramsAPI = async () => {
+const getAllPublicProgramsAPI = async () => {
   const userId = sessionStorage.getItem('id');
   const response = await API.get(`/users/${userId}/programs/public`);
   return response;
 };
 
-export const deleteProgramAPI = async (programId) => {
+const deleteProgramAPI = async (programId) => {
   const userId = sessionStorage.getItem('id');
   await API.delete(`/users/${userId}/programs/${programId}`);
 };
 
-export const deleteSavedProgramAPI = async (programId) => {
+const deleteSavedProgramAPI = async (programId) => {
   const userId = sessionStorage.getItem('id');
   await API.delete(`/users/${userId}/savedPrograms/${programId}`);
 };
 
-export const saveProgramAPI = async (programId) => {
+const saveProgramAPI = async (programId) => {
   const userId = sessionStorage.getItem('id');
   await API.post(`/users/${userId}/savedPrograms`, { programId });
 };
 
-export const programService = {
+const getProgramPdfAPI = async (programId, name) => {
+  const response = await API.get(`/pdfcreator/${programId}`, { responseType: 'blob' });
+  const url = window.URL.createObjectURL(new Blob([response.data]));
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `${name}.pdf`;
+  link.click();
+};
+
+// Todo: change to email that is not hardcoded
+const sendProgramPdfToEmailAPI = async (email, programId) => {
+  // await API.get(`/email/${email}/program/${programId}`);
+  await API.get(`/email/${email}/program/${programId}`);
+};
+
+const programService = {
   updateProgramAPI,
   submitProgramAPI,
   getProgramAPI,
@@ -65,4 +80,8 @@ export const programService = {
   getAllSavedProgramsAPI,
   saveProgramAPI,
   deleteSavedProgramAPI,
+  getProgramPdfAPI,
+  sendProgramPdfToEmailAPI,
 };
+
+export default programService;
