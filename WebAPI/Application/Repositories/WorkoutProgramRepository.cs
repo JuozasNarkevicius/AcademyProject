@@ -73,6 +73,13 @@ namespace Application.Repositories
                 .ThenInclude(w => w.Exercises)
                 .FirstOrDefaultAsync();
 
+            program.Workouts = program.Workouts.OrderBy(w => w.Position).ToList();
+
+            for (int i = 0; i < program.Workouts.Count; i++)
+            {
+                program.Workouts[i].Exercises = program.Workouts[i].Exercises.OrderBy(w => w.Position).ToList();
+            }
+
             return program;
         }
 

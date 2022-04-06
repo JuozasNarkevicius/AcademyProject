@@ -1,12 +1,27 @@
 using Application.DatabaseContext;
 using Application.Jwt;
 using Application.Repositories;
+using DinkToPdf;
+using DinkToPdf.Contracts;
+using EmailService;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
+using WebAPI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+var emailConfig = builder.Configuration
+    .GetSection("EmailConfiguration")
+    .Get<EmailConfiguration>();
 
-
+builder.Services.AddSingleton(emailConfig);
+builder.Services.Configure<FormOptions>(o =>
+{
+    o.ValueLengthLimit = int.MaxValue;
+    o.MultipartBodyLengthLimit = int.MaxValue;
+    o.MemoryBufferThreshold = int.MaxValue;
+});
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -29,6 +44,8 @@ builder.Services.AddDbContext<WebContext>(options =>
 
 builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("AppSettings"));
 
+builder.Services.AddScoped<IPdfCreator, PdfCreator>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
 builder.Services.AddScoped<IWorkoutDayRepository, WorkoutDayRepository>();
 builder.Services.AddScoped<IWorkoutProgramRepository, WorkoutProgramRepository>();
