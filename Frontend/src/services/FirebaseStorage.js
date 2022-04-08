@@ -8,9 +8,9 @@ const getProfileImage = async (imageId) => {
   return response;
 };
 
-const uploadProfileImage = async (file) => {
+const uploadProfileImage = async (file, imageId) => {
   const storage = getStorage();
-  const storageRef = ref(storage, `profileImages/${file.name}`);
+  const storageRef = ref(storage, `profileImages/${imageId}`);
   await uploadBytes(storageRef, file);
 };
 

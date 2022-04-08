@@ -11,6 +11,7 @@ const ProfileCard = ({ trainer }) => (
         <Typography gutterBottom variant="h5" component="div">
           Trainer profile
         </Typography>
+        <img src={trainer.profileImage} alt="" />
         <Typography variant="body2" color="text.secondary">
           {`${trainer.firstName}${' '}${trainer.lastName}`}
         </Typography>

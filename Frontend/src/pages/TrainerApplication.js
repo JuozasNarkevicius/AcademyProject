@@ -1,10 +1,10 @@
-/* eslint-disable no-unused-vars */
 import {
   Button, Container, TextField, CircularProgress, Chip, Typography, Backdrop,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useEffect, useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import applicationService from '../services/ApplicationService';
 import userService from '../services/UserService';
 import STATUS_COLORS from '../constants/statusColors';
@@ -35,20 +35,26 @@ const TrainerApplication = () => {
 
   const getApplication = async () => {
     const response = await applicationService.getCurrentUserApplicationAPI();
+    const image = await firebaseStorage.getProfileImage(response.data.imageId);
+    response.data.profileImage = window.URL.createObjectURL(image);
     setApplication(response.data);
   };
 
   const postApplication = async (values) => {
-    console.log(values.profileImage);
-    await firebaseStorage.uploadProfileImage(values.profileImage[0]);
-    // const response = await userService.getCurrentUserAPI();
-    // await applicationService.postApplicationAPI({
-    //   firstName: response.data.firstName,
-    //   lastName: response.data.lastName,
-    //   email: response.data.email,
-    //   ...values,
-    // });
-    // await getApplication();
+    const imageId = uuidv4();
+    await firebaseStorage.uploadProfileImage(values.profileImage[0], imageId);
+    const response = await userService.getCurrentUserAPI();
+
+    await applicationService.postApplicationAPI({
+      firstName: response.data.firstName,
+      lastName: response.data.lastName,
+      email: response.data.email,
+      description: values.description,
+      qualifications: values.qualifications,
+      phoneNumber: values.phoneNumber,
+      imageId,
+    });
+    await getApplication();
   };
 
   const deleteApplication = async () => {
@@ -59,7 +65,15 @@ const TrainerApplication = () => {
   };
 
   const updateApplication = async (values) => {
-    await applicationService.updateApplicationAPI(application.id, { ...values, status: 'pending' });
+    const imageId = uuidv4();
+    if (values.profileImage) {
+      await firebaseStorage.uploadProfileImage(values.profileImage[0], imageId);
+      const { profileImage, ...valuesToPost } = values;
+      valuesToPost.imageId = imageId;
+      await applicationService.updateApplicationAPI(application.id, { ...valuesToPost, status: 'pending' });
+    } else {
+      await applicationService.updateApplicationAPI(application.id, { ...values, status: 'pending' });
+    }
     await getApplication();
   };
 
@@ -89,8 +103,6 @@ const TrainerApplication = () => {
   if (isLoading) {
     return <CircularProgress />;
   }
-
-  console.log(application);
 
   return (
     <Container sx={{ width: '20rem', mt: '7rem' }}>
@@ -134,7 +146,6 @@ const TrainerApplication = () => {
                 type="submit"
               >
                 Re-Apply
-
               </Button>
               <Button
                 sx={{ margin: '10px' }}

@@ -1,11 +1,10 @@
-/* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import { Box, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { useDropzone } from 'react-dropzone';
+import PropTypes from 'prop-types';
 
 const FileUpload = ({
-  name, value, setFieldValue, helperText, error,
+  name, setFieldValue,
 }) => {
   const {
     acceptedFiles,
@@ -32,10 +31,16 @@ const FileUpload = ({
         {...getInputProps()}
         name={name}
       />
-      <Typography>Drag n drop or click to upload an image</Typography>
-      <Typography>{error}</Typography>
+      {acceptedFiles[0]
+        ? <Typography>{acceptedFiles[0].name}</Typography>
+        : <Typography>Drag n drop or click to upload an image</Typography>}
     </Box>
   );
+};
+
+FileUpload.propTypes = {
+  name: PropTypes.string.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
 };
 
 export default FileUpload;

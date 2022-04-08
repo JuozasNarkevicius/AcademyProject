@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import {
   Card, Container, CircularProgress, CardContent, Typography,
@@ -14,11 +13,8 @@ const TrainerProfile = () => {
 
   const getTrainer = async () => {
     const response = await applicationService.getApplicationAPI(id);
-    console.log(response.data);
-    const img = await firebaseStorage.getProfileImage();
-    const image = window.URL.createObjectURL(img);
-    response.data.profileImage = image;
-    console.log(response.data);
+    const img = await firebaseStorage.getProfileImage(response.data.imageId);
+    response.data.profileImage = window.URL.createObjectURL(img);
     setTrainer(response.data);
     setIsLoading(false);
   };
