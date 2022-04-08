@@ -2,6 +2,8 @@ import { useState, useMemo } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core';
 import { StyledEngineProvider } from '@mui/material/styles';
+import { initializeApp } from 'firebase/app';
+import firebaseConfig from './constants/firebase';
 import Navigation from './components/layout/Navigation';
 import {
   Home, Sport, Login, Registration,
@@ -14,6 +16,8 @@ import ROUTES from './constants/Routes';
 import './App.css';
 import { AuthorizationContext } from './Context';
 import theme from './styles/theme';
+
+initializeApp(firebaseConfig);
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(sessionStorage.getItem('auth'));

@@ -1,9 +1,11 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import {
   Card, Container, CircularProgress, CardContent, Typography,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import applicationService from '../services/ApplicationService';
+import firebaseStorage from '../services/FirebaseStorage';
 
 const TrainerProfile = () => {
   const [trainer, setTrainer] = useState();
@@ -12,6 +14,11 @@ const TrainerProfile = () => {
 
   const getTrainer = async () => {
     const response = await applicationService.getApplicationAPI(id);
+    console.log(response.data);
+    const img = await firebaseStorage.getProfileImage();
+    const image = window.URL.createObjectURL(img);
+    response.data.profileImage = image;
+    console.log(response.data);
     setTrainer(response.data);
     setIsLoading(false);
   };
@@ -31,6 +38,7 @@ const TrainerProfile = () => {
           <Typography gutterBottom variant="h5" component="div">
             Trainer profile
           </Typography>
+          <img src={trainer.profileImage} alt="" />
           <Typography variant="body2" color="text.secondary">
             {`${trainer.firstName}${' '}${trainer.lastName}`}
           </Typography>

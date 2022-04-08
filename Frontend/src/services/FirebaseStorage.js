@@ -1,0 +1,22 @@
+import {
+  getBlob, getStorage, ref, uploadBytes,
+} from 'firebase/storage';
+
+const getProfileImage = async (imageId) => {
+  const storage = getStorage();
+  const response = await getBlob(ref(storage, `profileImages/${imageId}`));
+  return response;
+};
+
+const uploadProfileImage = async (file) => {
+  const storage = getStorage();
+  const storageRef = ref(storage, `profileImages/${file.name}`);
+  await uploadBytes(storageRef, file);
+};
+
+const firebaseStorage = {
+  getProfileImage,
+  uploadProfileImage,
+};
+
+export default firebaseStorage;
