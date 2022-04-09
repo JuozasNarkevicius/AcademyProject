@@ -1,4 +1,4 @@
-export { default as Home } from './Home';
+export { default as Home } from './home/Home';
 export { default as Login } from './Login';
 export { default as ProgramCreation } from './ProgramCreation';
 export { default as Registration } from './Registration';

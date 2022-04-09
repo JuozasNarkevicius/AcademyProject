@@ -3,27 +3,32 @@ import {
   AppBar, Box, Toolbar, Button,
 } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
+import { styled } from '@mui/system';
 import ROUTES from '../../constants/Routes';
 import { authenticationService } from '../../services/AuthenticationService';
 import { AuthorizationContext } from '../../Context';
+
+const NavButton = styled(Button)({
+  minWidth: '6vw',
+});
 
 const Navigation = () => {
   const { isLoggedIn, setIsLoggedIn, role } = useContext(AuthorizationContext);
   const navigate = useNavigate();
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="sticky" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, m: 0 }} color="primary">
+    <Box>
+      <AppBar position="sticky" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, m: 0, backgroundColor: '#141414' }} color="primary">
         <Toolbar>
           {isLoggedIn === 'true' ? (
             <>
-              <Button color="inherit" component={Link} to={ROUTES.HOME}>Logo</Button>
-              <Button color="inherit" component={Link} to={ROUTES.MY_PROGRAMS}>My programs</Button>
-              <Button color="inherit" component={Link} to={ROUTES.BROWSE_PROGRAMS}>Browse programs</Button>
-              <Button color="inherit" component={Link} to={ROUTES.TRAINERS}>Trainers</Button>
+              <NavButton color="inherit" component={Link} to={ROUTES.HOME}>Logo</NavButton>
+              <NavButton color="inherit" component={Link} to={ROUTES.MY_PROGRAMS}>My programs</NavButton>
+              <NavButton color="inherit" component={Link} to={ROUTES.BROWSE_PROGRAMS}>Browse programs</NavButton>
+              <NavButton color="inherit" component={Link} to={ROUTES.TRAINERS}>Trainers</NavButton>
               {role === 'admin'
-              && <Button color="inherit" component={Link} to={ROUTES.TRAINER_APPLICATION_LIST}>Trainer applications</Button>}
+              && <NavButton color="inherit" component={Link} to={ROUTES.TRAINER_APPLICATION_LIST}>Trainer applications</NavButton>}
               <Box sx={{ flexGrow: 1 }} />
-              <Button
+              <NavButton
                 sx={{ p: 0 }}
                 color="inherit"
                 onClick={() => {
@@ -35,13 +40,24 @@ const Navigation = () => {
               >
                 Logout
 
-              </Button>
+              </NavButton>
             </>
           ) : (
             <>
-              <Button color="inherit" component={Link} to={ROUTES.HOME}>Logo</Button>
-              <Button color="inherit" component={Link} to={ROUTES.LOGIN}>Login</Button>
-              <Button color="inherit" component={Link} to={ROUTES.REGISTER}>Register</Button>
+              <Box>
+                <Button color="inherit" component={Link} to={ROUTES.HOME}>Logo</Button>
+              </Box>
+              <Box>
+                <NavButton color="inherit" component={Link} to={ROUTES.LOGIN}>Login</NavButton>
+                <NavButton
+                  color="inherit"
+                  component={Link}
+                  to={ROUTES.REGISTER}
+                  sx={{ backgroundColor: '#CD5C5C' }}
+                >
+                  Register
+                </NavButton>
+              </Box>
             </>
           )}
         </Toolbar>
