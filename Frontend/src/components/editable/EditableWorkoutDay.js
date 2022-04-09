@@ -92,7 +92,7 @@ const EditableWorkoutDay = ({ workout, setIsDraggable }) => {
     <>
       <TableContainer component={Paper}>
         {workout.exercises.length ? (
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 650, backgroundColor: '#1c1c1c' }} aria-label="simple table">
             <TableHead>
               <TableRow>
                 <TableCell>Exercise name</TableCell>

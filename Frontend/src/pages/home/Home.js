@@ -1,22 +1,23 @@
-import { Typography, Grid } from '@mui/material';
+import { Typography, Grid, CssBaseline } from '@mui/material';
 import athlete from '../../assets/images/athlete.png';
 import programTool from '../../assets/images/programtool.png';
 import personalTrainer from '../../assets/images/personalTrainer.webp';
 
 const Home = () => (
   <Grid container spacing={{ xs: 1, md: 2 }} columns={{ xs: 2, md: 12 }}>
+    <CssBaseline />
     <Grid
       item
       xs={6}
       sx={{
-        backgroundColor: '#141414', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center',
+        color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center',
       }}
     >
       <Typography sx={{ textAlign: 'left', fontSize: '35px', m: '13rem' }}>
         Your journey to a healthier life style begins today!
       </Typography>
     </Grid>
-    <Grid item xs={6} sx={{ backgroundColor: '#141414' }}>
+    <Grid item xs={6}>
       <img src={athlete} alt="" style={{ height: '80vh', marginTop: '4rem' }} />
     </Grid>
     <Grid
@@ -49,7 +50,7 @@ const Home = () => (
       item
       xs={6}
       sx={{
-        backgroundColor: '#141414', color: 'white', minHeight: '65rem', display: 'flex', justifyContent: 'center', alignItems: 'center',
+        color: 'white', minHeight: '65rem', display: 'flex', justifyContent: 'center', alignItems: 'center',
       }}
     >
       <Typography sx={{ textAlign: 'left', fontSize: '35px', m: '13rem' }}>
@@ -60,7 +61,7 @@ const Home = () => (
       item
       xs={6}
       sx={{
-        backgroundColor: '#141414', display: 'flex', justifyContent: 'center', alignItems: 'center',
+        display: 'flex', justifyContent: 'center', alignItems: 'center',
       }}
     >
       <img

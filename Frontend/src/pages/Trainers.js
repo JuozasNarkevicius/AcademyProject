@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Card, Container, CardActions, CardContent,
-  Button, Typography, Grid, CircularProgress,
+  Button, Typography, Grid, CircularProgress, CssBaseline,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../constants/Routes';
@@ -39,6 +39,7 @@ const Trainers = () => {
 
   return (
     <Container sx={{ mt: '2.5rem' }}>
+      <CssBaseline />
       <Typography variant="h5">Registered trainers</Typography>
       <SearchBar
         elements={trainers}

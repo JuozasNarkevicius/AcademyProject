@@ -63,9 +63,9 @@ const EditableName = ({
             }}
             onKeyPress={(e) => (e.key === 'Enter' && save(e))}
           />
-          <IconButton title="Save" onClick={save}>
+          <IconButton title="Save" onClick={save} sx={{ color: '#fff' }}>
             <Icon>
-              <img src={imgSrcSave} height={23} width={23} alt="k" />
+              <img src={imgSrcSave} height={23} width={23} alt="k" style={{ color: 'white' }} />
             </Icon>
           </IconButton>
         </>

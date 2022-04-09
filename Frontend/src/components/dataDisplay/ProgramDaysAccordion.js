@@ -1,3 +1,4 @@
+/* eslint-disable max-lines */
 import React, { useContext, useState } from 'react';
 import {
   Accordion, AccordionSummary, AccordionDetails, Button, Box,
@@ -108,12 +109,13 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
                   >
                     {(provided) => (
                       <Accordion
+                        sx={{ backgroundColor: '#1c1c1c' }}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         ref={provided.innerRef}
                       >
                         <AccordionSummary
-                          expandIcon={<ExpandMoreIcon />}
+                          expandIcon={<ExpandMoreIcon sx={{ color: 'white' }} />}
                           onMouseEnter={() => !isDraggable && setIsDraggable(true)}
                         >
                           <EditableName

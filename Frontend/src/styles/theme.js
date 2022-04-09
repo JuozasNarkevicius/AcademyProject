@@ -5,6 +5,12 @@ const theme = createTheme({
     fontFamily: 'Nunito',
   },
   palette: {
+    background: {
+      default: '#222222',
+    },
+    text: {
+      primary: '#ffffff',
+    },
     primary: {
       main: '#242526',
     },
@@ -29,6 +35,14 @@ const theme = createTheme({
       root: {
         defaultProps: {
           maxWidth: '100%',
+          backgroundColor: 'black',
+        },
+      },
+    },
+    MuiInput: {
+      styleOverrides: {
+        root: {
+          color: '#fff',
         },
       },
     },

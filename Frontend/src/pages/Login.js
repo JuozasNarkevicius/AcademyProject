@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import {
-  Button, Container, TextField, Typography,
+  Button, Container, TextField, Typography, Box, CssBaseline,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -41,24 +41,36 @@ const Login = () => {
     },
   });
   return (
-    <Container sx={{ width: '20rem', mt: '7rem' }}>
-      <form sx={{ mt: '20%' }} onSubmit={formik.handleSubmit}>
-        {loginFields.map((login) => (
-          <TextField
-            sx={{ m: '10px' }}
-            key={login.name}
-            name={login.name}
-            label={login.label}
-            type={login.type}
-            value={formik.values[login.name]}
-            onChange={formik.handleChange}
-            error={formik.touched[login.name] && Boolean(formik.errors[login.name])}
-            helperText={formik.touched[login.name] && formik.errors[login.name]}
-          />
-        ))}
-        <Typography sx={{ color: 'red' }}>{error}</Typography>
-        <Button sx={{ margin: '10px' }} variant="contained" size="large" type="submit">Login</Button>
-      </form>
+    <Container sx={{ minWidth: '100%', minHeight: '100vh', paddingTop: '5rem' }}>
+      <CssBaseline />
+      <Box sx={{
+        display: 'flex', justifyContent: 'center', marginTop: '10vh',
+      }}
+      >
+        <form onSubmit={formik.handleSubmit} style={{ maxWidth: '20rem' }}>
+          {loginFields.map((login) => (
+            <TextField
+              InputLabelProps={{
+                style: { color: '#fff' },
+              }}
+              variant="filled"
+              sx={{
+                m: '10px', backgroundColor: '#2d2b2b', color: 'white',
+              }}
+              key={login.name}
+              name={login.name}
+              label={login.label}
+              type={login.type}
+              value={formik.values[login.name]}
+              onChange={formik.handleChange}
+              error={formik.touched[login.name] && Boolean(formik.errors[login.name])}
+              helperText={formik.touched[login.name] && formik.errors[login.name]}
+            />
+          ))}
+          <Typography sx={{ color: 'red' }}>{error}</Typography>
+          <Button sx={{ margin: '10px' }} variant="contained" color="secondary" size="large" type="submit">Login</Button>
+        </form>
+      </Box>
     </Container>
   );
 };
