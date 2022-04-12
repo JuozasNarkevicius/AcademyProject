@@ -15,13 +15,15 @@ const opts = {
 
 const additionalContentFields = [
   { name: 'description', label: 'Description', type: 'text' },
-  { name: 'videoId', label: 'Video', type: 'text' },
+  { name: 'videoUrl', label: 'Video', type: 'text' },
 ];
 
 const EditableExerciseDetails = ({
   exercise, setIsBackdropOpen, setIsDraggable, deleteExerciseAttribute, updateExercise,
 }) => {
   const [videoEvent, setVideoEvent] = useState();
+
+  console.log(videoService.getIdFromUrl(exercise.videoUrl));
   return (
     <Card sx={{ minHeight: '30rem', minWidth: '60rem', maxWidth: '60rem' }}>
       <IconButton
@@ -49,14 +51,14 @@ const EditableExerciseDetails = ({
       </AdditionalField>
       <AdditionalField
         exercise={exercise}
-        attribute="videoId"
+        attribute="videoUrl"
         field={additionalContentFields[1]}
         updateExercise={updateExercise}
-        deleteExerciseAttribute={() => deleteExerciseAttribute(exercise, 'videoId')}
+        deleteExerciseAttribute={() => deleteExerciseAttribute(exercise, 'videoUrl')}
       >
         <YouTube
-          videoId={exercise.videoId
-        && videoService.getIdFromUrl(exercise.videoId)}
+          videoId={exercise.videoUrl
+        && videoService.getIdFromUrl(exercise.videoUrl)}
           opts={opts}
           onPlay={setVideoEvent}
         />

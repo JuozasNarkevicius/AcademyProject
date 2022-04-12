@@ -12,7 +12,7 @@ const exerciseFields = [
   { name: 'reps', label: 'Reps', type: 'text' },
   { name: 'rest', label: 'Rest', type: 'text' },
   { name: 'description', label: 'Description', type: 'text' },
-  { name: 'videoId', label: 'Video Url', type: 'text' },
+  { name: 'videoUrl', label: 'Video Url', type: 'text' },
 ];
 
 const validationSchema = yup.object({
@@ -30,7 +30,7 @@ const ExerciseForm = ({ createExercise, setIsBackdropOpen, setIsDraggable }) => 
       reps: '',
       rest: '',
       description: '',
-      videoId: '',
+      videoUrl: '',
     },
     validationSchema,
     onSubmit: async (values) => {

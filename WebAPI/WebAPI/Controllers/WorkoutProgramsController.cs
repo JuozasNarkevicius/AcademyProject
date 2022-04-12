@@ -16,41 +16,15 @@ namespace WebAPI.Controllers
         private readonly IMapper _mapper;
         private readonly IWorkoutProgramRepository _workoutProgramRepository;
         private readonly IRatingRepository _ratingRepository;
-        private readonly IWorkoutDayRepository _workoutDayRepository;
-        private readonly IExerciseRepository _exerciseRepository;
-        private readonly IEmailSender _emailSender;
 
-        public WorkoutProgramsController(IWorkoutProgramRepository workoutProgramRepository, IWorkoutDayRepository workoutDayRepository, IExerciseRepository exerciseRepository, IRatingRepository ratingRepository, IMapper mapper, IEmailSender emailSender)
+        public WorkoutProgramsController(IWorkoutProgramRepository workoutProgramRepository, IRatingRepository ratingRepository, IMapper mapper)
         {
             _workoutProgramRepository = workoutProgramRepository;
-            _workoutDayRepository = workoutDayRepository;
-            _exerciseRepository = exerciseRepository;
             _ratingRepository = ratingRepository;
             _mapper = mapper;
-            _emailSender = emailSender;
         }
 
-        //[HttpGet("~/api/email/")]
-        //public async Task<ActionResult<IEnumerable<WorkoutProgram>>> SendEmail()
-        //{
-        //    var message = new Message("juoznark@gmail.com", "Test email", "This is the content of the email");
-
-        //    _emailSender.SendEmail(message);
-
-        //    return Ok();
-        //}
-
-        //[HttpPost("~/api/email/")]
-        //public async Task<ActionResult<IEnumerable<WorkoutProgram>>> SendEmail()
-        //{
-        //    var message = new Message("juoznark@gmail.com", "Test email", "This is the content of the email");
-
-        //    _emailSender.SendEmail(message);
-
-        //    return Ok();
-        //}
-
-        [Authorize]
+        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<WorkoutProgram>>> GetPrograms(long userId)
         {
@@ -61,7 +35,6 @@ namespace WebAPI.Controllers
             return Ok(mapped);
         }
 
-        [Authorize]
         [HttpGet("~/api/users/{userId}/savedPrograms/")]
         public async Task<ActionResult<IEnumerable<WorkoutProgram>>> GetSavedPrograms(long userId)
         {
@@ -98,6 +71,7 @@ namespace WebAPI.Controllers
             return Ok(mapped);
         }
 
+        [AllowAnonymous]
         [HttpGet("/api/programs/{id}")]
         public async Task<ActionResult<WorkoutProgram>> GetProgram(long id)
         {
@@ -159,29 +133,6 @@ namespace WebAPI.Controllers
             var programFromDB = await _workoutProgramRepository.Add(program);
 
             return CreatedAtAction("GetProgramName", new { userId, id = programFromDB.Id }, _mapper.Map<WorkoutProgramNamesDTO>(programFromDB));
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<WorkoutProgram>> PostProgram(long userId, CreateWorkoutProgramDTO programDTO)
-        {
-            var program = _mapper.Map<WorkoutProgram>(programDTO);
-            program.UserId = userId;
-            var programFromDb = await _workoutProgramRepository.Add(program);
-
-            foreach (var workoutDTO in programDTO.Workouts)
-            {
-                var workout = _mapper.Map<WorkoutDay>(workoutDTO);
-                workout.ProgramId = programFromDb.Id;
-                var workoutFromDb = await _workoutDayRepository.Add(workout);
-
-                foreach (var exerciseDTO in workoutDTO.Exercises)
-                {
-                    var exercise = _mapper.Map<Exercise>(exerciseDTO);
-                    exercise.WorkoutId = workoutFromDb.Id;
-                    await _exerciseRepository.Add(exercise);
-                }
-            }
-            return CreatedAtAction(nameof(GetProgram), new { userId, id = programFromDb.Id }, _mapper.Map<WorkoutProgramDTO>(programFromDb));
         }
 
         [HttpDelete("~/api/users/{userId}/savedPrograms/{programId}")]
