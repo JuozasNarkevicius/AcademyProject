@@ -1,5 +1,5 @@
 import {
-  Button, Container, TextField, CircularProgress, Chip, Typography, Backdrop,
+  Button, Container, TextField, Chip, Typography, Backdrop,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -11,6 +11,7 @@ import STATUS_COLORS from '../constants/statusColors';
 import ProfileCard from '../components/dataDisplay/ProfileCard';
 import FileUpload from '../components/FileUpload';
 import firebaseStorage from '../services/FirebaseStorage';
+import Loading from '../components/Loading';
 
 const ApplicationFields = [
   { name: 'description', label: 'Description', type: 'text' },
@@ -101,7 +102,7 @@ const TrainerApplication = () => {
   });
 
   if (isLoading) {
-    return <CircularProgress />;
+    return <Loading />;
   }
 
   return (

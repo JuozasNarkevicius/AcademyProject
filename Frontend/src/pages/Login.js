@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { authenticationService } from '../services/AuthenticationService';
 import ROUTES from '../constants/Routes';
 import { AuthorizationContext } from '../Context';
+import backgroundImage from '../assets/images/workoutEquipment.jpg';
+import COLORS from '../styles/colors';
 
 const loginFields = [
   { name: 'email', label: 'Email', type: 'text' },
@@ -41,10 +43,20 @@ const Login = () => {
     },
   });
   return (
-    <Container sx={{ minWidth: '100%', minHeight: '100vh', paddingTop: '5rem' }}>
+    <Container sx={{
+      minWidth: '100%',
+      minHeight: '93vh',
+      paddingTop: '5rem',
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      overflow: 'hidden',
+    }}
+    >
       <CssBaseline />
       <Box sx={{
-        display: 'flex', justifyContent: 'center', marginTop: '10vh',
+        display: 'flex', justifyContent: 'center', marginTop: '20vh',
       }}
       >
         <form onSubmit={formik.handleSubmit} style={{ maxWidth: '20rem' }}>
@@ -68,7 +80,18 @@ const Login = () => {
             />
           ))}
           <Typography sx={{ color: 'red' }}>{error}</Typography>
-          <Button sx={{ margin: '10px' }} variant="contained" color="secondary" size="large" type="submit">Login</Button>
+          <Button
+            sx={{
+              margin: '10px',
+              '&:hover': { backgroundColor: COLORS.SECONDARY_HOVER },
+              width: '8rem',
+            }}
+            variant="contained"
+            color="secondary"
+            type="submit"
+          >
+            Login
+          </Button>
         </form>
       </Box>
     </Container>

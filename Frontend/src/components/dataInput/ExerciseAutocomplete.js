@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { TextField, CircularProgress, Autocomplete } from '@mui/material';
+import { TextField, Autocomplete } from '@mui/material';
 import { exerciseService } from '../../services/ExerciseService';
+import Loading from '../Loading';
 
 const ExerciseAutocomplete = () => {
   const [exercises, setExercises] = useState();
@@ -17,7 +18,7 @@ const ExerciseAutocomplete = () => {
   }, []);
 
   if (isLoading) {
-    return <CircularProgress />;
+    return <Loading />;
   }
 
   return (

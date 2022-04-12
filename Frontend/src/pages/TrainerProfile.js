@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Card, Container, CircularProgress, CardContent, Typography,
+  Card, Container, CardContent, Typography,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import applicationService from '../services/ApplicationService';
 import firebaseStorage from '../services/FirebaseStorage';
+import Loading from '../components/Loading';
 
 const TrainerProfile = () => {
   const [trainer, setTrainer] = useState();
@@ -24,7 +25,7 @@ const TrainerProfile = () => {
   }, []);
 
   if (isLoading) {
-    return <CircularProgress />;
+    return <Loading />;
   }
 
   return (

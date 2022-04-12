@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Container, Typography, CircularProgress, Button, Box,
+  Container, Typography, Button, Box,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
@@ -8,6 +8,7 @@ import StarIcon from '@mui/icons-material/Star';
 import programService from '../services/ProgramService';
 import ratingService from '../services/Rating';
 import ProgramAccordion from '../components/dataDisplay/ProgramAccordion';
+import Loading from '../components/Loading';
 
 const PublicProgramView = () => {
   const [program, setProgram] = useState();
@@ -43,7 +44,7 @@ const PublicProgramView = () => {
   }, []);
 
   if (isLoading) {
-    return <CircularProgress />;
+    return <Loading />;
   }
 
   return (

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Container, Card, CardContent, Typography, CircularProgress, Button,
+  Container, Card, CardContent, Typography, Button,
 } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import applicationService from '../services/ApplicationService';
 import userService from '../services/UserService';
 import ROUTES from '../constants/Routes';
 import firebaseStorage from '../services/FirebaseStorage';
+import Loading from '../components/Loading';
 
 const TrainerApplicationView = () => {
   const [application, setApplication] = useState();
@@ -38,7 +39,7 @@ const TrainerApplicationView = () => {
   }, []);
 
   if (isLoading) {
-    return <CircularProgress />;
+    return <Loading />;
   }
 
   return (

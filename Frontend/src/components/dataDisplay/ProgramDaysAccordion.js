@@ -13,6 +13,7 @@ import saveIcon from '../../assets/icons/checkmark.svg';
 import EditableName from '../editable/EditableName';
 import programService from '../../services/ProgramService';
 import { workoutService } from '../../services/WorkoutService';
+import COLORS from '../../styles/colors';
 
 const ProgramDaysAccordion = ({ deleteProgram }) => {
   const { program, setProgram } = useContext(ProgramContext);
@@ -109,7 +110,7 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
                   >
                     {(provided) => (
                       <Accordion
-                        sx={{ backgroundColor: '#1c1c1c' }}
+                        sx={{ backgroundColor: COLORS.ITEM }}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         ref={provided.innerRef}

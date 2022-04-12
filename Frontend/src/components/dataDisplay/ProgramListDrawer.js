@@ -3,6 +3,7 @@ import {
   Box, Drawer, CssBaseline, Toolbar, List, ListItem, ListItemText, Button, Divider,
 } from '@mui/material';
 import PropTypes from 'prop-types';
+import COLORS from '../../styles/colors';
 
 const drawerWidth = '12rem';
 
@@ -24,7 +25,7 @@ const ProgramListDrawer = ({
         sx={{
           width: drawerWidth,
           flexShrink: 0,
-          '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box' },
+          '& .MuiDrawer-paper': { width: drawerWidth, boxSizing: 'border-box', backgroundColor: COLORS.ITEM },
         }}
       >
         <Toolbar />
@@ -36,14 +37,14 @@ const ProgramListDrawer = ({
                   <ListItemText sx={{ textAlign: 'center' }} primary={program.name} />
                 </ListItem>
               ) : (
-                <ListItem sx={{ '&:hover': { backgroundColor: '#dbdbdb' } }} key={program.id} onClick={() => selectProgram(program.id, 'owned')}>
+                <ListItem sx={{ '&:hover': { backgroundColor: COLORS.SUB_ITEM } }} key={program.id} onClick={() => selectProgram(program.id, 'owned')}>
                   <ListItemText sx={{ textAlign: 'center' }} primary={program.name} />
                 </ListItem>
               )
             ))}
           </List>
           <Button sx={{ m: '10px', float: 'middle' }} variant="contained" onClick={createProgram} color="secondary">New program</Button>
-          <Divider />
+          <Divider sx={{ backgroundColor: COLORS.SUB_ITEM_ITEM }} />
           <List>
             {savedPrograms.map((program) => (
               (program.id === selectedProgramId) ? (
@@ -51,7 +52,7 @@ const ProgramListDrawer = ({
                   <ListItemText sx={{ textAlign: 'center' }} primary={program.name} />
                 </ListItem>
               ) : (
-                <ListItem sx={{ '&:hover': { backgroundColor: '#dbdbdb' } }} key={program.id} onClick={() => selectProgram(program.id, 'saved')}>
+                <ListItem sx={{ '&:hover': { backgroundColor: COLORS.SUB_ITEM } }} key={program.id} onClick={() => selectProgram(program.id, 'saved')}>
                   <ListItemText sx={{ textAlign: 'center' }} primary={program.name} />
                 </ListItem>
               )

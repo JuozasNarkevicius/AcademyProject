@@ -2,6 +2,7 @@ import { Typography, Grid, CssBaseline } from '@mui/material';
 import athlete from '../../assets/images/athlete.png';
 import programTool from '../../assets/images/programtool.png';
 import personalTrainer from '../../assets/images/personalTrainer.webp';
+import COLORS from '../../styles/colors';
 
 const Home = () => (
   <Grid container spacing={{ xs: 1, md: 2 }} columns={{ xs: 2, md: 12 }}>
@@ -24,7 +25,7 @@ const Home = () => (
       item
       xs={6}
       sx={{
-        backgroundColor: '#CD5C5C', minHeight: '65rem', display: 'flex', justifyContent: 'center', alignItems: 'center',
+        backgroundColor: COLORS.SECONDARY, minHeight: '65rem', display: 'flex', justifyContent: 'center', alignItems: 'center',
       }}
     >
       <img
@@ -39,7 +40,7 @@ const Home = () => (
       item
       xs={6}
       sx={{
-        backgroundColor: '#CD5C5C', color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center',
+        backgroundColor: COLORS.SECONDARY, color: 'white', display: 'flex', justifyContent: 'center', alignItems: 'center',
       }}
     >
       <Typography sx={{ textAlign: 'left', fontSize: '35px', m: '13rem' }}>

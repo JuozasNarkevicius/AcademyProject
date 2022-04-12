@@ -98,13 +98,13 @@ const EditableExercise = ({
       </>
     ) : (
       <>
-        <TableCell sx={{ width: '22%' }} component="th" scope="row">
+        <TableCell sx={{ width: '22%', borderBottomColor: 'gray' }} component="th" scope="row">
           {exercise.name}
         </TableCell>
-        <TableCell sx={{ width: '22%' }} align="left">{exercise.sets}</TableCell>
-        <TableCell sx={{ width: '22%' }}>{exercise.reps}</TableCell>
-        <TableCell sx={{ width: '20%' }}>{exercise.rest}</TableCell>
-        <TableCell align="right">
+        <TableCell sx={{ width: '22%', borderBottomColor: 'gray' }} align="left">{exercise.sets}</TableCell>
+        <TableCell sx={{ width: '22%', borderBottomColor: 'gray' }}>{exercise.reps}</TableCell>
+        <TableCell sx={{ width: '20%', borderBottomColor: 'gray' }}>{exercise.rest}</TableCell>
+        <TableCell sx={{ borderBottomColor: 'gray' }} align="right">
           <IconButton
             title="View details"
             onClick={() => {

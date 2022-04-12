@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Card, Container, CardActions, CardContent,
-  Button, Typography, Grid, CircularProgress, CssBaseline,
+  Button, Typography, Grid, CssBaseline,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../constants/Routes';
@@ -9,6 +9,8 @@ import applicationService from '../services/ApplicationService';
 import paginationService from '../services/genericServices/pagination';
 import SearchBar from '../components/dataInput/SearchBar';
 import Pagination from '../components/layout/Pagination';
+import COLORS from '../styles/colors';
+import Loading from '../components/Loading';
 
 const Trainers = () => {
   const [trainers, setTrainers] = useState();
@@ -34,7 +36,7 @@ const Trainers = () => {
   }, []);
 
   if (isLoading) {
-    return <CircularProgress />;
+    return <Loading />;
   }
 
   return (
@@ -62,6 +64,7 @@ const Trainers = () => {
                 <Button
                   size="small"
                   onClick={() => navigate(`${ROUTES.TRAINER_PROFILE}/${trainer.id}`)}
+                  sx={{ color: COLORS.TEXT }}
                 >
                   Learn More
                 </Button>

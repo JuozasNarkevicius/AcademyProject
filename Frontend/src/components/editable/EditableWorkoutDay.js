@@ -2,7 +2,7 @@
 import React, { useContext, useState } from 'react';
 import {
   Table, TableBody, TableCell, Backdrop, TableContainer,
-  TableHead, TableRow, Paper, Button, Typography,
+  TableHead, TableRow, Button, Typography, CssBaseline,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -13,6 +13,7 @@ import EditableExercise from './EditableExercise';
 import { exerciseService } from '../../services/ExerciseService';
 import ExerciseForm from '../dataInput/ExerciseForm';
 import EditableExerciseDetails from './EditableExerciseDetails';
+import COLORS from '../../styles/colors';
 
 const EditableWorkoutDay = ({ workout, setIsDraggable }) => {
   const { program, setProgram } = useContext(ProgramContext);
@@ -91,11 +92,12 @@ const EditableWorkoutDay = ({ workout, setIsDraggable }) => {
 
   return (
     <>
-      <TableContainer component={Paper}>
+      <TableContainer>
+        <CssBaseline />
         {workout.exercises.length ? (
-          <Table sx={{ minWidth: 650, backgroundColor: '#1c1c1c' }} aria-label="simple table">
+          <Table sx={{ backgroundColor: COLORS.SUB_ITEM, borderRadius: 3 }}>
             <TableHead>
-              <TableRow>
+              <TableRow sx={{ borderColor: 'gray' }}>
                 <TableCell>Exercise name</TableCell>
                 <TableCell>Sets</TableCell>
                 <TableCell>Reps</TableCell>

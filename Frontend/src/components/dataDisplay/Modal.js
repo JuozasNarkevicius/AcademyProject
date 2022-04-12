@@ -5,9 +5,10 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import deleteIcon from '../../assets/icons/x.svg';
+import COLORS from '../../styles/colors';
 
 const AlertDialog = ({
-  deleteObject, id, objectType,
+  deleteObject, objectType,
 }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -37,10 +38,9 @@ const AlertDialog = ({
         </Icon>
       </IconButton>
       <Dialog
+        sx={{ color: COLORS.BACKGROUND, paper: { backgroundColor: 0 } }}
         open={open}
         onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
           Are you sure you want to delete this
@@ -61,7 +61,6 @@ const AlertDialog = ({
 
 AlertDialog.propTypes = {
   deleteObject: PropTypes.func.isRequired,
-  id: PropTypes.number.isRequired,
   objectType: PropTypes.string.isRequired,
 };
 

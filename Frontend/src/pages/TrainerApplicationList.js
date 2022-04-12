@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
   Container, List, ListItem, ListItemButton, Chip, Typography,
-  CircularProgress,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import applicationService from '../services/ApplicationService';
@@ -10,6 +9,7 @@ import STATUS_COLORS from '../constants/statusColors';
 import paginationService from '../services/genericServices/pagination';
 import Pagination from '../components/layout/Pagination';
 import SearchBar from '../components/dataInput/SearchBar';
+import Loading from '../components/Loading';
 
 const TrainerApplicationList = () => {
   const [applications, setApplications] = useState();
@@ -35,7 +35,7 @@ const TrainerApplicationList = () => {
   }, []);
 
   if (isLoading) {
-    return <CircularProgress />;
+    return <Loading />;
   }
 
   return (

@@ -7,6 +7,7 @@ import { styled } from '@mui/system';
 import ROUTES from '../../constants/Routes';
 import { authenticationService } from '../../services/AuthenticationService';
 import { AuthorizationContext } from '../../Context';
+import COLORS from '../../styles/colors';
 
 const NavButton = styled(Button)({
   minWidth: '6vw',
@@ -17,7 +18,7 @@ const Navigation = () => {
   const navigate = useNavigate();
   return (
     <Box>
-      <AppBar position="sticky" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, m: 0, backgroundColor: '#141414' }} color="primary">
+      <AppBar position="sticky" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, m: 0, backgroundColor: COLORS.HEADER }} color="primary">
         <Toolbar>
           {isLoggedIn === 'true' ? (
             <>
@@ -53,7 +54,10 @@ const Navigation = () => {
                   color="inherit"
                   component={Link}
                   to={ROUTES.REGISTER}
-                  sx={{ backgroundColor: '#CD5C5C' }}
+                  sx={{
+                    backgroundColor: COLORS.SECONDARY,
+                    '&:hover': { backgroundColor: COLORS.SECONDARY_HOVER },
+                  }}
                 >
                   Register
                 </NavButton>

@@ -1,6 +1,6 @@
 import {
-  Container, Typography, List, ListItem, CircularProgress,
-  ListItemButton, Chip,
+  Container, Typography, List, ListItem,
+  ListItemButton, Chip, CssBaseline,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -9,6 +9,7 @@ import ROUTES from '../constants/Routes';
 import paginationService from '../services/genericServices/pagination';
 import Pagination from '../components/layout/Pagination';
 import SearchBar from '../components/dataInput/SearchBar';
+import Loading from '../components/Loading';
 
 const SharedPrograms = () => {
   const [programs, setPrograms] = useState();
@@ -34,11 +35,12 @@ const SharedPrograms = () => {
   }, []);
 
   if (isLoading) {
-    return <CircularProgress />;
+    return <Loading />;
   }
 
   return (
     <Container sx={{ mt: '5rem' }}>
+      <CssBaseline />
       <Typography variant="h5">Programs shared by other users</Typography>
       <SearchBar
         elements={programs}

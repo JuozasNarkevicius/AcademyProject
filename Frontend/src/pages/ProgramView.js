@@ -1,12 +1,15 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useMemo } from 'react';
 import {
-  Container, Typography, CircularProgress, Button,
+  Container, Typography, Button,
 } from '@mui/material';
 import ProgramListDrawer from '../components/dataDisplay/ProgramListDrawer';
 import ProgramDaysAccordion from '../components/dataDisplay/ProgramDaysAccordion';
 import programService from '../services/ProgramService';
 import { ProgramContext } from '../Context';
 import ProgramAccordion from '../components/dataDisplay/ProgramAccordion';
+import COLORS from '../styles/colors';
+import Loading from '../components/Loading';
 
 const ProgramView = () => {
   const [programList, setProgramList] = useState([]);
@@ -54,7 +57,7 @@ const ProgramView = () => {
   }, [program]);
 
   if (isLoading) {
-    return <CircularProgress />;
+    return <Loading />;
   }
 
   return (
@@ -72,7 +75,15 @@ const ProgramView = () => {
         && (
           <>
             <ProgramAccordion program={program} />
-            <Button variant="contained" sx={{ float: 'left', ml: '4rem' }} onClick={unfollowProgram}>Unfollow program</Button>
+            <Button
+              variant="contained"
+              sx={{
+                float: 'left', ml: '4rem', backgroundColor: COLORS.SECONDARY, '&:hover': { backgroundColor: COLORS.SECONDARY_HOVER },
+              }}
+              onClick={unfollowProgram}
+            >
+              Unfollow program
+            </Button>
           </>
         )}
         {!program
