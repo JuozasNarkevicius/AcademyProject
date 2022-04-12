@@ -37,10 +37,10 @@ const ExerciseDetails = ({ exercise, setIsBackdropOpen }) => {
           : <Typography>No description added</Typography>}
       </Card>
       <Card sx={{ m: '2rem', p: '1rem' }}>
-        {exercise.videoId ? (
+        {exercise.videoUrl ? (
           <YouTube
-            videoId={exercise.videoId
-        && videoService.getIdFromUrl(exercise.videoId)}
+            videoUrl={exercise.videoUrl
+        && videoService.getIdFromUrl(exercise.videoUrl)}
             opts={opts}
             onPlay={setVideoEvent}
           />
