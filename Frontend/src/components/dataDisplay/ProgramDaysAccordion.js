@@ -110,7 +110,7 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
                   >
                     {(provided) => (
                       <Accordion
-                        sx={{ backgroundColor: COLORS.ITEM }}
+                        sx={{ backgroundColor: COLORS.ITEM, width: '70rem' }}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
                         ref={provided.innerRef}

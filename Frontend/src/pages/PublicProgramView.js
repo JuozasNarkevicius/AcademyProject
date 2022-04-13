@@ -9,6 +9,7 @@ import programService from '../services/ProgramService';
 import ratingService from '../services/Rating';
 import ProgramAccordion from '../components/dataDisplay/ProgramAccordion';
 import Loading from '../components/Loading';
+import backgroundImage from '../assets/images/workoutEquipment.jpg';
 
 const PublicProgramView = () => {
   const [program, setProgram] = useState();
@@ -47,7 +48,18 @@ const PublicProgramView = () => {
   }
 
   return (
-    <Container sx={{ mb: '4rem', mt: '-2.5rem' }}>
+    <Container sx={{
+      mt: '-2.5rem',
+      backgroundImage: `url(${backgroundImage})`,
+      minWidth: '100%',
+      minHeight: '97.5vh',
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat',
+      backgroundAttachment: 'fixed',
+      overflow: 'hidden',
+    }}
+    >
       <CssBaseline />
       <Box sx={{
         display: 'flex',

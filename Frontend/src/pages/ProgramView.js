@@ -1,7 +1,6 @@
-/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useMemo } from 'react';
 import {
-  Container, Typography, Button,
+  Container, Typography, Button, Box,
 } from '@mui/material';
 import ProgramListDrawer from '../components/dataDisplay/ProgramListDrawer';
 import ProgramDaysAccordion from '../components/dataDisplay/ProgramDaysAccordion';
@@ -10,6 +9,7 @@ import { ProgramContext } from '../Context';
 import ProgramAccordion from '../components/dataDisplay/ProgramAccordion';
 import COLORS from '../styles/colors';
 import Loading from '../components/Loading';
+import backgroundImage from '../assets/images/workoutEquipment.jpg';
 
 const ProgramView = () => {
   const [programList, setProgramList] = useState([]);
@@ -61,7 +61,18 @@ const ProgramView = () => {
   }
 
   return (
-    <Container>
+    <Container sx={{
+      mt: '-2.5rem',
+      backgroundImage: `url(${backgroundImage})`,
+      minWidth: '100%',
+      minHeight: '97.5vh',
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+      backgroundRepeat: 'no-repeat',
+      backgroundAttachment: 'fixed',
+      overflow: 'hidden',
+    }}
+    >
       <ProgramContext.Provider value={programMemo}>
         <ProgramListDrawer
           programs={programList}
@@ -69,9 +80,10 @@ const ProgramView = () => {
           createProgram={createProgram}
           handleClick={handleDrawerButtonClick}
         />
-        {program && selectedProgramType === 'owned'
+        <Box sx={{ display: 'flex', justifyContent: 'center', width: '90vw' }}>
+          {program && selectedProgramType === 'owned'
         && <ProgramDaysAccordion deleteProgram={deleteProgram} programType={selectedProgramType} />}
-        {program && selectedProgramType === 'saved'
+          {program && selectedProgramType === 'saved'
         && (
           <>
             <ProgramAccordion program={program} />
@@ -86,12 +98,13 @@ const ProgramView = () => {
             </Button>
           </>
         )}
-        {!program
+          {!program
         && (
           <Typography variant="h4" sx={{ mt: '8rem' }}>
             Choose a program!
           </Typography>
         )}
+        </Box>
       </ProgramContext.Provider>
     </Container>
   );
