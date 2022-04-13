@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import {
   Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Backdrop,
@@ -7,6 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import Exercise from './Exercise';
 import ExerciseDetails from './ExerciseDetails';
+import COLORS from '../../styles/colors';
 
 const WorkoutDay = ({ workout }) => {
   const [IsBackdropOpen, setIsBackdropOpen] = useState(false);
@@ -21,7 +20,7 @@ const WorkoutDay = ({ workout }) => {
     <>
       <TableContainer component={Paper}>
         {workout.exercises.length ? (
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table sx={{ minWidth: 650, backgroundColor: COLORS.SUB_ITEM }}>
             <TableHead>
               <TableRow>
                 <TableCell>Exercise name</TableCell>

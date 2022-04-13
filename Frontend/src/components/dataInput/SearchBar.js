@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useState } from 'react';
 import SearchBarMUI from 'material-ui-search-bar';
 import { Box } from '@mui/material';
@@ -33,7 +32,10 @@ const SearchBar = ({
 
   return (
     <Box sx={{
-      display: 'flex', alignItems: 'center', justifyContent: 'center', m: '2rem',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      m: '2rem',
     }}
     >
       <SearchBarMUI

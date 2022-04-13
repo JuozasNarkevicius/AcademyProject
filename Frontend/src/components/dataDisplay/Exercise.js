@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import {
   TableCell, TableRow, IconButton, Icon,
@@ -12,13 +11,13 @@ const Exercise = ({
   <TableRow
     key={exercise.id}
   >
-    <TableCell sx={{ width: '22%' }} component="th" scope="row">
+    <TableCell sx={{ width: '22%', borderColor: 'gray' }} component="th" scope="row">
       {exercise.name}
     </TableCell>
-    <TableCell sx={{ width: '22%' }} align="left">{exercise.sets}</TableCell>
-    <TableCell sx={{ width: '22%' }}>{exercise.reps}</TableCell>
-    <TableCell sx={{ width: '26%' }}>{exercise.rest}</TableCell>
-    <TableCell sx={{ borderTop: 1, borderTopColor: '#e6e6e6' }}>
+    <TableCell sx={{ width: '22%', borderColor: 'gray' }} align="left">{exercise.sets}</TableCell>
+    <TableCell sx={{ width: '22%', borderColor: 'gray' }}>{exercise.reps}</TableCell>
+    <TableCell sx={{ width: '26%', borderColor: 'gray' }}>{exercise.rest}</TableCell>
+    <TableCell sx={{ borderColor: 'gray' }}>
       <IconButton
         title="View details"
         onClick={() => {
