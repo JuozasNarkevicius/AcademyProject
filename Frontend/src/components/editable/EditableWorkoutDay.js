@@ -142,7 +142,11 @@ const EditableWorkoutDay = ({ workout, setIsDraggable }) => {
               </Droppable>
             </DragDropContext>
           </Table>
-        ) : <Typography>This workout has no exercises.</Typography>}
+        ) : (
+          <Typography sx={{ borderRadius: '5px', backgroundColor: COLORS.SUB_ITEM }}>
+            This workout has no exercises.
+          </Typography>
+        )}
       </TableContainer>
       <Button
         sx={{ m: '15px', float: 'left' }}

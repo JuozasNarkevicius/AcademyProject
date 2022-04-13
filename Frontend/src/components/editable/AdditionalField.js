@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import {
-  Card, IconButton, Icon, Button,
+  Card, IconButton, Icon, Button, Box,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import Form from '../dataInput/Form';
 import AlertDialog from '../dataDisplay/Modal';
 import editIcon from '../../assets/icons/edit.svg';
 import exitIcon from '../../assets/icons/x.svg';
+import COLORS from '../../styles/colors';
 
 const AdditionalField = ({
   exercise, attribute, field,
@@ -28,11 +29,13 @@ const AdditionalField = ({
     if (exercise[attribute] != null && exercise[attribute] !== '' && !isEditing) {
       return (
         <>
-          <AlertDialog
-            deleteObject={deleteExerciseAttribute}
-            id={exercise.id}
-            objectType={attribute}
-          />
+          <Box sx={{ float: 'right' }}>
+            <AlertDialog
+              deleteObject={deleteExerciseAttribute}
+              id={exercise.id}
+              objectType={attribute}
+            />
+          </Box>
           <IconButton
             sx={{ float: 'right' }}
             title="Edit"
@@ -76,7 +79,7 @@ const AdditionalField = ({
 
   return (
 
-    <Card sx={{ m: '2rem' }}>
+    <Card sx={{ m: '2rem', backgroundColor: COLORS.SUB_ITEM }}>
       {isAdding && (
         <IconButton
           sx={{ float: 'right' }}

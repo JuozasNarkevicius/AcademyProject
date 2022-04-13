@@ -11,6 +11,7 @@ import SearchBar from '../components/dataInput/SearchBar';
 import Pagination from '../components/layout/Pagination';
 import COLORS from '../styles/colors';
 import Loading from '../components/Loading';
+import backgroundImage from '../assets/images/workoutEquipment.jpg';
 
 const Trainers = () => {
   const [trainers, setTrainers] = useState();
@@ -40,7 +41,17 @@ const Trainers = () => {
   }
 
   return (
-    <Container sx={{ mt: '2.5rem' }}>
+    <Container sx={{
+      minWidth: '100%',
+      minHeight: '93vh',
+      paddingTop: '2rem',
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      overflow: 'hidden',
+    }}
+    >
       <CssBaseline />
       <Typography variant="h5">Registered trainers</Typography>
       <SearchBar
@@ -51,7 +62,7 @@ const Trainers = () => {
       <Grid container spacing={2}>
         {paginationService.getElementsByPage(filteredTrainers, page, pageSize).map((trainer) => (
           <Grid key={trainer.id} item xs={4}>
-            <Card sx={{ margin: '1rem' }}>
+            <Card sx={{ margin: '1rem', backgroundColor: COLORS.ITEM }}>
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                   {`${trainer.firstName}${' '}${trainer.lastName}`}
@@ -64,7 +75,13 @@ const Trainers = () => {
                 <Button
                   size="small"
                   onClick={() => navigate(`${ROUTES.TRAINER_PROFILE}/${trainer.id}`)}
-                  sx={{ color: COLORS.TEXT }}
+                  sx={{
+                    color: COLORS.TEXT,
+                    backgroundColor: COLORS.SECONDARY,
+                    '&:hover': {
+                      background: COLORS.SECONDARY_HOVER,
+                    },
+                  }}
                 >
                   Learn More
                 </Button>
@@ -76,6 +93,12 @@ const Trainers = () => {
       <Button
         variant="contained"
         onClick={() => navigate(ROUTES.TRAINER_APPLICATION, { replace: true })}
+        sx={{
+          backgroundColor: COLORS.SECONDARY,
+          '&:hover': {
+            background: COLORS.SECONDARY_HOVER,
+          },
+        }}
       >
         Become a trainer
       </Button>

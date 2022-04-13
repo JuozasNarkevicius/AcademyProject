@@ -4,6 +4,7 @@ import {
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useFormik } from 'formik';
+import COLORS from '../../styles/colors';
 
 const Form = ({
   fields, initialValues, validationSchema, onSubmitFunction,
@@ -20,7 +21,13 @@ const Form = ({
     <form onSubmit={formik.handleSubmit}>
       {fields.map((field) => (
         <TextField
-          sx={{ m: '10px' }}
+          InputLabelProps={{
+            style: { color: '#fff' },
+          }}
+          variant="filled"
+          sx={{
+            m: '10px', backgroundColor: COLORS.BACKGROUND, color: 'white',
+          }}
           key={field.name}
           name={field.name}
           label={field.label}

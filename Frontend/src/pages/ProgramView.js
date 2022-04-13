@@ -1,3 +1,5 @@
+/* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useMemo } from 'react';
 import {
   Container, Typography, Button, Box,
@@ -85,22 +87,22 @@ const ProgramView = () => {
         && <ProgramDaysAccordion deleteProgram={deleteProgram} programType={selectedProgramType} />}
           {program && selectedProgramType === 'saved'
         && (
-          <>
+          <Box sx={{ ml: '13rem' }}>
             <ProgramAccordion program={program} />
             <Button
               variant="contained"
               sx={{
-                float: 'left', ml: '4rem', backgroundColor: COLORS.SECONDARY, '&:hover': { backgroundColor: COLORS.SECONDARY_HOVER },
+                float: 'left', ml: '2rem', backgroundColor: COLORS.SECONDARY, '&:hover': { backgroundColor: COLORS.SECONDARY_HOVER },
               }}
               onClick={unfollowProgram}
             >
               Unfollow program
             </Button>
-          </>
+          </Box>
         )}
           {!program
         && (
-          <Typography variant="h4" sx={{ mt: '8rem' }}>
+          <Typography variant="h4" sx={{ mt: '8rem', ml: '6rem' }}>
             Choose a program!
           </Typography>
         )}

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable max-lines */
 import React, { useContext, useState } from 'react';
 import {
@@ -153,7 +154,7 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
       >
         New workout
       </Button>
-      {program.isPublic
+      {program.isPublic && program.workouts.length > 0
         && (
           <Button
             onClick={() => updateProgramStatus(false)}
@@ -164,7 +165,7 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
             Stop sharing program
           </Button>
         )}
-      {!program.isPublic
+      {!program.isPublic && program.workouts.length > 0
         && (
           <Button
             onClick={() => updateProgramStatus(true)}
@@ -175,22 +176,26 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
             Share program
           </Button>
         )}
-      <Button
-        onClick={getProgramPdf}
-        sx={{ float: 'left' }}
-        variant="contained"
-        color="secondary"
-      >
-        Download PDF
-      </Button>
-      <Button
-        onClick={sendProgramPdfToEmail}
-        sx={{ float: 'left' }}
-        variant="contained"
-        color="secondary"
-      >
-        Send PDF to email
-      </Button>
+      {program.workouts.length > 0 && (
+        <>
+          <Button
+            onClick={getProgramPdf}
+            sx={{ float: 'left' }}
+            variant="contained"
+            color="secondary"
+          >
+            Download PDF
+          </Button>
+          <Button
+            onClick={sendProgramPdfToEmail}
+            sx={{ float: 'left' }}
+            variant="contained"
+            color="secondary"
+          >
+            Send PDF to email
+          </Button>
+        </>
+      )}
     </Box>
   );
 };

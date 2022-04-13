@@ -39,7 +39,11 @@ const WorkoutDay = ({ workout }) => {
               ))}
             </TableBody>
           </Table>
-        ) : <Typography>This workout has no exercises.</Typography>}
+        ) : (
+          <Typography sx={{ backgroundColor: COLORS.SUB_ITEM }}>
+            This workout has no exercises.
+          </Typography>
+        )}
       </TableContainer>
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}

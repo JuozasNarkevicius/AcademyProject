@@ -5,6 +5,7 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import PropTypes from 'prop-types';
 import exitIcon from '../../assets/icons/x.svg';
+import COLORS from '../../styles/colors';
 
 const exerciseFields = [
   { name: 'name', label: 'Exercise name', type: 'text' },
@@ -39,7 +40,7 @@ const ExerciseForm = ({ createExercise, setIsBackdropOpen, setIsDraggable }) => 
   });
   return (
     <Container>
-      <Card>
+      <Card sx={{ backgroundColor: COLORS.ITEM }}>
         <IconButton
           sx={{ float: 'right', m: 1 }}
           title="Exit"
@@ -55,7 +56,13 @@ const ExerciseForm = ({ createExercise, setIsBackdropOpen, setIsDraggable }) => 
         <form onSubmit={formik.handleSubmit}>
           {exerciseFields.map((field) => (
             <TextField
-              sx={{ m: '10px' }}
+              InputLabelProps={{
+                style: { color: '#fff' },
+              }}
+              variant="filled"
+              sx={{
+                m: '10px', backgroundColor: COLORS.BACKGROUND, color: 'white',
+              }}
               key={field.name}
               label={field.label}
               name={field.name}
@@ -66,7 +73,7 @@ const ExerciseForm = ({ createExercise, setIsBackdropOpen, setIsDraggable }) => 
               helperText={formik.touched[field.name] && formik.errors[field.name]}
             />
           ))}
-          <Button sx={{ margin: '10px' }} variant="contained" size="large" type="submit">Create exercise</Button>
+          <Button sx={{ margin: '1.1rem', backgroundColor: COLORS.SECONDARY, '&:hover': { backgroundColor: COLORS.SECONDARY_HOVER } }} variant="contained" size="large" type="submit">Create exercise</Button>
         </form>
       </Card>
     </Container>

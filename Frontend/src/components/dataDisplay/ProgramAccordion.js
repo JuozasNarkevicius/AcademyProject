@@ -13,6 +13,7 @@ const ProgramAccordion = ({ program }) => (
     {program.workouts.map((w) => (
       <AccordionMUI key={w.id} sx={{ width: '60vw', backgroundColor: COLORS.ITEM }}>
         <AccordionSummary
+          sx={{ height: '4rem' }}
           expandIcon={<ExpandMoreIcon sx={{ color: COLORS.TEXT }} />}
         >
           <Typography>{w.name}</Typography>

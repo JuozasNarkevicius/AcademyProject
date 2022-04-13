@@ -29,7 +29,6 @@ const AlertDialog = ({
   return (
     <>
       <IconButton
-        sx={{ float: 'right' }}
         title="Delete"
         onClick={handleClickOpen}
       >

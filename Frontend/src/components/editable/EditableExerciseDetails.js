@@ -7,6 +7,7 @@ import YouTube from 'react-youtube';
 import exitIcon from '../../assets/icons/x.svg';
 import AdditionalField from './AdditionalField';
 import videoService from '../../services/genericServices/video';
+import COLORS from '../../styles/colors';
 
 const opts = {
   height: '390',
@@ -23,9 +24,14 @@ const EditableExerciseDetails = ({
 }) => {
   const [videoEvent, setVideoEvent] = useState();
 
-  console.log(videoService.getIdFromUrl(exercise.videoUrl));
   return (
-    <Card sx={{ minHeight: '30rem', minWidth: '60rem', maxWidth: '60rem' }}>
+    <Card sx={{
+      minHeight: '30rem',
+      minWidth: '60rem',
+      maxWidth: '60rem',
+      backgroundColor: COLORS.ITEM,
+    }}
+    >
       <IconButton
         sx={{ float: 'right', m: 1 }}
         title="Exit"

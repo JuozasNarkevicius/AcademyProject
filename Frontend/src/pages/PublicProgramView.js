@@ -10,6 +10,7 @@ import ratingService from '../services/Rating';
 import ProgramAccordion from '../components/dataDisplay/ProgramAccordion';
 import Loading from '../components/Loading';
 import backgroundImage from '../assets/images/workoutEquipment.jpg';
+import COLORS from '../styles/colors';
 
 const PublicProgramView = () => {
   const [program, setProgram] = useState();
@@ -70,7 +71,7 @@ const PublicProgramView = () => {
         <ProgramAccordion program={program} />
       </Box>
       <Box
-        sx={{ float: 'left', m: '2rem' }}
+        sx={{ float: 'left', m: '2rem', ml: '20vw' }}
       >
         <Typography>
           <Rating
@@ -92,18 +93,21 @@ const PublicProgramView = () => {
           </Typography>
         )}
       </Box>
-      <Box sx={{
-        display: 'flex', justifyContent: 'center', mt: '2.7rem', mr: '13rem',
-      }}
+      <Button
+        sx={{
+          float: 'left',
+          m: '1.5rem',
+          color: COLORS.TEXT,
+          backgroundColor: COLORS.SECONDARY,
+          '&:hover': {
+            background: COLORS.SECONDARY_HOVER,
+          },
+        }}
+        variant="contained"
+        onClick={saveProgram}
       >
-        <Button
-          sx={{ float: 'left', ml: '1.5rem' }}
-          variant="contained"
-          onClick={saveProgram}
-        >
-          Follow program
-        </Button>
-      </Box>
+        Follow program
+      </Button>
     </Container>
   );
 };
