@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Application.Repositories;
+using BCrypt.Net;
 
 namespace Application.Jwt
 {
@@ -38,12 +39,7 @@ namespace Application.Jwt
                 return false;
             }
 
-            if (request.Password != user.Password)
-            {
-                return false;
-            }
-
-            return true;
+            return BCrypt.Net.BCrypt.EnhancedVerify(request.Password, user.Password, hashType: HashType.SHA384);
         }
 
         public async Task<string> GenerateJwtToken(string email)

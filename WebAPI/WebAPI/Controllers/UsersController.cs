@@ -1,5 +1,6 @@
 ﻿using Application.Repositories;
 using AutoMapper;
+using BCrypt.Net;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -87,6 +88,8 @@ namespace WebAPI.Controllers
             var user = _mapper.Map<User>(userDTO);
 
             user.Role = "user";
+
+            user.Password = BCrypt.Net.BCrypt.EnhancedHashPassword(user.Password, HashType.SHA384);
 
             var userFromDb = await _userRepository.Add(user);
 
