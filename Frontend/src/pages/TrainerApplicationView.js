@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Container, Card, CardContent, Typography, Button,
-} from '@mui/material';
+import { Container, Box } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import applicationService from '../services/ApplicationService';
 import userService from '../services/UserService';
 import ROUTES from '../constants/Routes';
 import firebaseStorage from '../services/FirebaseStorage';
 import Loading from '../components/Loading';
+import backgroundImage from '../assets/images/workoutEquipment.jpg';
+import Button from '../components/Button';
+import ProfileCard from '../components/dataDisplay/ProfileCard';
 
 const TrainerApplicationView = () => {
   const [application, setApplication] = useState();
@@ -17,8 +18,10 @@ const TrainerApplicationView = () => {
 
   const getApplication = async () => {
     const response = await applicationService.getApplicationAPI(id);
-    const image = await firebaseStorage.getProfileImage(response.data.imageId);
-    response.data.profileImage = window.URL.createObjectURL(image);
+    if (response.data.imageId.length > 1) {
+      const image = await firebaseStorage.getProfileImage(response.data.imageId);
+      response.data.profileImage = window.URL.createObjectURL(image);
+    }
     setApplication(response.data);
     setIsLoading(false);
   };
@@ -43,38 +46,31 @@ const TrainerApplicationView = () => {
   }
 
   return (
-    <Container sx={{ mt: '2rem', width: '80%' }}>
-      <Card>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            {`${application.firstName} ${application.lastName}`}
-          </Typography>
-          <img src={application.profileImage} alt="" />
-          <Typography variant="h5">Description</Typography>
-          <Typography gutterBottom variant="body2" component="div">
-            {application.description}
-          </Typography>
-          <Typography variant="h5">Qualifications</Typography>
-          <Typography variant="body2">
-            {application.qualifications}
-          </Typography>
-          <Typography variant="h5">Email</Typography>
-          <Typography variant="body2">
-            {application.email}
-          </Typography>
-          <Typography variant="h5">Phone number</Typography>
-          <Typography variant="body2">
-            {application.phoneNumber}
-          </Typography>
-        </CardContent>
-      </Card>
+    <Container sx={{
+      minWidth: '100%',
+      minHeight: '93vh',
+      paddingTop: '2rem',
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      overflow: 'hidden',
+    }}
+    >
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <ProfileCard trainer={application} />
+      </Box>
       {application.status === 'pending' ? (
         <>
-          <Button variant="contained" onClick={approveTrainer}>Approve</Button>
-          <Button variant="contained" onClick={declineTrainer}>Decline</Button>
+          <Button text="Approve" onClick={approveTrainer} />
+          <Button text="Dismiss" onClick={declineTrainer} />
         </>
       ) : (
-        <Button variant="contained" onClick={declineTrainer}>Take away trainer status</Button>
+        <Button
+          text="Take away trainer status"
+          onClick={declineTrainer}
+          width="11rem"
+        />
       )}
     </Container>
   );

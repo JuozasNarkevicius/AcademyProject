@@ -2,6 +2,7 @@ import { Box, TextField, Typography } from '@mui/material';
 import React from 'react';
 import { useDropzone } from 'react-dropzone';
 import PropTypes from 'prop-types';
+import COLORS from '../styles/colors';
 
 const FileUpload = ({
   name, setFieldValue,
@@ -21,9 +22,11 @@ const FileUpload = ({
     <Box
       {...getRootProps({ className: 'dropzone' })}
       sx={{
-        borderColor: '#DEDEDE',
+        borderColor: COLORS.TEXT,
         borderStyle: 'dashed',
-        backgroundColor: '#F5F5F5',
+        backgroundColor: COLORS.BACKGROUND,
+        padding: '0.3rem',
+        height: '4rem',
         m: '1rem',
       }}
     >

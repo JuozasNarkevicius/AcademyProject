@@ -1,5 +1,5 @@
 import {
-  Button, Container, TextField, Chip, Typography, Backdrop,
+  Container, TextField, Chip, Typography, Backdrop, CssBaseline, Box,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -12,6 +12,8 @@ import ProfileCard from '../components/dataDisplay/ProfileCard';
 import FileUpload from '../components/FileUpload';
 import firebaseStorage from '../services/FirebaseStorage';
 import Loading from '../components/Loading';
+import backgroundImage from '../assets/images/workoutEquipment.jpg';
+import Button from '../components/Button';
 
 const ApplicationFields = [
   { name: 'description', label: 'Description', type: 'text' },
@@ -106,64 +108,72 @@ const TrainerApplication = () => {
   }
 
   return (
-    <Container sx={{ width: '20rem', mt: '7rem' }}>
-      <form onSubmit={formik.handleSubmit}>
-        {ApplicationFields.slice(0, 3).map((r) => (
-          <TextField
-            sx={{ m: '10px' }}
-            key={r.name}
-            name={r.name}
-            label={r.label}
-            type={r.type}
-            value={formik.values[r.name]}
-            onChange={formik.handleChange}
-            error={formik.touched[r.name] && Boolean(formik.errors[r.name])}
-            helperText={formik.touched[r.name] && formik.errors[r.name]}
+    <Container sx={{
+      minWidth: '100%',
+      minHeight: '93vh',
+      paddingTop: '2rem',
+      backgroundImage: `url(${backgroundImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      overflow: 'hidden',
+    }}
+    >
+      <CssBaseline />
+      <Box sx={{
+        display: 'flex', justifyContent: 'center', marginTop: '15vh',
+      }}
+      >
+        <form onSubmit={formik.handleSubmit} style={{ maxWidth: '20rem' }}>
+          {ApplicationFields.slice(0, 3).map((r) => (
+            <TextField
+              InputLabelProps={{
+                style: { color: '#fff' },
+              }}
+              variant="filled"
+              sx={{
+                m: '10px', backgroundColor: '#2d2b2b', color: 'white',
+              }}
+              key={r.name}
+              name={r.name}
+              label={r.label}
+              type={r.type}
+              value={formik.values[r.name]}
+              onChange={formik.handleChange}
+              error={formik.touched[r.name] && Boolean(formik.errors[r.name])}
+              helperText={formik.touched[r.name] && formik.errors[r.name]}
+            />
+          ))}
+          <FileUpload
+            name="profileImage"
+            value={formik.values.profileImage}
+            setFieldValue={formik.setFieldValue}
+            helperText={formik.touched.profileImage && formik.errors.profileImage}
+            error={formik.touched.profileImage && Boolean(formik.errors.profileImage)}
           />
-        ))}
-        <FileUpload
-          name="profileImage"
-          value={formik.values.profileImage}
-          setFieldValue={formik.setFieldValue}
-          helperText={formik.touched.profileImage && formik.errors.profileImage}
-          error={formik.touched.profileImage && Boolean(formik.errors.profileImage)}
-        />
-        <Typography>
-          Status:
-          <Chip
-            sx={{ ml: 1 }}
-            label={application.status || 'not applied'}
-            color={STATUS_COLORS[application.status]}
-            variant="outlined"
-          />
-        </Typography>
-        {application.description
-          ? (
-            <>
-              <Button
-                sx={{ margin: '10px' }}
-                variant="contained"
-                size="large"
-                type="submit"
-              >
-                Re-Apply
-              </Button>
-              <Button
-                sx={{ margin: '10px' }}
-                variant="contained"
-                size="large"
-                onClick={deleteApplication}
-              >
-                Delete application
-              </Button>
-            </>
-          )
-          : <Button sx={{ margin: '10px' }} variant="contained" size="large" type="submit">Apply</Button>}
-      </form>
-      {application
+          <Typography>
+            Status:
+            <Chip
+              sx={{ ml: 1 }}
+              label={application.status || 'not applied'}
+              color={STATUS_COLORS[application.status]}
+              variant="outlined"
+            />
+          </Typography>
+          {application.description
+            ? (
+              <>
+                <Button text="Re-Apply" type="submit" />
+                <Button text="Delete application" onClick={deleteApplication} />
+              </>
+            )
+            : <Button text="Apply" type="submit" />}
+        </form>
+      </Box>
+      {application.description
       && (
         <>
-          <Button variant="contained" size="large" onClick={() => setIsPreviewOpen(true)}>Preview profile</Button>
+          <Button text="Preview profile" onClick={() => setIsPreviewOpen(true)} width="10rem" />
           <Backdrop
             sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
             open={isPreviewOpen}

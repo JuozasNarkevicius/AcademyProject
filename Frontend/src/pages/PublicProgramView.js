@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Container, Typography, Button, Box, CssBaseline,
+  Container, Typography, Button, Box, CssBaseline, Card,
 } from '@mui/material';
 import { useParams } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
@@ -74,16 +74,19 @@ const PublicProgramView = () => {
         sx={{ float: 'left', m: '2rem', ml: '20vw' }}
       >
         <Typography>
-          <Rating
-            sx={{ mr: '1rem' }}
-            value={program.rating}
-            precision={0.5}
-            onChange={(event, newValue) => {
-              handleRatingChange(newValue);
-            }}
-            emptyIcon={<StarIcon style={{ opacity: 0.55 }} />}
-          />
-          <Typography sx={{ float: 'right' }}>{Math.round(program.rating * 2) / 2}</Typography>
+          <Card sx={{ p: '1rem', backgroundColor: COLORS.SUB_ITEM }}>
+            <Rating
+              sx={{ mr: '1rem' }}
+              value={program.rating}
+              precision={0.5}
+              onChange={(event, newValue) => {
+                handleRatingChange(newValue);
+              }}
+              emptyIcon={<StarIcon style={{ opacity: 0.55 }} />}
+            />
+
+            <Typography sx={{ float: 'right' }}>{Math.round(program.rating * 2) / 2}</Typography>
+          </Card>
         </Typography>
         {personalRating && (
           <Typography sx={{ float: 'left', mt: '1.15rem', ml: '1.5rem' }}>
