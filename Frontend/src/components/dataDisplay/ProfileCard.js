@@ -4,6 +4,7 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import COLORS from '../../styles/colors';
+import firebaseStorage from '../../services/FirebaseStorage';
 
 const ProfileCard = ({ trainer }) => (
   <Card sx={{ minHeight: '30rem', width: '70rem', backgroundColor: COLORS.ITEM }}>
@@ -11,7 +12,7 @@ const ProfileCard = ({ trainer }) => (
       <Grid container spacing={4}>
         <Grid item>
           <ButtonBase>
-            <img alt="" src={trainer.profileImage} style={{ height: '300px' }} />
+            <img alt="" src={firebaseStorage.convertIfImageFile(trainer.profileImage)} style={{ height: '300px' }} />
           </ButtonBase>
         </Grid>
         <Grid item xs={12} sm container>

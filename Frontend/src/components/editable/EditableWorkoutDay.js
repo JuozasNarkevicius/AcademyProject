@@ -67,7 +67,6 @@ const EditableWorkoutDay = ({ workout, setIsDraggable }) => {
       .exercises[exerciseIndex] = editedExercise;
     setProgram({ ...newProgram });
     const { id, ...exerciseWithoutId } = editedExercise;
-    console.log(exerciseWithoutId);
     await exerciseService.updateExerciseAPI(workout.id, exerciseId, exerciseWithoutId);
   };
 

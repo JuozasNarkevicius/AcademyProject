@@ -1,3 +1,6 @@
+/* eslint-disable max-lines */
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
 import {
   Container, TextField, Chip, Typography, Backdrop, CssBaseline, Box,
 } from '@mui/material';
@@ -26,7 +29,6 @@ const validationSchema = yup.object({
   description: yup.string().required('Enter a description'),
   qualifications: yup.string().required('Enter your qualifications'),
   phoneNumber: yup.string().required('Enter your phone number'),
-  profileImage: yup.array().required('Please upload an image'),
 });
 
 const TrainerApplication = () => {
@@ -39,7 +41,8 @@ const TrainerApplication = () => {
   const getApplication = async () => {
     const response = await applicationService.getCurrentUserApplicationAPI();
     const image = await firebaseStorage.getProfileImage(response.data.imageId);
-    response.data.profileImage = window.URL.createObjectURL(image);
+    const file = new File([image], 'name');
+    response.data.profileImage = file;
     setApplication(response.data);
   };
 
@@ -70,7 +73,7 @@ const TrainerApplication = () => {
   const updateApplication = async (values) => {
     const imageId = uuidv4();
     if (values.profileImage) {
-      await firebaseStorage.uploadProfileImage(values.profileImage[0], imageId);
+      await firebaseStorage.uploadProfileImage(values.profileImage, imageId);
       const { profileImage, ...valuesToPost } = values;
       valuesToPost.imageId = imageId;
       await applicationService.updateApplicationAPI(application.id, { ...valuesToPost, status: 'pending' });
@@ -95,6 +98,7 @@ const TrainerApplication = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
+      setApplication(values);
       if (application.description) {
         await updateApplication(values);
       } else {
@@ -164,7 +168,7 @@ const TrainerApplication = () => {
             ? (
               <>
                 <Button text="Re-Apply" type="submit" />
-                <Button text="Delete application" onClick={deleteApplication} />
+                <Button text="Delete application" onClick={deleteApplication} width="10rem" type="button" />
               </>
             )
             : <Button text="Apply" type="submit" />}

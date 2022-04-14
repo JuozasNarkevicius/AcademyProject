@@ -14,9 +14,17 @@ const uploadProfileImage = async (file, imageId) => {
   await uploadBytes(storageRef, file);
 };
 
+const convertIfImageFile = (image) => {
+  if (image instanceof File) {
+    return URL.createObjectURL(image);
+  }
+  return image;
+};
+
 const firebaseStorage = {
   getProfileImage,
   uploadProfileImage,
+  convertIfImageFile,
 };
 
 export default firebaseStorage;
