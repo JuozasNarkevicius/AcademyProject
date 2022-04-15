@@ -4,7 +4,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import applicationService from '../services/ApplicationService';
 import userService from '../services/UserService';
 import ROUTES from '../constants/Routes';
-import firebaseStorage from '../services/FirebaseStorage';
 import Loading from '../components/Loading';
 import backgroundImage from '../assets/images/workoutEquipment.jpg';
 import Button from '../components/Button';
@@ -18,10 +17,6 @@ const TrainerApplicationView = () => {
 
   const getApplication = async () => {
     const response = await applicationService.getApplicationAPI(id);
-    if (response.data.imageId.length > 1) {
-      const image = await firebaseStorage.getProfileImage(response.data.imageId);
-      response.data.profileImage = window.URL.createObjectURL(image);
-    }
     setApplication(response.data);
     setIsLoading(false);
   };

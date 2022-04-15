@@ -1,13 +1,9 @@
-/* eslint-disable max-lines */
-/* eslint-disable no-unused-vars */
-/* eslint-disable max-len */
 import {
   Container, TextField, Chip, Typography, Backdrop, CssBaseline, Box,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import applicationService from '../services/ApplicationService';
 import userService from '../services/UserService';
 import STATUS_COLORS from '../constants/statusColors';
@@ -22,7 +18,7 @@ const ApplicationFields = [
   { name: 'description', label: 'Description', type: 'text' },
   { name: 'qualifications', label: 'Qualifications', type: 'text' },
   { name: 'phoneNumber', label: 'Phone number', type: 'text' },
-  { name: 'profileImage', label: 'Profile image', type: 'array' },
+  { name: 'ImageId', label: 'Profile image', type: 'array' },
 ];
 
 const validationSchema = yup.object({
@@ -33,50 +29,46 @@ const validationSchema = yup.object({
 
 const TrainerApplication = () => {
   const [application, setApplication] = useState({
-    description: '', qualifications: '', profileImage: [], phoneNumber: '',
+    description: '', qualifications: '', ImageId: [], phoneNumber: '',
   });
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const getApplication = async () => {
     const response = await applicationService.getCurrentUserApplicationAPI();
-    const image = await firebaseStorage.getProfileImage(response.data.imageId);
-    const file = new File([image], 'name');
-    response.data.profileImage = file;
     setApplication(response.data);
   };
 
   const postApplication = async (values) => {
-    const imageId = uuidv4();
-    await firebaseStorage.uploadProfileImage(values.profileImage[0], imageId);
+    await firebaseStorage.uploadProfileImage(values.imageId[0], values.imageId[0].name);
+    const imageUrl = await firebaseStorage.getProfileImage(values.imageId[0].name);
     const response = await userService.getCurrentUserAPI();
-
-    await applicationService.postApplicationAPI({
+    const trainerApplication = {
       firstName: response.data.firstName,
       lastName: response.data.lastName,
       email: response.data.email,
       description: values.description,
       qualifications: values.qualifications,
       phoneNumber: values.phoneNumber,
-      imageId,
-    });
-    await getApplication();
+      imageId: imageUrl,
+    };
+    const applicationWithId = await applicationService.postApplicationAPI(trainerApplication);
+    setApplication(applicationWithId.data);
   };
 
   const deleteApplication = async () => {
     await applicationService.deleteApplicationAPI(application.id);
     setApplication({
-      description: '', qualifications: '', profileImage: [], phoneNumber: '',
+      description: '', qualifications: '', ImageId: [], phoneNumber: '',
     });
   };
 
   const updateApplication = async (values) => {
-    const imageId = uuidv4();
-    if (values.profileImage) {
-      await firebaseStorage.uploadProfileImage(values.profileImage, imageId);
-      const { profileImage, ...valuesToPost } = values;
-      valuesToPost.imageId = imageId;
-      await applicationService.updateApplicationAPI(application.id, { ...valuesToPost, status: 'pending' });
+    if (values.imageId[0] instanceof File) {
+      await firebaseStorage.uploadProfileImage(values.imageId[0], values.imageId[0].name);
+      const imageUrl = await firebaseStorage.getProfileImage(values.imageId[0].name);
+      values.imageId = imageUrl;
+      await applicationService.updateApplicationAPI(application.id, { ...values, status: 'pending' });
     } else {
       await applicationService.updateApplicationAPI(application.id, { ...values, status: 'pending' });
     }
@@ -94,7 +86,7 @@ const TrainerApplication = () => {
       description: application.description,
       qualifications: application.qualifications,
       phoneNumber: application.phoneNumber,
-      profileImage: application.profileImage,
+      imageId: application.imageId,
     },
     validationSchema,
     onSubmit: async (values) => {
@@ -149,11 +141,11 @@ const TrainerApplication = () => {
             />
           ))}
           <FileUpload
-            name="profileImage"
-            value={formik.values.profileImage}
+            name="imageId"
+            value={formik.values.imageId}
             setFieldValue={formik.setFieldValue}
-            helperText={formik.touched.profileImage && formik.errors.profileImage}
-            error={formik.touched.profileImage && Boolean(formik.errors.profileImage)}
+            helperText={formik.touched.imageId && formik.errors.imageId}
+            error={formik.touched.imageId && Boolean(formik.errors.imageId)}
           />
           <Typography>
             Status:

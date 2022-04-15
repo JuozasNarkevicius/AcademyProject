@@ -14,7 +14,7 @@ const FileUpload = ({
   } = useDropzone({
     accept: 'image/*',
     onDrop: (acceptedFiles) => {
-      setFieldValue('profileImage', acceptedFiles);
+      setFieldValue('imageId', acceptedFiles);
     },
   });
 
