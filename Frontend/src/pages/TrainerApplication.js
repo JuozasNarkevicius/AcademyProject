@@ -31,11 +31,13 @@ const TrainerApplication = () => {
   const [application, setApplication] = useState({
     description: '', qualifications: '', ImageId: [], phoneNumber: '',
   });
+  const [imageName, setImageName] = useState();
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const getApplication = async () => {
     const response = await applicationService.getCurrentUserApplicationAPI();
+    setImageName(firebaseStorage.getImageNameFromUrl(response.data.imageId));
     setApplication(response.data);
   };
 
@@ -143,6 +145,8 @@ const TrainerApplication = () => {
           <FileUpload
             name="imageId"
             value={formik.values.imageId}
+            imageName={imageName}
+            setImageName={setImageName}
             setFieldValue={formik.setFieldValue}
             helperText={formik.touched.imageId && formik.errors.imageId}
             error={formik.touched.imageId && Boolean(formik.errors.imageId)}

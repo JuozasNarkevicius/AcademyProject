@@ -14,17 +14,17 @@ const uploadProfileImage = async (file, imageId) => {
   await uploadBytes(storageRef, file);
 };
 
-const convertIfImageFile = (image) => {
-  if (image instanceof File) {
-    return URL.createObjectURL(image);
+const getImageNameFromUrl = (url) => {
+  if (url) {
+    return decodeURI(url.substring(url.indexOf('/profileImages') + 17, url.indexOf('?')));
   }
-  return image;
+  return null;
 };
 
 const firebaseStorage = {
   getProfileImage,
   uploadProfileImage,
-  convertIfImageFile,
+  getImageNameFromUrl,
 };
 
 export default firebaseStorage;

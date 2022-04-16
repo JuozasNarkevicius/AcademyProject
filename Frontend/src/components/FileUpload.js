@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import COLORS from '../styles/colors';
 
 const FileUpload = ({
-  name, setFieldValue,
+  name, setFieldValue, imageName, setImageName,
 }) => {
   const {
     acceptedFiles,
@@ -15,6 +15,7 @@ const FileUpload = ({
     accept: 'image/*',
     onDrop: (acceptedFiles) => {
       setFieldValue('imageId', acceptedFiles);
+      setImageName(acceptedFiles[0].name);
     },
   });
 
@@ -34,8 +35,8 @@ const FileUpload = ({
         {...getInputProps()}
         name={name}
       />
-      {acceptedFiles[0]
-        ? <Typography>{acceptedFiles[0].name}</Typography>
+      {imageName
+        ? <Typography>{imageName}</Typography>
         : <Typography>Drag n drop or click to upload an image</Typography>}
     </Box>
   );
@@ -44,6 +45,12 @@ const FileUpload = ({
 FileUpload.propTypes = {
   name: PropTypes.string.isRequired,
   setFieldValue: PropTypes.func.isRequired,
+  imageName: PropTypes.string,
+  setImageName: PropTypes.func.isRequired,
+};
+
+FileUpload.defaultProps = {
+  imageName: null,
 };
 
 export default FileUpload;
