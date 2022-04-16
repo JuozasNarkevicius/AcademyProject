@@ -4,6 +4,7 @@ import {
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import applicationService from '../services/ApplicationService';
 import userService from '../services/UserService';
 import STATUS_COLORS from '../constants/statusColors';
@@ -34,11 +35,18 @@ const TrainerApplication = () => {
   const [imageName, setImageName] = useState();
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const getApplication = async () => {
-    const response = await applicationService.getCurrentUserApplicationAPI();
-    setImageName(firebaseStorage.getImageNameFromUrl(response.data.imageId));
-    setApplication(response.data);
+    try {
+      const response = await applicationService.getCurrentUserApplicationAPI();
+      setImageName(firebaseStorage.getImageNameFromUrl(response.data.imageId));
+      setApplication(response.data);
+    } catch (error) {
+      if (error.response.status === 401) {
+        navigate(-1);
+      }
+    }
   };
 
   const postApplication = async (values) => {

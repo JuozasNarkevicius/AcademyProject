@@ -8,6 +8,7 @@ import Loading from '../components/Loading';
 import backgroundImage from '../assets/images/workoutEquipment.jpg';
 import Button from '../components/Button';
 import ProfileCard from '../components/dataDisplay/ProfileCard';
+import authenticationService from '../services/AuthenticationService';
 
 const TrainerApplicationView = () => {
   const [application, setApplication] = useState();
@@ -33,6 +34,9 @@ const TrainerApplicationView = () => {
   };
 
   useEffect(() => {
+    if (!authenticationService.isAdmin()) {
+      navigate(-1);
+    }
     getApplication();
   }, []);
 

@@ -4,7 +4,7 @@ import {
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import { authenticationService } from '../services/AuthenticationService';
+import authenticationService from '../services/AuthenticationService';
 import ROUTES from '../constants/Routes';
 import backgroundImage from '../assets/images/workoutEquipment.jpg';
 import COLORS from '../styles/colors';

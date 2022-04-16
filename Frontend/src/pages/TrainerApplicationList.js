@@ -12,6 +12,7 @@ import SearchBar from '../components/dataInput/SearchBar';
 import Loading from '../components/Loading';
 import backgroundImage from '../assets/images/workoutEquipment.jpg';
 import COLORS from '../styles/colors';
+import authenticationService from '../services/AuthenticationService';
 
 const TrainerApplicationList = () => {
   const [applications, setApplications] = useState();
@@ -33,6 +34,9 @@ const TrainerApplicationList = () => {
   };
 
   useEffect(() => {
+    if (!authenticationService.isAdmin()) {
+      navigate(-1);
+    }
     getApplications();
   }, []);
 

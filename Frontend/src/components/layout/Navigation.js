@@ -5,7 +5,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { styled } from '@mui/system';
 import ROUTES from '../../constants/Routes';
-import { authenticationService } from '../../services/AuthenticationService';
+import authenticationService from '../../services/AuthenticationService';
 import { AuthorizationContext } from '../../Context';
 import COLORS from '../../styles/colors';
 

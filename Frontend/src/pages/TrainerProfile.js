@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Container, CssBaseline, Box,
 } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import applicationService from '../services/ApplicationService';
 import Loading from '../components/Loading';
 import backgroundImage from '../assets/images/workoutEquipment.jpg';
@@ -12,10 +12,17 @@ const TrainerProfile = () => {
   const [trainer, setTrainer] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const getTrainer = async () => {
-    const response = await applicationService.getApplicationAPI(id);
-    setTrainer(response.data);
+    try {
+      const response = await applicationService.getApplicationAPI(id);
+      setTrainer(response.data);
+    } catch (error) {
+      if (error.response.status === 401) {
+        navigate(-1);
+      }
+    }
     setIsLoading(false);
   };
 

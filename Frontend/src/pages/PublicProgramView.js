@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import {
   Container, Typography, Button, Box, CssBaseline, Card,
 } from '@mui/material';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
 import programService from '../services/ProgramService';
@@ -17,13 +17,20 @@ const PublicProgramView = () => {
   const [personalRating, setPersonalRating] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
+  const navigate = useNavigate();
   const userId = sessionStorage.getItem('id');
 
   const getData = async () => {
-    const programResponse = await programService.getProgramAPI(id);
-    const ratingResponse = await ratingService.getMyRatingAPI(userId, id);
-    setProgram(programResponse.data);
-    setPersonalRating(ratingResponse.data);
+    try {
+      const programResponse = await programService.getProgramAPI(id);
+      const ratingResponse = await ratingService.getMyRatingAPI(userId, id);
+      setProgram(programResponse.data);
+      setPersonalRating(ratingResponse.data);
+    } catch (error) {
+      if (error.response.status === 401) {
+        navigate(-1);
+      }
+    }
     setIsLoading(false);
   };
 

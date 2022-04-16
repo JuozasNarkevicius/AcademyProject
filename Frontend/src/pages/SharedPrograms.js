@@ -22,9 +22,15 @@ const SharedPrograms = () => {
   const pageSize = 10;
 
   const getPrograms = async () => {
-    const response = await programService.getAllPublicProgramsAPI();
-    setPrograms(response.data);
-    setfilteredPrograms(response.data);
+    try {
+      const response = await programService.getAllPublicProgramsAPI();
+      setPrograms(response.data);
+      setfilteredPrograms(response.data);
+    } catch (error) {
+      if (error.response.status === 401) {
+        navigate(-1);
+      }
+    }
     setIsLoading(false);
   };
 

@@ -22,9 +22,15 @@ const Trainers = () => {
   const pageSize = 9;
 
   const getTrainers = async () => {
-    const response = await applicationService.getVerifiedApplicationsAPI();
-    setTrainers(response.data);
-    setFilteredTrainers(response.data);
+    try {
+      const response = await applicationService.getVerifiedApplicationsAPI();
+      setTrainers(response.data);
+      setFilteredTrainers(response.data);
+    } catch (error) {
+      if (error.response.status === 401) {
+        navigate(-1);
+      }
+    }
     setIsLoading(false);
   };
 

@@ -8,7 +8,6 @@ const FileUpload = ({
   name, setFieldValue, imageName, setImageName,
 }) => {
   const {
-    acceptedFiles,
     getRootProps,
     getInputProps,
   } = useDropzone({

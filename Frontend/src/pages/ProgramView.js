@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import {
   Container, Typography, Button, Box,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 import ProgramListDrawer from '../components/dataDisplay/ProgramListDrawer';
 import ProgramDaysAccordion from '../components/dataDisplay/ProgramDaysAccordion';
 import programService from '../services/ProgramService';
@@ -17,6 +18,7 @@ const ProgramView = () => {
   const [program, setProgram] = useState(null);
   const [selectedProgramType, setSelectedProgramType] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
 
   const programMemo = useMemo(() => ({ program, setProgram }), [program]);
 
@@ -48,12 +50,22 @@ const ProgramView = () => {
     await programService.deleteSavedProgramAPI(program.id);
   };
 
-  useEffect(async () => {
-    const allPrograms = await programService.getAllProgramsAPI();
-    const allSavedPrograms = await programService.getAllSavedProgramsAPI();
-    setProgramList(allPrograms.data);
-    setSavedProgramList(allSavedPrograms.data);
+  const getPrograms = async () => {
+    try {
+      const allPrograms = await programService.getAllProgramsAPI();
+      const allSavedPrograms = await programService.getAllSavedProgramsAPI();
+      setProgramList(allPrograms.data);
+      setSavedProgramList(allSavedPrograms.data);
+    } catch (error) {
+      if (error.response.status === 401) {
+        navigate(-1);
+      }
+    }
     setIsLoading(false);
+  };
+
+  useEffect(() => {
+    getPrograms();
   }, [program]);
 
   if (isLoading) {
