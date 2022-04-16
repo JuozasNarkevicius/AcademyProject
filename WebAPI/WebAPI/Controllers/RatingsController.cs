@@ -70,19 +70,19 @@ namespace WebAPI.Controllers
             //return CreatedAtAction(nameof(GetExercise), new { workoutId, id = exerciseFromDb.Id }, _mapper.Map<ExerciseDTO>(exerciseFromDb));
         }
 
-        //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteExercise(long id)
-        //{
-        //    var exercise = await _exerciseRepository.Get(id);
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRating(long id)
+        {
+            var rating = await _ratingRepository.Get(id);
 
-        //    if (exercise == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (rating == null)
+            {
+                return NotFound();
+            }
 
-        //    await _exerciseRepository.Delete(exercise);
+            await _ratingRepository.Delete(rating);
 
-        //    return NoContent();
-        //}
+            return NoContent();
+        }
     }
 }
