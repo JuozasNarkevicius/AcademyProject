@@ -19,24 +19,35 @@ const FileUpload = ({
   });
 
   return (
-    <Box
-      {...getRootProps({ className: 'dropzone' })}
-      sx={{
-        borderColor: COLORS.TEXT,
-        borderStyle: 'dashed',
-        backgroundColor: COLORS.BACKGROUND,
-        padding: '0.3rem',
-        height: '4rem',
-        m: '1rem',
-      }}
+    <Box sx={{
+      display: 'flex',
+      justifyContent: 'center',
+    }}
     >
-      <TextField
-        {...getInputProps()}
-        name={name}
-      />
-      {imageName
-        ? <Typography>{imageName}</Typography>
-        : <Typography>Drag n drop or click to upload an image</Typography>}
+      <Box
+        {...getRootProps({ className: 'dropzone' })}
+        sx={{
+          borderColor: COLORS.TEXT,
+          borderStyle: 'dashed',
+          backgroundColor: COLORS.BACKGROUND,
+          padding: '0.3rem',
+          height: '4rem',
+          width: '320px',
+          m: '1rem',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'Center',
+        }}
+      >
+        <TextField
+          sx={{ maxWidth: '2rem' }}
+          {...getInputProps()}
+          name={name}
+        />
+        {imageName
+          ? <Typography>{imageName}</Typography>
+          : <Typography>Drag n drop or click to upload an image</Typography>}
+      </Box>
     </Box>
   );
 };

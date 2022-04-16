@@ -1,5 +1,6 @@
+/* eslint-disable max-lines */
 import {
-  Container, TextField, Chip, Typography, Backdrop, CssBaseline, Box,
+  Container, TextField, Chip, Typography, Backdrop, CssBaseline, Box, Card,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -14,6 +15,7 @@ import firebaseStorage from '../services/FirebaseStorage';
 import Loading from '../components/Loading';
 import backgroundImage from '../assets/images/workoutEquipment.jpg';
 import Button from '../components/Button';
+import COLORS from '../styles/colors';
 
 const ApplicationFields = [
   { name: 'description', label: 'Description', type: 'text' },
@@ -127,10 +129,10 @@ const TrainerApplication = () => {
     >
       <CssBaseline />
       <Box sx={{
-        display: 'flex', justifyContent: 'center', marginTop: '15vh',
+        display: 'flex', justifyContent: 'center', marginTop: '5vh',
       }}
       >
-        <form onSubmit={formik.handleSubmit} style={{ maxWidth: '20rem' }}>
+        <form onSubmit={formik.handleSubmit} style={{ maxWidth: '30rem' }}>
           {ApplicationFields.slice(0, 3).map((r) => (
             <TextField
               InputLabelProps={{
@@ -138,8 +140,10 @@ const TrainerApplication = () => {
               }}
               variant="filled"
               sx={{
-                m: '10px', backgroundColor: '#2d2b2b', color: 'white',
+                m: '10px', backgroundColor: '#2d2b2b', color: 'white', width: '23rem',
               }}
+              multiline
+              maxRows={6}
               key={r.name}
               name={r.name}
               label={r.label}
@@ -159,15 +163,19 @@ const TrainerApplication = () => {
             helperText={formik.touched.imageId && formik.errors.imageId}
             error={formik.touched.imageId && Boolean(formik.errors.imageId)}
           />
-          <Typography>
-            Status:
-            <Chip
-              sx={{ ml: 1 }}
-              label={application.status || 'not applied'}
-              color={STATUS_COLORS[application.status]}
-              variant="outlined"
-            />
-          </Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Card sx={{ backgroundColor: COLORS.ITEM, width: '13rem', p: '0.5rem' }}>
+              <Typography>
+                Status:
+                <Chip
+                  sx={{ ml: 1, fontSize: '19px' }}
+                  label={application.status || 'not applied'}
+                  color={STATUS_COLORS[application.status]}
+                  variant="outlined"
+                />
+              </Typography>
+            </Card>
+          </Box>
           {application.description
             ? (
               <>

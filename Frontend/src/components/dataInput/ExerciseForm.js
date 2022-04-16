@@ -6,15 +6,7 @@ import * as yup from 'yup';
 import PropTypes from 'prop-types';
 import exitIcon from '../../assets/icons/x.svg';
 import COLORS from '../../styles/colors';
-
-const exerciseFields = [
-  { name: 'name', label: 'Exercise name', type: 'text' },
-  { name: 'sets', label: 'Sets', type: 'text' },
-  { name: 'reps', label: 'Reps', type: 'text' },
-  { name: 'rest', label: 'Rest', type: 'text' },
-  { name: 'description', label: 'Description', type: 'text' },
-  { name: 'videoUrl', label: 'Video Url', type: 'text' },
-];
+import EXERCISE_FIELDS from '../../constants/ExerciseFields';
 
 const validationSchema = yup.object({
   name: yup.string().required('Enter an exercise name'),
@@ -54,15 +46,17 @@ const ExerciseForm = ({ createExercise, setIsBackdropOpen, setIsDraggable }) => 
           </Icon>
         </IconButton>
         <form onSubmit={formik.handleSubmit}>
-          {exerciseFields.map((field) => (
+          {EXERCISE_FIELDS.map((field) => (
             <TextField
               InputLabelProps={{
                 style: { color: '#fff' },
               }}
               variant="filled"
               sx={{
-                m: '10px', backgroundColor: COLORS.BACKGROUND, color: 'white',
+                m: '10px', backgroundColor: COLORS.BACKGROUND, color: 'white', width: field.width,
               }}
+              multiline={field.multiline}
+              maxRows={4}
               key={field.name}
               label={field.label}
               name={field.name}
