@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import {
   Button, Dialog, DialogActions, DialogTitle, IconButton, Icon,
@@ -31,6 +30,7 @@ const AlertDialog = ({
       <IconButton
         title="Delete"
         onClick={handleClickOpen}
+        sx={{ '&:hover': { backgroundColor: COLORS.BACKGROUND } }}
       >
         <Icon>
           <img src={deleteIcon} height={23} width={23} alt="k" />

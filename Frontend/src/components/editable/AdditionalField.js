@@ -37,7 +37,7 @@ const AdditionalField = ({
             />
           </Box>
           <IconButton
-            sx={{ float: 'right' }}
+            sx={{ float: 'right', '&:hover': { backgroundColor: COLORS.BACKGROUND } }}
             title="Edit"
             onClick={() => setIsEditing(true)}
           >
@@ -82,7 +82,7 @@ const AdditionalField = ({
     <Card sx={{ m: '2rem', backgroundColor: COLORS.SUB_ITEM }}>
       {isAdding && (
         <IconButton
-          sx={{ float: 'right' }}
+          sx={{ float: 'right', '&:hover': { backgroundColor: COLORS.BACKGROUND } }}
           title="Cancel submission"
           onClick={() => setIsAdding(false)}
         >

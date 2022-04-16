@@ -4,6 +4,7 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import detailsIcon from '../../assets/icons/description.svg';
+import COLORS from '../../styles/colors';
 
 const Exercise = ({
   exercise, handleBackdropOpen,
@@ -23,6 +24,7 @@ const Exercise = ({
         onClick={() => {
           handleBackdropOpen(true, exercise);
         }}
+        sx={{ '&:hover': { backgroundColor: COLORS.BACKGROUND } }}
       >
         <Icon>
           <img src={detailsIcon} height={25} width={25} alt="k" />

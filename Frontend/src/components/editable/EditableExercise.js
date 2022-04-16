@@ -5,6 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import AlertDialog from '../dataDisplay/Modal';
 import detailsIcon from '../../assets/icons/description.svg';
+import COLORS from '../../styles/colors';
 
 const EditableExercise = ({
   exercise, imgSrcEdit, imgSrcSave,
@@ -87,6 +88,7 @@ const EditableExercise = ({
         </TableCell>
         <TableCell align="right">
           <IconButton
+            sx={{ '&:hover': { backgroundColor: COLORS.BACKGROUND } }}
             title="Submit exercise"
             onClick={submitUpdatedExercise}
           >
@@ -106,6 +108,7 @@ const EditableExercise = ({
         <TableCell sx={{ width: '20%', borderBottomColor: 'gray' }}>{exercise.rest}</TableCell>
         <TableCell sx={{ borderBottomColor: 'gray' }} align="right">
           <IconButton
+            sx={{ '&:hover': { backgroundColor: COLORS.BACKGROUND } }}
             title="View details"
             onClick={() => {
               handleBackdropOpen(true, true, exercise);
@@ -115,7 +118,11 @@ const EditableExercise = ({
               <img src={detailsIcon} height={25} width={25} alt="k" />
             </Icon>
           </IconButton>
-          <IconButton title="Edit exercise" onClick={() => setEditedExercise(exercise)}>
+          <IconButton
+            sx={{ '&:hover': { backgroundColor: COLORS.BACKGROUND } }}
+            title="Edit exercise"
+            onClick={() => setEditedExercise(exercise)}
+          >
             <Icon>
               <img src={imgSrcEdit} height={23} width={23} alt="k" />
             </Icon>

@@ -25,7 +25,11 @@ const ExerciseDetails = ({ exercise, setIsBackdropOpen }) => {
     }}
     >
       <IconButton
-        sx={{ float: 'right', m: 1 }}
+        sx={{
+          float: 'right',
+          m: 1,
+          '&:hover': { backgroundColor: COLORS.BACKGROUND },
+        }}
         title="Exit"
         onClick={() => {
           setIsBackdropOpen(false);

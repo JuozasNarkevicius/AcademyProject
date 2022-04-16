@@ -5,6 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import AlertDialog from '../dataDisplay/Modal';
 import imgSrcDelete from '../../assets/icons/x.svg';
+import COLORS from '../../styles/colors';
 
 const EditableName = ({
   imgSrcEdit, imgSrcSave, nameField, saveNewName, objectId, deleteObject, objectType,
@@ -25,6 +26,7 @@ const EditableName = ({
         <>
           {nameField}
           <IconButton
+            sx={{ '&:hover': { backgroundColor: COLORS.BACKGROUND }, ml: '5px' }}
             title="Edit"
             onClick={(e) => {
               setNewName(nameField);
@@ -63,7 +65,11 @@ const EditableName = ({
             }}
             onKeyPress={(e) => (e.key === 'Enter' && save(e))}
           />
-          <IconButton title="Save" onClick={save} sx={{ color: '#fff' }}>
+          <IconButton
+            title="Save"
+            onClick={save}
+            sx={{ color: '#fff', '&:hover': { backgroundColor: COLORS.BACKGROUND } }}
+          >
             <Icon>
               <img src={imgSrcSave} height={23} width={23} alt="k" style={{ color: 'white' }} />
             </Icon>

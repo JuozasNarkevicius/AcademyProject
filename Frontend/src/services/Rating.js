@@ -14,10 +14,15 @@ const getMyRatingAPI = async (userId, programId) => {
   return response;
 };
 
+const deleteRatingAPI = async (ratingId) => {
+  await API.delete(`/ratings/${ratingId}`);
+};
+
 const ratingService = {
   postRatingAPI,
   getMyRatingAPI,
   updateRatingAPI,
+  deleteRatingAPI,
 };
 
 export default ratingService;
