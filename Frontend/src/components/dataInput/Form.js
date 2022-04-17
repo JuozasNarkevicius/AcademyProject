@@ -26,12 +26,14 @@ const Form = ({
           }}
           variant="filled"
           sx={{
-            m: '10px', backgroundColor: COLORS.BACKGROUND, color: 'white',
+            m: '10px', backgroundColor: COLORS.BACKGROUND, color: 'white', width: field.width,
           }}
           key={field.name}
           name={field.name}
           label={field.label}
           type={field.type}
+          multiline={field.multiline}
+          maxRows={field.maxRows}
           value={formik.values[field.name]}
           onChange={formik.handleChange}
           error={formik.touched[field.name] && Boolean(formik.errors[field.name])}

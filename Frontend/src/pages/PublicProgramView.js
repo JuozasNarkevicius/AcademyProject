@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Container, Typography, Button, Box, CssBaseline, Card, IconButton, Icon,
+  Container, Typography, Box, CssBaseline, Card, IconButton, Icon,
 } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import Rating from '@mui/material/Rating';
@@ -12,10 +12,12 @@ import Loading from '../components/Loading';
 import backgroundImage from '../assets/images/workoutEquipment.jpg';
 import COLORS from '../styles/colors';
 import exitIcon from '../assets/icons/x.svg';
+import Button from '../components/Button';
 
 const PublicProgramView = () => {
   const [program, setProgram] = useState();
   const [personalRating, setPersonalRating] = useState();
+  const [isSaved, setIsSaved] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -25,8 +27,10 @@ const PublicProgramView = () => {
     try {
       const programResponse = await programService.getProgramAPI(id);
       const ratingResponse = await ratingService.getMyRatingAPI(userId, id);
+      const isProgramSaved = await programService.isProgramSavedAPI(id);
       setProgram(programResponse.data);
       setPersonalRating(ratingResponse.data);
+      setIsSaved(isProgramSaved.data);
     } catch (error) {
       if (error.response.status === 401) {
         navigate(-1);
@@ -36,7 +40,13 @@ const PublicProgramView = () => {
   };
 
   const saveProgram = async () => {
+    setIsSaved(true);
     await programService.saveProgramAPI(program.id);
+  };
+
+  const unfollowProgram = async () => {
+    setIsSaved(false);
+    await programService.deleteSavedProgramAPI(program.id);
   };
 
   const handleRatingChange = async (value) => {
@@ -136,21 +146,12 @@ const PublicProgramView = () => {
           </Typography>
         </Card>
       </Box>
-      <Button
-        sx={{
-          float: 'left',
-          mt: '2.1rem',
-          color: COLORS.TEXT,
-          backgroundColor: COLORS.SECONDARY,
-          '&:hover': {
-            background: COLORS.SECONDARY_HOVER,
-          },
-        }}
-        variant="contained"
-        onClick={saveProgram}
-      >
-        Follow program
-      </Button>
+      <Box sx={{ float: 'left', mt: '1.3rem' }}>
+        {isSaved
+          ? <Button text="Unfollow program" onClick={unfollowProgram} width="10rem" />
+          : <Button text="Follow program" onClick={saveProgram} />}
+
+      </Box>
     </Container>
   );
 };

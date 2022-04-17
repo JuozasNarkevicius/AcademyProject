@@ -96,18 +96,6 @@ const Trainers = () => {
           </Grid>
         ))}
       </Grid>
-      <Button
-        variant="contained"
-        onClick={() => navigate(ROUTES.TRAINER_APPLICATION, { replace: true })}
-        sx={{
-          backgroundColor: COLORS.SECONDARY,
-          '&:hover': {
-            background: COLORS.SECONDARY_HOVER,
-          },
-        }}
-      >
-        Become a trainer
-      </Button>
       <Pagination
         elements={trainers}
         pageSize={pageSize}

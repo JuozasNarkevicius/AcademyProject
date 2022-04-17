@@ -46,10 +46,6 @@ const ProgramView = () => {
     setSelectedProgramType(programType);
   };
 
-  const unfollowProgram = async () => {
-    await programService.deleteSavedProgramAPI(program.id);
-  };
-
   const getPrograms = async () => {
     try {
       const allPrograms = await programService.getAllProgramsAPI();
@@ -62,6 +58,12 @@ const ProgramView = () => {
       }
     }
     setIsLoading(false);
+  };
+
+  const unfollowProgram = async () => {
+    setProgram(null);
+    await programService.deleteSavedProgramAPI(program.id);
+    await getPrograms();
   };
 
   useEffect(() => {

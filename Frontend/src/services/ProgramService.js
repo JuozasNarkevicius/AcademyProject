@@ -35,7 +35,7 @@ const getAllSavedProgramsAPI = async () => {
 
 const getAllPublicProgramsAPI = async () => {
   const userId = sessionStorage.getItem('id');
-  const response = await API.get(`/users/${userId}/programs/public`);
+  const response = await API.get(`/users/${userId}/publicPrograms`);
   return response;
 };
 
@@ -52,6 +52,12 @@ const deleteSavedProgramAPI = async (programId) => {
 const saveProgramAPI = async (programId) => {
   const userId = sessionStorage.getItem('id');
   await API.post(`/users/${userId}/savedPrograms`, { programId });
+};
+
+const isProgramSavedAPI = async (programId) => {
+  const userId = sessionStorage.getItem('id');
+  const response = API.get(`/users/${userId}/programs/${programId}/isSaved`);
+  return response;
 };
 
 const getProgramPdfAPI = async (programId, name) => {
@@ -82,6 +88,7 @@ const programService = {
   deleteSavedProgramAPI,
   getProgramPdfAPI,
   sendProgramPdfToEmailAPI,
+  isProgramSavedAPI,
 };
 
 export default programService;

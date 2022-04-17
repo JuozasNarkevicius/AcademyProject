@@ -1,8 +1,8 @@
 /* eslint-disable max-lines */
 import {
-  Container, TextField, Chip, Typography, Backdrop, CssBaseline, Box, Card,
+  Container, TextField, Chip, Typography, Backdrop, CssBaseline, Box, Card, CircularProgress,
 } from '@mui/material';
-import { useFormik } from 'formik';
+import { Formik, useFormik } from 'formik';
 import * as yup from 'yup';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -32,11 +32,12 @@ const validationSchema = yup.object({
 
 const TrainerApplication = () => {
   const [application, setApplication] = useState({
-    description: '', qualifications: '', ImageId: [], phoneNumber: '',
+    description: '', qualifications: '', imageId: [], phoneNumber: '',
   });
   const [imageName, setImageName] = useState();
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isStatusLoading, setIsStatusLoading] = useState(false);
   const navigate = useNavigate();
 
   const getApplication = async () => {
@@ -66,13 +67,7 @@ const TrainerApplication = () => {
     };
     const applicationWithId = await applicationService.postApplicationAPI(trainerApplication);
     setApplication(applicationWithId.data);
-  };
-
-  const deleteApplication = async () => {
-    await applicationService.deleteApplicationAPI(application.id);
-    setApplication({
-      description: '', qualifications: '', ImageId: [], phoneNumber: '',
-    });
+    setIsStatusLoading(false);
   };
 
   const updateApplication = async (values) => {
@@ -85,6 +80,7 @@ const TrainerApplication = () => {
       await applicationService.updateApplicationAPI(application.id, { ...values, status: 'pending' });
     }
     await getApplication();
+    setIsStatusLoading(false);
   };
 
   useEffect(() => {
@@ -93,16 +89,17 @@ const TrainerApplication = () => {
   }, []);
 
   const formik = useFormik({
-    enableReinitialize: application.description,
+    enableReinitialize: true,
     initialValues: {
-      description: application.description,
-      qualifications: application.qualifications,
-      phoneNumber: application.phoneNumber,
-      imageId: application.imageId,
+      description: application.description || '',
+      qualifications: application.qualifications || '',
+      phoneNumber: application.phoneNumber || '',
+      imageId: application.imageId || '',
     },
     validationSchema,
     onSubmit: async (values) => {
       setApplication(values);
+      setIsStatusLoading(true);
       if (application.description) {
         await updateApplication(values);
       } else {
@@ -110,6 +107,13 @@ const TrainerApplication = () => {
       }
     },
   });
+
+  const deleteApplication = async () => {
+    setIsStatusLoading(true);
+    await applicationService.deleteApplicationAPI(application.id);
+    await getApplication();
+    setIsStatusLoading(false);
+  };
 
   if (isLoading) {
     return <Loading />;
@@ -167,12 +171,16 @@ const TrainerApplication = () => {
             <Card sx={{ backgroundColor: COLORS.ITEM, width: '13rem', p: '0.5rem' }}>
               <Typography>
                 Status:
-                <Chip
-                  sx={{ ml: 1, fontSize: '19px' }}
-                  label={application.status || 'not applied'}
-                  color={STATUS_COLORS[application.status]}
-                  variant="outlined"
-                />
+                {isStatusLoading
+                  ? <CircularProgress sx={{ color: COLORS.TEXT, ml: '10px' }} size="1rem" />
+                  : (
+                    <Chip
+                      sx={{ ml: 1, fontSize: '19px' }}
+                      label={application.status || 'not applied'}
+                      color={STATUS_COLORS[application.status]}
+                      variant="outlined"
+                    />
+                  )}
               </Typography>
             </Card>
           </Box>
@@ -180,7 +188,15 @@ const TrainerApplication = () => {
             ? (
               <>
                 <Button text="Re-Apply" type="submit" />
-                <Button text="Delete application" onClick={deleteApplication} width="10rem" type="button" />
+                <Button
+                  text="Delete application"
+                  onClick={() => {
+                    deleteApplication();
+                    formik.resetForm();
+                  }}
+                  width="10rem"
+                  type="button"
+                />
               </>
             )
             : <Button text="Apply" type="submit" />}
