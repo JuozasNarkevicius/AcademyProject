@@ -77,7 +77,7 @@ const SharedPrograms = () => {
                   borderRadius: '10px',
                   '&:hover': { backgroundColor: COLORS.SUB_ITEM },
                 }}
-                onClick={() => navigate(`${ROUTES.PUBLIC_PROGRAM}/${program.id}`, { replace: true })}
+                onClick={() => navigate(`${ROUTES.PUBLIC_PROGRAM}/${program.id}`)}
               >
                 <Typography>{program.name}</Typography>
                 <Chip label="category" color="success" variant="outlined" sx={{ ml: '20px' }} />
