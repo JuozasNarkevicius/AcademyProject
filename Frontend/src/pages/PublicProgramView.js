@@ -18,6 +18,7 @@ const PublicProgramView = () => {
   const [program, setProgram] = useState();
   const [personalRating, setPersonalRating] = useState();
   const [isSaved, setIsSaved] = useState();
+  const [ratingsCount, setRatingsCount] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -27,9 +28,11 @@ const PublicProgramView = () => {
     try {
       const programResponse = await programService.getProgramAPI(id);
       const ratingResponse = await ratingService.getMyRatingAPI(userId, id);
+      const ratingsCountResponse = await ratingService.getRatingsCountAPI(id);
       const isProgramSaved = await programService.isProgramSavedAPI(id);
       setProgram(programResponse.data);
       setPersonalRating(ratingResponse.data);
+      setRatingsCount(ratingsCountResponse.data);
       setIsSaved(isProgramSaved.data);
     } catch (error) {
       if (error.response.status === 401) {
@@ -38,6 +41,8 @@ const PublicProgramView = () => {
     }
     setIsLoading(false);
   };
+
+  console.log(ratingsCount);
 
   const saveProgram = async () => {
     setIsSaved(true);
@@ -62,6 +67,8 @@ const PublicProgramView = () => {
     await ratingService.deleteRatingAPI(personalRating.id);
     const programResponse = await programService.getProgramAPI(id);
     setProgram(programResponse.data);
+    const newRatingsCount = ratingsCount;
+    setRatingsCount(newRatingsCount - 1);
     setPersonalRating();
   };
 
@@ -110,6 +117,13 @@ const PublicProgramView = () => {
             />
             {program.rating !== 0 ? Math.round(program.rating * 2) / 2 : <>Rating not given</>}
           </Typography>
+          {ratingsCount > 0 && (
+            <Typography sx={{ float: 'left', mt: '0.5rem' }}>
+              Ratings given:
+              {' '}
+              {ratingsCount}
+            </Typography>
+          )}
         </Card>
         <Card sx={{
           p: '1rem',

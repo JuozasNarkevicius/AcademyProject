@@ -18,11 +18,17 @@ const deleteRatingAPI = async (ratingId) => {
   await API.delete(`/ratings/${ratingId}`);
 };
 
+const getRatingsCountAPI = async (programId) => {
+  const response = await API.get(`/programs/${programId}/ratingsCount`);
+  return response;
+};
+
 const ratingService = {
   postRatingAPI,
   getMyRatingAPI,
   updateRatingAPI,
   deleteRatingAPI,
+  getRatingsCountAPI,
 };
 
 export default ratingService;
