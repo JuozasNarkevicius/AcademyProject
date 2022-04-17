@@ -211,7 +211,7 @@ const TrainerApplication = () => {
             open={isPreviewOpen}
             onClick={() => setIsPreviewOpen(false)}
           >
-            <ProfileCard trainer={application} />
+            <ProfileCard trainer={application} isLoading={isLoading} />
           </Backdrop>
         </>
       )}

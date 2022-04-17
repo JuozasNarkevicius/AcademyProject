@@ -11,7 +11,7 @@ import ProfileCard from '../components/dataDisplay/ProfileCard';
 import authenticationService from '../services/AuthenticationService';
 
 const TrainerApplicationView = () => {
-  const [application, setApplication] = useState();
+  const [application, setApplication] = useState({ status: '' });
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -19,7 +19,6 @@ const TrainerApplicationView = () => {
   const getApplication = async () => {
     const response = await applicationService.getApplicationAPI(id);
     setApplication(response.data);
-    setIsLoading(false);
   };
 
   const approveTrainer = async () => {
@@ -40,10 +39,6 @@ const TrainerApplicationView = () => {
     getApplication();
   }, []);
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   return (
     <Container sx={{
       minWidth: '100%',
@@ -57,7 +52,7 @@ const TrainerApplicationView = () => {
     }}
     >
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <ProfileCard trainer={application} />
+        <ProfileCard trainer={application} isLoading={isLoading} setIsLoading={setIsLoading} />
       </Box>
       {application.status === 'pending' ? (
         <>

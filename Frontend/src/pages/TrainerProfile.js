@@ -4,7 +4,6 @@ import {
 } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import applicationService from '../services/ApplicationService';
-import Loading from '../components/Loading';
 import backgroundImage from '../assets/images/workoutEquipment.jpg';
 import ProfileCard from '../components/dataDisplay/ProfileCard';
 
@@ -23,16 +22,11 @@ const TrainerProfile = () => {
         navigate(-1);
       }
     }
-    setIsLoading(false);
   };
 
   useEffect(() => {
     getTrainer();
   }, []);
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   return (
     <Container sx={{
@@ -48,7 +42,7 @@ const TrainerProfile = () => {
     >
       <CssBaseline />
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-        <ProfileCard trainer={trainer} />
+        <ProfileCard trainer={trainer} isLoading={isLoading} setIsLoading={setIsLoading} />
       </Box>
     </Container>
   );
