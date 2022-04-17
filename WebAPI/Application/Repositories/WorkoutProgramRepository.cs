@@ -9,8 +9,9 @@ namespace Application.Repositories
         public Task<IEnumerable<WorkoutProgram>> GetAll(long userId);
         public Task<IEnumerable<WorkoutProgram>> GetAllSaved(long userId);
         public Task<SavedProgram> GetSaved(long userId, long programId);
+        public Task<bool> IsSaved(long userId, long programId);
         public Task<SavedProgram> SaveProgram(SavedProgram program);
-        public Task<IEnumerable<WorkoutProgram>> GetAllPublic();
+        public Task<IEnumerable<WorkoutProgram>> GetAllPublic(long userId);
         public Task<WorkoutProgram> Get(long id);
         public Task<WorkoutProgram> Add(WorkoutProgram program);
         public Task<WorkoutProgram> GetName(long id);
@@ -58,9 +59,17 @@ namespace Application.Repositories
             return program;
         }
 
-        public async Task<IEnumerable<WorkoutProgram>> GetAllPublic()
+        public async Task<bool> IsSaved(long userId, long programId)
         {
-            var programs = await _context.Programs.Where(p => p.IsPublic == true).ToListAsync();
+            var isSaved = await _context.SavedPrograms
+                .Where(s => s.UserId == userId && s.ProgramId == programId)
+                .AnyAsync();
+            return isSaved;
+        }
+
+        public async Task<IEnumerable<WorkoutProgram>> GetAllPublic(long userId)
+        {
+            var programs = await _context.Programs.Where(p => p.IsPublic == true && p.UserId != userId).ToListAsync();
 
             return programs;
         }

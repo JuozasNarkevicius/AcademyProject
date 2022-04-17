@@ -60,11 +60,20 @@ namespace WebAPI.Controllers
             return Ok(savedProgram);
         }
 
-        [Authorize]
-        [HttpGet("public")]
-        public async Task<ActionResult<IEnumerable<WorkoutProgram>>> GetPublicPrograms()
+        [HttpGet]
+        [Route("~/api/users/{userId}/programs/{programId}/isSaved")]
+        public async Task<ActionResult<UpdateProgramNameDTO>> IsSaved(long userId, long programId)
         {
-            var programs = await _workoutProgramRepository.GetAllPublic();
+            var isSaved = await _workoutProgramRepository.IsSaved(userId, programId);
+
+            return Ok(isSaved);
+        }
+
+        [Authorize]
+        [HttpGet("~/api/users/{userId}/publicPrograms/")]
+        public async Task<ActionResult<IEnumerable<WorkoutProgram>>> GetPublicPrograms(long userId)
+        {
+            var programs = await _workoutProgramRepository.GetAllPublic(userId);
 
             var mapped = _mapper.Map<IEnumerable<WorkoutProgramNamesDTO>>(programs);
 
