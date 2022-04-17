@@ -11,6 +11,7 @@ namespace Application.Repositories
         public Task<ProgramRating> Add(ProgramRating rating);
         public Task Delete(ProgramRating rating);
         public Task<ProgramRating> GetMyRating(long programId, long userId);
+        public Task<int> GetRatingsCount(long programId);
         public Task<ProgramRating> Get(long id);
     };
     public class RatingRepository : IRatingRepository
@@ -52,6 +53,14 @@ namespace Application.Repositories
                 .FirstOrDefaultAsync();
 
             return rating;
+        }
+
+        public async Task<int> GetRatingsCount(long programId)
+        {
+            var ratingsCount = await context.Ratings
+                .CountAsync(r => r.ProgramId == programId);
+
+            return ratingsCount;
         }
 
         public async Task<ProgramRating> Update(ProgramRating rating)

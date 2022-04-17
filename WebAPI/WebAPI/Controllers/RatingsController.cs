@@ -42,6 +42,14 @@ namespace WebAPI.Controllers
             return Ok(myRating);
         }
 
+        [HttpGet("~/api/programs/{programId}/ratingsCount")]
+        public async Task<ActionResult<int>> RatingsCount(long programId)
+        {
+            var ratingsCount = await _ratingRepository.GetRatingsCount(programId);
+
+            return Ok(ratingsCount);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRating(long id, UpdateRatingDTO rating)
         {
