@@ -57,6 +57,7 @@ const EditableName = ({
       ) : (
         <>
           <Input
+            autoFocus
             value={newName}
             onClickCapture={(e) => e.stopPropagation()}
             onChange={(e) => {

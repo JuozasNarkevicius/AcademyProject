@@ -19,7 +19,7 @@ const additionalContentFields = [
     name: 'description', label: 'Description', type: 'text', multiline: true, maxRows: 4, width: '30rem',
   },
   {
-    name: 'videoUrl', label: 'Video', type: 'text', width: '',
+    name: 'videoUrl', label: 'Video', type: 'text', width: '20rem',
   },
 ];
 

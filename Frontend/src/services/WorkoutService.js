@@ -5,8 +5,8 @@ export const postWorkoutAPI = async (programId, workout) => {
   return response;
 };
 
-export const updateWorkoutAPI = async (programId, workoutId, name) => {
-  await API.put(`/programs/${programId}}/workouts/${workoutId}`, { name });
+export const updateWorkoutAPI = async (programId, workoutId, name, position) => {
+  await API.put(`/programs/${programId}}/workouts/${workoutId}`, { name, position });
 };
 
 export const deleteWorkoutAPI = async (programId, workoutId) => {

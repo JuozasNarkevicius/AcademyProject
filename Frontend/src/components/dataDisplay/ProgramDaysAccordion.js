@@ -46,9 +46,10 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
 
   const updateWorkoutName = async (newName, workoutId) => {
     const newProgram = program;
+    const { position } = newProgram.workouts.find((w) => w.id === workoutId);
     newProgram.workouts.find((w) => w.id === workoutId).name = newName;
     setProgram({ ...newProgram });
-    await workoutService.updateWorkoutAPI(program.id, workoutId, newName);
+    await workoutService.updateWorkoutAPI(program.id, workoutId, newName, position);
   };
 
   const updateProgramStatus = async (status) => {

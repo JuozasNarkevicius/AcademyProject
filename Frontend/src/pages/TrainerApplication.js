@@ -21,18 +21,22 @@ const ApplicationFields = [
   { name: 'description', label: 'Description', type: 'text' },
   { name: 'qualifications', label: 'Qualifications', type: 'text' },
   { name: 'phoneNumber', label: 'Phone number', type: 'text' },
+  { name: 'specializations', label: 'Specializations', type: 'text' },
+  { name: 'workExperience', label: 'Work Experience', type: 'text' },
   { name: 'ImageId', label: 'Profile image', type: 'array' },
 ];
 
 const validationSchema = yup.object({
   description: yup.string().required('Enter a description'),
   qualifications: yup.string().required('Enter your qualifications'),
+  specializations: yup.string().required('Enter your specializations'),
+  workExperience: yup.string().required('Enter your work experience'),
   phoneNumber: yup.string().required('Enter your phone number'),
 });
 
 const TrainerApplication = () => {
   const [application, setApplication] = useState({
-    description: '', qualifications: '', imageId: [], phoneNumber: '',
+    description: '', qualifications: '', imageId: [], phoneNumber: '', specializations: '', workExperience: '',
   });
   const [imageName, setImageName] = useState();
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
@@ -63,6 +67,8 @@ const TrainerApplication = () => {
       description: values.description,
       qualifications: values.qualifications,
       phoneNumber: values.phoneNumber,
+      specializations: values.specializations,
+      workExperience: values.workExperience,
       imageId: imageUrl,
     };
     const applicationWithId = await applicationService.postApplicationAPI(trainerApplication);
@@ -94,6 +100,8 @@ const TrainerApplication = () => {
       description: application.description || '',
       qualifications: application.qualifications || '',
       phoneNumber: application.phoneNumber || '',
+      specializations: application.specializations,
+      workExperience: application.workExperience,
       imageId: application.imageId || '',
     },
     validationSchema,
@@ -137,7 +145,7 @@ const TrainerApplication = () => {
       }}
       >
         <form onSubmit={formik.handleSubmit} style={{ maxWidth: '30rem' }}>
-          {ApplicationFields.slice(0, 3).map((r) => (
+          {ApplicationFields.slice(0, 5).map((r) => (
             <TextField
               InputLabelProps={{
                 style: { color: '#fff' },

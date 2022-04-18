@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  Card, IconButton, Icon, Button, Box,
+  Card, IconButton, Icon, Button, Box, Typography,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import Form from '../dataInput/Form';
@@ -35,17 +35,39 @@ const AdditionalField = ({
               id={exercise.id}
               objectType={attribute}
             />
+            <IconButton
+              sx={{ float: 'right', '&:hover': { backgroundColor: COLORS.BACKGROUND } }}
+              title="Edit"
+              onClick={() => setIsEditing(true)}
+            >
+              <Icon>
+                <img src={editIcon} height={23} width={23} alt="" />
+              </Icon>
+            </IconButton>
           </Box>
-          <IconButton
-            sx={{ float: 'right', '&:hover': { backgroundColor: COLORS.BACKGROUND } }}
-            title="Edit"
-            onClick={() => setIsEditing(true)}
-          >
-            <Icon>
-              <img src={editIcon} height={23} width={23} alt="" />
-            </Icon>
-          </IconButton>
-          {children}
+          {attribute === 'description'
+            ? (
+              <>
+                <Typography
+                  sx={{
+                    textAlign: 'left',
+                    mt: '2rem',
+                    ml: '2rem',
+                  }}
+                  variant="h5"
+                >
+                  Description:
+
+                </Typography>
+                <Typography sx={{
+                  width: '730px', textAlign: 'left', m: '2rem', mt: '0.5rem',
+                }}
+                >
+                  {children}
+                </Typography>
+              </>
+            )
+            : <Typography sx={{ m: '1rem' }}>{children}</Typography>}
         </>
       );
     }
@@ -91,7 +113,9 @@ const AdditionalField = ({
           </Icon>
         </IconButton>
       )}
-      {renderDescription()}
+      <Box sx={{ mr: '2rem' }}>
+        {renderDescription()}
+      </Box>
     </Card>
   );
 };

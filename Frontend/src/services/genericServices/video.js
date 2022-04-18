@@ -1,4 +1,4 @@
-const getIdFromUrl = (url) => url.substring(url.indexOf('=') + 1);
+const getIdFromUrl = (url) => url.substring(url.indexOf('=') + 1, url.indexOf('&'));
 
 const videoService = {
   getIdFromUrl,
