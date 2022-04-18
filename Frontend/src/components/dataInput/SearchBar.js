@@ -35,12 +35,10 @@ const SearchBar = ({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      mt: '1rem',
-      mb: '1rem',
     }}
     >
       <SearchBarMUI
-        sx={{ minWidth: '500px' }}
+        sx={{ minWidth: '300px' }}
         style={{ backgroundColor: COLORS.ITEM, color: COLORS.TEXT }}
         value={searched}
         onChange={(value) => requestSearch(value)}

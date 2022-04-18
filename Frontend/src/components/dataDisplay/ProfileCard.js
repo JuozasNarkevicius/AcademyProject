@@ -62,6 +62,22 @@ const ProfileCard = ({ trainer, isLoading, setIsLoading }) => {
             </Grid>
             <Grid item xs={12}>
               <Typography variant="h5" sx={{ float: 'left', mt: '1rem' }}>
+                Specializations
+              </Typography>
+              <Typography variant="body2" sx={{ textAlign: 'left', mt: '3.5rem' }}>
+                {trainer.specializations}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h5" sx={{ float: 'left', mt: '1rem' }}>
+                Work experience
+              </Typography>
+              <Typography variant="body2" sx={{ textAlign: 'left', mt: '3.5rem' }}>
+                {trainer.workExperience}
+              </Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant="h5" sx={{ float: 'left', mt: '1rem' }}>
                 Contacts
               </Typography>
               <Typography variant="body2" sx={{ textAlign: 'left', mt: '3.5rem' }}>

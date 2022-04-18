@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Card, Container, CardActions, CardContent,
-  Button, Typography, Grid, CssBaseline,
+  Button, Typography, Grid, CssBaseline, Box,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../constants/Routes';
@@ -19,7 +19,7 @@ const Trainers = () => {
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
-  const pageSize = 9;
+  const pageSize = 10;
 
   const getTrainers = async () => {
     try {
@@ -59,39 +59,34 @@ const Trainers = () => {
     }}
     >
       <CssBaseline />
-      <Typography variant="h5">Registered trainers</Typography>
       <SearchBar
         elements={trainers}
         setFilteredElements={setFilteredTrainers}
         attribute="fullName"
       />
-      <Grid container spacing={2}>
+      <Grid container spacing={0}>
         {paginationService.getElementsByPage(filteredTrainers, page, pageSize).map((trainer) => (
-          <Grid key={trainer.id} item xs={4}>
-            <Card sx={{ margin: '1rem', backgroundColor: COLORS.ITEM }}>
-              <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {`${trainer.firstName}${' '}${trainer.lastName}`}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {trainer.qualification}
-                </Typography>
-              </CardContent>
-              <CardActions>
-                <Button
-                  size="small"
-                  onClick={() => navigate(`${ROUTES.TRAINER_PROFILE}/${trainer.id}`)}
-                  sx={{
-                    color: COLORS.TEXT,
-                    backgroundColor: COLORS.SECONDARY,
-                    '&:hover': {
-                      background: COLORS.SECONDARY_HOVER,
-                    },
-                  }}
-                >
-                  Learn More
-                </Button>
-              </CardActions>
+          <Grid key={trainer.id} item xs={2.4} sx={{ height: '22.5rem' }}>
+            <Card
+              sx={{
+                margin: '1rem',
+                backgroundColor: COLORS.ITEM,
+                height: '21.5rem',
+                '&:hover': {
+                  background: COLORS.SUB_ITEM_ITEM,
+                },
+                width: '18.8rem',
+                borderColor: COLORS.ITEM,
+              }}
+              onClick={() => navigate(`${ROUTES.TRAINER_PROFILE}/${trainer.id}`)}
+            >
+              <Typography variant="body2" color="text.secondary">
+                {trainer.qualification}
+              </Typography>
+              <img src={trainer.imageId} alt="" style={{ height: '300px', width: '300px' }} />
+              <Typography gutterBottom variant="h5" component="div">
+                {`${trainer.firstName}${' '}${trainer.lastName}`}
+              </Typography>
             </Card>
           </Grid>
         ))}

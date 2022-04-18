@@ -66,14 +66,14 @@ const TrainerApplicationList = () => {
     >
       <CssBaseline />
       <Box>
-        <Typography variant="h5">Trainer profile applications</Typography>
+        <Typography sx={{ mb: '1rem' }} variant="h5">Trainer profile applications</Typography>
         <SearchBar
           elements={applications}
           setFilteredElements={setFilteredApplications}
           attribute="fullName"
         />
         <Box sx={{ mb: '0.5rem' }}>
-          <InputLabel sx={{ color: COLORS.TEXT }}>Filter by status:</InputLabel>
+          <InputLabel sx={{ color: COLORS.TEXT, mt: '1rem' }}>Filter by status:</InputLabel>
           <Select
             sx={{
               backgroundColor: COLORS.ITEM,

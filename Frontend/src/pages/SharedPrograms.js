@@ -116,7 +116,9 @@ const SharedPrograms = () => {
             pageSize={8}
             rowsPerPageOptions={[5]}
             disableColumnFilter
+            disableCOlumn
             disableSelectionOnClick
+            disableColumnSelector
             onRowClick={(program) => navigate(`${ROUTES.PUBLIC_PROGRAM}/${program.id}`)}
           />
         </Box>
