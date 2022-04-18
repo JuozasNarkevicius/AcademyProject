@@ -1,11 +1,12 @@
 import React from 'react';
 import {
-  Button, Dialog, DialogActions, DialogTitle, IconButton, Icon,
+  Dialog, DialogActions, DialogTitle, IconButton, Icon,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import deleteIcon from '../../assets/icons/x.svg';
 import COLORS from '../../styles/colors';
 import styles from './Modal.module.css';
+import Button from '../Button';
 
 const AlertDialog = ({
   deleteObject, objectType,
@@ -50,10 +51,8 @@ const AlertDialog = ({
           ?
         </DialogTitle>
         <DialogActions>
-          <Button color="secondary" onClick={handleClose}>No</Button>
-          <Button color="secondary" onClick={handleConfirm} autoFocus>
-            Yes
-          </Button>
+          <Button text="No" onClick={handleClose} width="3rem" />
+          <Button text="Yes" onClick={handleConfirm} width="3rem" />
         </DialogActions>
       </Dialog>
     </>

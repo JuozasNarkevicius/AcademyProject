@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import {
-  Button, Container, TextField, Typography, Box, CssBaseline,
+  Button, Container, TextField, Typography, Box, CssBaseline, Card,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -56,43 +56,45 @@ const Login = () => {
     >
       <CssBaseline />
       <Box sx={{
-        display: 'flex', justifyContent: 'center', marginTop: '20vh',
+        display: 'flex', justifyContent: 'center', marginTop: '17vh',
       }}
       >
-        <form onSubmit={formik.handleSubmit} style={{ maxWidth: '20rem' }}>
-          {loginFields.map((login) => (
-            <TextField
-              InputLabelProps={{
-                style: { color: '#fff' },
-              }}
-              variant="filled"
+        <Card sx={{ pt: '1.5rem', pb: '1rem' }}>
+          <form onSubmit={formik.handleSubmit} style={{ maxWidth: '20rem' }}>
+            {loginFields.map((login) => (
+              <TextField
+                InputLabelProps={{
+                  style: { color: '#fff' },
+                }}
+                variant="filled"
+                sx={{
+                  m: '10px', backgroundColor: '#2d2b2b', color: 'white',
+                }}
+                key={login.name}
+                name={login.name}
+                label={login.label}
+                type={login.type}
+                value={formik.values[login.name]}
+                onChange={formik.handleChange}
+                error={formik.touched[login.name] && Boolean(formik.errors[login.name])}
+                helperText={formik.touched[login.name] && formik.errors[login.name]}
+              />
+            ))}
+            <Typography sx={{ color: 'red' }}>{error}</Typography>
+            <Button
               sx={{
-                m: '10px', backgroundColor: '#2d2b2b', color: 'white',
+                margin: '10px',
+                '&:hover': { backgroundColor: COLORS.SECONDARY_HOVER },
+                width: '8rem',
               }}
-              key={login.name}
-              name={login.name}
-              label={login.label}
-              type={login.type}
-              value={formik.values[login.name]}
-              onChange={formik.handleChange}
-              error={formik.touched[login.name] && Boolean(formik.errors[login.name])}
-              helperText={formik.touched[login.name] && formik.errors[login.name]}
-            />
-          ))}
-          <Typography sx={{ color: 'red' }}>{error}</Typography>
-          <Button
-            sx={{
-              margin: '10px',
-              '&:hover': { backgroundColor: COLORS.SECONDARY_HOVER },
-              width: '8rem',
-            }}
-            variant="contained"
-            color="secondary"
-            type="submit"
-          >
-            Login
-          </Button>
-        </form>
+              variant="contained"
+              color="secondary"
+              type="submit"
+            >
+              Login
+            </Button>
+          </form>
+        </Card>
       </Box>
     </Container>
   );

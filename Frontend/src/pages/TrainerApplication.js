@@ -140,77 +140,79 @@ const TrainerApplication = () => {
     }}
     >
       <CssBaseline />
-      <Box sx={{
-        display: 'flex', justifyContent: 'center', marginTop: '5vh',
-      }}
-      >
-        <form onSubmit={formik.handleSubmit} style={{ maxWidth: '30rem' }}>
-          {ApplicationFields.slice(0, 5).map((r) => (
-            <TextField
-              InputLabelProps={{
-                style: { color: '#fff' },
-              }}
-              variant="filled"
-              sx={{
-                m: '10px', backgroundColor: '#2d2b2b', color: 'white', width: '23rem',
-              }}
-              multiline
-              maxRows={6}
-              key={r.name}
-              name={r.name}
-              label={r.label}
-              type={r.type}
-              value={formik.values[r.name]}
-              onChange={formik.handleChange}
-              error={formik.touched[r.name] && Boolean(formik.errors[r.name])}
-              helperText={formik.touched[r.name] && formik.errors[r.name]}
-            />
-          ))}
-          <FileUpload
-            name="imageId"
-            value={formik.values.imageId}
-            imageName={imageName}
-            setImageName={setImageName}
-            setFieldValue={formik.setFieldValue}
-            helperText={formik.touched.imageId && formik.errors.imageId}
-            error={formik.touched.imageId && Boolean(formik.errors.imageId)}
-          />
-          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-            <Card sx={{ backgroundColor: COLORS.ITEM, width: '13rem', p: '0.5rem' }}>
-              <Typography>
-                Status:
-                {isStatusLoading
-                  ? <CircularProgress sx={{ color: COLORS.TEXT, ml: '10px' }} size="1rem" />
-                  : (
-                    <Chip
-                      sx={{ ml: 1, fontSize: '19px' }}
-                      label={application.status || 'not applied'}
-                      color={STATUS_COLORS[application.status]}
-                      variant="outlined"
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Card sx={{ width: '30rem', pb: '0.5rem' }}>
+          <Box sx={{
+            display: 'flex', justifyContent: 'center', marginTop: '5vh',
+          }}
+          >
+            <form onSubmit={formik.handleSubmit} style={{ maxWidth: '30rem' }}>
+              {ApplicationFields.slice(0, 5).map((r) => (
+                <TextField
+                  InputLabelProps={{
+                    style: { color: '#fff' },
+                  }}
+                  variant="filled"
+                  sx={{
+                    m: '10px', backgroundColor: '#2d2b2b', color: 'white', width: '23rem',
+                  }}
+                  multiline
+                  maxRows={6}
+                  key={r.name}
+                  name={r.name}
+                  label={r.label}
+                  type={r.type}
+                  value={formik.values[r.name]}
+                  onChange={formik.handleChange}
+                  error={formik.touched[r.name] && Boolean(formik.errors[r.name])}
+                  helperText={formik.touched[r.name] && formik.errors[r.name]}
+                />
+              ))}
+              <FileUpload
+                name="imageId"
+                value={formik.values.imageId}
+                imageName={imageName}
+                setImageName={setImageName}
+                setFieldValue={formik.setFieldValue}
+                helperText={formik.touched.imageId && formik.errors.imageId}
+                error={formik.touched.imageId && Boolean(formik.errors.imageId)}
+              />
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Card sx={{ backgroundColor: COLORS.ITEM, width: '13rem', p: '0.5rem' }}>
+                  <Typography>
+                    Status:
+                    {isStatusLoading
+                      ? <CircularProgress sx={{ color: COLORS.TEXT, ml: '10px' }} size="1rem" />
+                      : (
+                        <Chip
+                          sx={{ ml: 1, fontSize: '19px' }}
+                          label={application.status || 'not applied'}
+                          color={STATUS_COLORS[application.status]}
+                          variant="outlined"
+                        />
+                      )}
+                  </Typography>
+                </Card>
+              </Box>
+              {application.description
+                ? (
+                  <>
+                    <Button text="Re-Apply" type="submit" />
+                    <Button
+                      text="Delete application"
+                      onClick={() => {
+                        deleteApplication();
+                        formik.resetForm();
+                      }}
+                      width="10rem"
+                      type="button"
                     />
-                  )}
-              </Typography>
-            </Card>
+                  </>
+                )
+                : <Button text="Apply" type="submit" />}
+            </form>
           </Box>
           {application.description
-            ? (
-              <>
-                <Button text="Re-Apply" type="submit" />
-                <Button
-                  text="Delete application"
-                  onClick={() => {
-                    deleteApplication();
-                    formik.resetForm();
-                  }}
-                  width="10rem"
-                  type="button"
-                />
-              </>
-            )
-            : <Button text="Apply" type="submit" />}
-        </form>
-      </Box>
-      {application.description
       && (
         <>
           <Button text="Preview profile" onClick={() => setIsPreviewOpen(true)} width="10rem" />
@@ -223,6 +225,8 @@ const TrainerApplication = () => {
           </Backdrop>
         </>
       )}
+        </Card>
+      </Box>
     </Container>
   );
 };

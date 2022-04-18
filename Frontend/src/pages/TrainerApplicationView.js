@@ -4,7 +4,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 import applicationService from '../services/ApplicationService';
 import userService from '../services/UserService';
 import ROUTES from '../constants/Routes';
-import Loading from '../components/Loading';
 import backgroundImage from '../assets/images/workoutEquipment.jpg';
 import Button from '../components/Button';
 import ProfileCard from '../components/dataDisplay/ProfileCard';

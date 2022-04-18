@@ -1,5 +1,5 @@
 import {
-  Button, Container, TextField, CssBaseline, Box,
+  Button, Container, TextField, CssBaseline, Box, Card,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
@@ -57,44 +57,46 @@ const Registration = () => {
     >
       <CssBaseline />
       <Box sx={{
-        display: 'flex', justifyContent: 'center', marginTop: '9vh',
+        display: 'flex', justifyContent: 'center', marginTop: '5vh',
       }}
       >
-        <form onSubmit={formik.handleSubmit} style={{ maxWidth: '20rem' }}>
-          {registationFields.map((r) => (
-            <TextField
-              InputLabelProps={{
-                style: { color: '#fff' },
-              }}
-              variant="filled"
+        <Card sx={{ pt: '1.5rem', pb: '1rem' }}>
+          <form onSubmit={formik.handleSubmit} style={{ maxWidth: '20rem' }}>
+            {registationFields.map((r) => (
+              <TextField
+                InputLabelProps={{
+                  style: { color: '#fff' },
+                }}
+                variant="filled"
+                sx={{
+                  m: '10px', backgroundColor: '#2d2b2b', color: 'white',
+                }}
+                key={r.name}
+                name={r.name}
+                label={r.label}
+                type={r.type}
+                value={formik.values[r.name]}
+                onChange={formik.handleChange}
+                error={formik.touched[r.name] && Boolean(formik.errors[r.name])}
+                helperText={formik.touched[r.name] && formik.errors[r.name]}
+              />
+            ))}
+            <Button
               sx={{
-                m: '10px', backgroundColor: '#2d2b2b', color: 'white',
+                margin: '10px',
+                '&:hover': { backgroundColor: COLORS.SECONDARY_HOVER },
+                width: '8rem',
               }}
-              key={r.name}
-              name={r.name}
-              label={r.label}
-              type={r.type}
-              value={formik.values[r.name]}
-              onChange={formik.handleChange}
-              error={formik.touched[r.name] && Boolean(formik.errors[r.name])}
-              helperText={formik.touched[r.name] && formik.errors[r.name]}
-            />
-          ))}
-          <Button
-            sx={{
-              margin: '10px',
-              '&:hover': { backgroundColor: COLORS.SECONDARY_HOVER },
-              width: '8rem',
-            }}
-            variant="contained"
-            color="secondary"
-            type="submit"
-            size="large"
-          >
-            Register
+              variant="contained"
+              color="secondary"
+              type="submit"
+              size="large"
+            >
+              Register
 
-          </Button>
-        </form>
+            </Button>
+          </form>
+        </Card>
       </Box>
     </Container>
   );
