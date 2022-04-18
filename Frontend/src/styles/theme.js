@@ -20,6 +20,30 @@ const theme = createTheme({
     },
   },
   components: {
+    MuiDataGrid: {
+      styleOverrides: {
+        root: {
+          '&.MuiDataGrid-root .MuiDataGrid-cell:focus': {
+            outline: 'none',
+          },
+          '.MuiButtonBase-root': {
+            color: COLORS.TEXT,
+          },
+          '&.MuiDataGrid-root .MuiDataGrid-cell': {
+            borderColor: COLORS.SUB_ITEM_ITEM,
+          },
+          '&.MuiDataGrid-root .MuiDataGrid-columnHeaders': {
+            borderColor: COLORS.SUB_ITEM_ITEM,
+          },
+          '&.MuiDataGrid-root .MuiDataGrid-columnHeader:focus': {
+            outline: 'none',
+          },
+          '&.MuiDataGrid-root .MuiDataGrid-footerContainer': {
+            borderColor: COLORS.SUB_ITEM_ITEM,
+          },
+        },
+      },
+    },
     MuiTableRow: {
       styleOverrides: {
         root: {
