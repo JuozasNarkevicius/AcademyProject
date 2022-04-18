@@ -4,5 +4,6 @@
     {
         public string Name { get; set; }
         public bool IsPublic { get; set; }
+        public int Position { get; set; }
     }
 }
