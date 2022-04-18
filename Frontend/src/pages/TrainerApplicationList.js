@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Container, List, ListItem, ListItemButton, Chip, Typography, CssBaseline, Box,
+  Container, List, ListItem, ListItemButton, Chip,
+  Typography, CssBaseline, Box, Select, MenuItem,
+  InputLabel,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { styled } from '@mui/system';
 import applicationService from '../services/ApplicationService';
 import ROUTES from '../constants/Routes';
 import STATUS_COLORS from '../constants/statusColors';
@@ -14,10 +17,15 @@ import backgroundImage from '../assets/images/workoutEquipment.jpg';
 import COLORS from '../styles/colors';
 import authenticationService from '../services/AuthenticationService';
 
+const StyledMenuItem = styled(MenuItem)({
+  '&:hover': { backgroundColor: COLORS.ITEM },
+});
+
 const TrainerApplicationList = () => {
   const [applications, setApplications] = useState();
   const [filteredApplications, setFilteredApplications] = useState();
   const [page, setPage] = useState(1);
+  const [selectedStatus, setSelectedStatus] = useState('all');
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
   const pageSize = 9;
@@ -64,10 +72,29 @@ const TrainerApplicationList = () => {
           setFilteredElements={setFilteredApplications}
           attribute="fullName"
         />
+        <Box sx={{ mb: '0.5rem' }}>
+          <InputLabel sx={{ color: COLORS.TEXT }}>Filter by status:</InputLabel>
+          <Select
+            sx={{
+              backgroundColor: COLORS.ITEM,
+              width: '10rem',
+              height: '2.5rem',
+            }}
+            value={selectedStatus}
+            onChange={(event) => setSelectedStatus(event.target.value)}
+          >
+            <StyledMenuItem value="all">All</StyledMenuItem>
+            <StyledMenuItem value="verified">Verified</StyledMenuItem>
+            <StyledMenuItem value="pending">Pending</StyledMenuItem>
+          </Select>
+        </Box>
       </Box>
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <List>
-          {paginationService.getElementsByPage(filteredApplications, page, pageSize)
+          {(selectedStatus === 'all'
+            ? paginationService.getElementsByPage(filteredApplications, page, pageSize)
+            : paginationService.getElementsByPage(filteredApplications, page, pageSize)
+              .filter((app) => app.status === selectedStatus))
             .map((application) => (
               <ListItem key={application.id} sx={{ width: '30rem' }}>
                 <ListItemButton

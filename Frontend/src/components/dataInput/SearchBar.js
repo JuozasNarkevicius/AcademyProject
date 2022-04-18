@@ -35,7 +35,8 @@ const SearchBar = ({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
-      m: '2rem',
+      mt: '1rem',
+      mb: '1rem',
     }}
     >
       <SearchBarMUI
