@@ -4,7 +4,7 @@ import {
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import Form from '../dataInput/Form';
-import AlertDialog from '../dataDisplay/Modal';
+import AlertDialog from '../modal/Modal';
 import editIcon from '../../assets/icons/edit.svg';
 import exitIcon from '../../assets/icons/x.svg';
 import COLORS from '../../styles/colors';

@@ -1,0 +1,10 @@
+@keyframes appear {
+  0%{
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+.Modal {
+  animation: appear 350ms ease-in 1;
+}

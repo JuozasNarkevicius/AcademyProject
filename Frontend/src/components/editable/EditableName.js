@@ -3,7 +3,7 @@ import {
   IconButton, Input, Icon, Box,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import AlertDialog from '../dataDisplay/Modal';
+import AlertDialog from '../modal/Modal';
 import imgSrcDelete from '../../assets/icons/x.svg';
 import COLORS from '../../styles/colors';
 

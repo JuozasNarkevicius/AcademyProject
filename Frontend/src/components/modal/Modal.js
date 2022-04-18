@@ -5,6 +5,7 @@ import {
 import PropTypes from 'prop-types';
 import deleteIcon from '../../assets/icons/x.svg';
 import COLORS from '../../styles/colors';
+import styles from './Modal.module.css';
 
 const AlertDialog = ({
   deleteObject, objectType,
@@ -37,6 +38,7 @@ const AlertDialog = ({
         </Icon>
       </IconButton>
       <Dialog
+        className={styles.Modal}
         sx={{ color: COLORS.BACKGROUND, paper: { backgroundColor: 0 } }}
         open={open}
         onClose={handleClose}

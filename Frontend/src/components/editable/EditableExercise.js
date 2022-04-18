@@ -3,7 +3,7 @@ import {
   TableCell, IconButton, Icon, TextField,
 } from '@mui/material';
 import PropTypes from 'prop-types';
-import AlertDialog from '../dataDisplay/Modal';
+import AlertDialog from '../modal/Modal';
 import detailsIcon from '../../assets/icons/description.svg';
 import COLORS from '../../styles/colors';
 
