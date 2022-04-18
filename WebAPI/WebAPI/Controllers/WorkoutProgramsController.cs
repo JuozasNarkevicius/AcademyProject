@@ -77,6 +77,11 @@ namespace WebAPI.Controllers
 
             var mapped = _mapper.Map<IEnumerable<WorkoutProgramNamesDTO>>(programs);
 
+            foreach (var program in mapped)
+            {
+                program.Rating = await _ratingRepository.GetAverage(program.Id);
+            }
+
             return Ok(mapped);
         }
 

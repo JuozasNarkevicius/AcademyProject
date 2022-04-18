@@ -69,7 +69,9 @@ namespace Application.Repositories
 
         public async Task<IEnumerable<WorkoutProgram>> GetAllPublic(long userId)
         {
-            var programs = await _context.Programs.Where(p => p.IsPublic == true && p.UserId != userId).ToListAsync();
+            var programs = await _context.Programs
+                .Where(p => p.IsPublic == true && p.UserId != userId)
+                .ToListAsync();
 
             return programs;
         }
