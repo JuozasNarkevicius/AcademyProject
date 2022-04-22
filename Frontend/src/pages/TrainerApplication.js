@@ -1,8 +1,8 @@
 /* eslint-disable max-lines */
 import {
-  Container, TextField, Chip, Typography, Backdrop, CssBaseline, Box, Card, CircularProgress,
+  Container, TextField, Chip, Typography, Backdrop, CssBaseline, Box, Card, CircularProgress, Input,
 } from '@mui/material';
-import { Formik, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import * as yup from 'yup';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -32,6 +32,7 @@ const validationSchema = yup.object({
   specializations: yup.string().required('Enter your specializations'),
   workExperience: yup.string().required('Enter your work experience'),
   phoneNumber: yup.string().required('Enter your phone number'),
+  imageId: yup.mixed().required('Choose an image for your profile'),
 });
 
 const TrainerApplication = () => {
@@ -177,6 +178,10 @@ const TrainerApplication = () => {
                 helperText={formik.touched.imageId && formik.errors.imageId}
                 error={formik.touched.imageId && Boolean(formik.errors.imageId)}
               />
+              <Typography sx={{ color: COLORS.SECONDARY, mb: '1rem' }}>
+                {formik.touched.imageId && Boolean(formik.errors.imageId)
+                 && formik.touched.imageId && formik.errors.imageId}
+              </Typography>
               <Box sx={{ display: 'flex', justifyContent: 'center' }}>
                 <Card sx={{ backgroundColor: COLORS.ITEM, width: '13rem', p: '0.5rem' }}>
                   <Typography>
