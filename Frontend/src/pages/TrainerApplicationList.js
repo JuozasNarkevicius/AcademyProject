@@ -93,8 +93,9 @@ const TrainerApplicationList = () => {
         <List>
           {(selectedStatus === 'all'
             ? paginationService.getElementsByPage(filteredApplications, page, pageSize)
-            : paginationService.getElementsByPage(filteredApplications, page, pageSize)
-              .filter((app) => app.status === selectedStatus))
+            : paginationService.getElementsByPage(filteredApplications
+              .filter((app) => app.status === selectedStatus), page, pageSize)
+          )
             .map((application) => (
               <ListItem key={application.id} sx={{ width: '30rem' }}>
                 <ListItemButton
@@ -118,7 +119,11 @@ const TrainerApplicationList = () => {
         </List>
       </Box>
       <Pagination
-        elements={applications}
+        elements={(selectedStatus === 'all'
+          ? applications
+          : applications
+            .filter((app) => app.status === selectedStatus)
+        )}
         pageSize={pageSize}
         handlePageChange={handlePageChange}
       />
