@@ -13,6 +13,7 @@ import backgroundImage from '../assets/images/workoutEquipment.jpg';
 import COLORS from '../styles/colors';
 import exitIcon from '../assets/icons/x.svg';
 import Button from '../components/Button';
+import RatingCards from '../components/dataDisplay/RatingCards';
 
 const PublicProgramView = () => {
   const [program, setProgram] = useState();
@@ -27,8 +28,8 @@ const PublicProgramView = () => {
   const getData = async () => {
     try {
       const programResponse = await programService.getProgramAPI(id);
-      const ratingResponse = await ratingService.getMyRatingAPI(userId, id);
-      const ratingsCountResponse = await ratingService.getRatingsCountAPI(id);
+      const ratingResponse = await ratingService.getMyRatingAPI(userId, 'programs', id);
+      const ratingsCountResponse = await ratingService.getRatingsCountAPI('programs', id);
       const isProgramSaved = await programService.isProgramSavedAPI(id);
       setProgram(programResponse.data);
       setPersonalRating(ratingResponse.data);
@@ -42,8 +43,6 @@ const PublicProgramView = () => {
     setIsLoading(false);
   };
 
-  console.log(ratingsCount);
-
   const saveProgram = async () => {
     setIsSaved(true);
     await programService.saveProgramAPI(program.id);
@@ -54,16 +53,16 @@ const PublicProgramView = () => {
     await programService.deleteSavedProgramAPI(program.id);
   };
 
-  const handleRatingChange = async (value) => {
-    if (personalRating) {
-      await ratingService.updateRatingAPI(personalRating.id, { starCount: value });
-    } else {
-      await ratingService.postRatingAPI({ starCount: value, programId: id, userId });
-    }
-    await getData();
-  };
+  // const handleRatingChange = async (value) => {
+  //   if (personalRating) {
+  //     await ratingService.updateRatingAPI(personalRating.id, { starCount: value });
+  //   } else {
+  //     await ratingService.postRatingAPI({ starCount: value, programId: id, userId });
+  //   }
+  //   await getData();
+  // };
 
-  const removerRating = async () => {
+  const removeRating = async () => {
     await ratingService.deleteRatingAPI(personalRating.id);
     const programResponse = await programService.getProgramAPI(id);
     setProgram(programResponse.data);
@@ -75,6 +74,8 @@ const PublicProgramView = () => {
   useEffect(() => {
     getData();
   }, []);
+
+  console.log(program);
 
   if (isLoading) {
     return <Loading />;
@@ -105,60 +106,16 @@ const PublicProgramView = () => {
       <Box
         sx={{ float: 'left', m: '2rem', ml: '20vw' }}
       >
-        <Card sx={{ p: '1rem', backgroundColor: COLORS.SUB_ITEM }}>
-          <Typography sx={{ display: 'flex' }}>
-            Global rating:
-            <Rating
-              sx={{ ml: '5px', mr: '15px' }}
-              value={program.rating}
-              precision={0.5}
-              emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-              readOnly
-            />
-            {program.rating !== 0 ? Math.round(program.rating * 2) / 2 : <>Rating not given</>}
-          </Typography>
-          {ratingsCount > 0 && (
-            <Typography sx={{ float: 'left', mt: '0.5rem' }}>
-              Ratings given:
-              {' '}
-              {ratingsCount}
-            </Typography>
-          )}
-        </Card>
-        <Card sx={{
-          p: '1rem',
-          mt: '1rem',
-          backgroundColor: COLORS.SUB_ITEM,
-        }}
-        >
-          <IconButton
-            sx={{
-              height: '40px',
-              float: 'right',
-              ml: '20px',
-              '&:hover': { backgroundColor: COLORS.BACKGROUND },
-            }}
-            title="Remove my rating"
-            onClick={removerRating}
-          >
-            <Icon>
-              <img src={exitIcon} height={20} width={20} alt="k" />
-            </Icon>
-          </IconButton>
-          <Typography sx={{ display: 'flex', mt: '0.5rem' }}>
-            My rating:
-            <Rating
-              sx={{ ml: '5px', mr: '15px' }}
-              value={personalRating ? personalRating.starCount : 0}
-              precision={1}
-              onChange={(event, newValue) => {
-                handleRatingChange(newValue);
-              }}
-              emptyIcon={<StarIcon style={{ opacity: 0.55 }} />}
-            />
-            {personalRating ? Math.round(personalRating.starCount * 2) / 2 : <>Rating not given</>}
-          </Typography>
-        </Card>
+        <RatingCards
+          itemRating={program.rating}
+          personalRating={personalRating}
+          ratingsCount={ratingsCount}
+          itemId={id}
+          itemIdName="programId"
+          userId={userId}
+          removeRating={removeRating}
+          getData={getData}
+        />
       </Box>
       <Box sx={{ float: 'left', mt: '1.3rem' }}>
         {isSaved

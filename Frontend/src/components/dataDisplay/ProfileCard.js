@@ -1,11 +1,13 @@
 import React from 'react';
 import {
-  Card, CardContent, Typography, Grid, CircularProgress,
+  Card, CardContent, Typography, Grid, CircularProgress, Box,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import COLORS from '../../styles/colors';
 
-const ProfileCard = ({ trainer, isLoading, setIsLoading }) => {
+const ProfileCard = ({
+  trainer, isLoading, setIsLoading, RatingCards,
+}) => {
   if (setIsLoading) {
     const img = new Image();
     img.src = trainer.imageId;
@@ -35,6 +37,11 @@ const ProfileCard = ({ trainer, isLoading, setIsLoading }) => {
         <Grid container spacing={4}>
           <Grid item>
             <img alt="" loading="eager" src={trainer.imageId} style={{ height: '300px' }} />
+            {RatingCards && (
+              <Box sx={{ mt: '3rem' }}>
+                {RatingCards}
+              </Box>
+            )}
           </Grid>
           <Grid item xs={12} sm container>
             <Grid container>
@@ -100,9 +107,11 @@ ProfileCard.propTypes = {
   trainer: PropTypes.instanceOf(Object),
   isLoading: PropTypes.bool.isRequired,
   setIsLoading: PropTypes.func,
+  RatingCards: PropTypes.node,
 };
 
 ProfileCard.defaultProps = {
   trainer: {},
   setIsLoading: null,
+  RatingCards: null,
 };
