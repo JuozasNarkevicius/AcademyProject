@@ -79,7 +79,7 @@ namespace WebAPI.Controllers
 
             foreach (var program in mapped)
             {
-                program.Rating = await _ratingRepository.GetAverage(program.Id);
+                program.Rating = await _ratingRepository.GetAverage(program.Id, "programs");
             }
 
             return Ok(mapped);
@@ -91,7 +91,7 @@ namespace WebAPI.Controllers
         {
             var program = await _workoutProgramRepository.Get(id);
 
-            var rating = await _ratingRepository.GetAverage(id);
+            var rating = await _ratingRepository.GetAverage(id, "programs");
 
             if (program == null)
             {

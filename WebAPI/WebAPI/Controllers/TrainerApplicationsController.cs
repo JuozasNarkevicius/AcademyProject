@@ -14,10 +14,12 @@ namespace WebAPI.Controllers
     {
         private readonly IMapper _mapper;
         private readonly ITrainerApplicationRepository _applicationRepository;
+        private readonly IRatingRepository _ratingRepository;
 
-        public TrainerApplicationsController(ITrainerApplicationRepository applicationRepository, IMapper mapper)
+        public TrainerApplicationsController(ITrainerApplicationRepository applicationRepository, IRatingRepository ratingRepository, IMapper mapper)
         {
             _applicationRepository = applicationRepository;
+            _ratingRepository = ratingRepository;
             _mapper = mapper;
         }
 
@@ -70,12 +72,16 @@ namespace WebAPI.Controllers
                 application = await _applicationRepository.Get(id);
             }
 
+            var rating = await _ratingRepository.GetAverage(id, "trainers");
+
             //if (application == null)
             //{
             //    return NotFound();
             //}
 
             var mapped = _mapper.Map<TrainerApplicationDTO>(application);
+
+            mapped.Rating = rating;
 
             return Ok(mapped);
         }

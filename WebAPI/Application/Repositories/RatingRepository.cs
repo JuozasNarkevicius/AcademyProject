@@ -6,13 +6,13 @@ namespace Application.Repositories
 {
     public interface IRatingRepository
     {
-        public Task<double> GetAverage(long id);
-        public Task<ProgramRating> Update(ProgramRating rating);
-        public Task<ProgramRating> Add(ProgramRating rating);
-        public Task Delete(ProgramRating rating);
-        public Task<ProgramRating> GetMyRating(long programId, long userId);
-        public Task<int> GetRatingsCount(long programId);
-        public Task<ProgramRating> Get(long id);
+        public Task<double> GetAverage(long id, string item);
+        public Task<Rating> Update(Rating rating);
+        public Task<Rating> Add(Rating rating);
+        public Task Delete(Rating rating);
+        public Task<Rating> GetMyRating(long userId, string item, long itemId);
+        public Task<int> GetRatingsCount(string item, long itemId);
+        public Task<Rating> Get(long Id);
     };
     public class RatingRepository : IRatingRepository
     {
@@ -23,13 +23,23 @@ namespace Application.Repositories
             this.context = context;
         }
 
-        public async Task<double> GetAverage(long id)
+        public async Task<double> GetAverage(long id, string item)
         {
             try
             {
-                var average = await context.Ratings
-                .Where(r => r.ProgramId == id)
-                .AverageAsync(r => r.StarCount);
+                double average;
+                if (item == "programs")
+                {
+                    average = await context.Ratings
+                        .Where(r => r.ProgramId == id)
+                        .AverageAsync(r => r.StarCount);
+                }
+                else
+                {
+                    average = await context.Ratings
+                        .Where(r => r.TrainerId == id)
+                        .AverageAsync(r => r.StarCount);
+                }
 
                 return average;
 
@@ -39,43 +49,61 @@ namespace Application.Repositories
             }
         }
 
-        public async Task<ProgramRating> Get(long id)
+        public async Task<Rating> Get(long Id)
         {
-            var rating = await context.Ratings.FindAsync(id);
+            var rating = await context.Ratings.FindAsync(Id);
 
             return rating;
         }
 
-        public async Task<ProgramRating> GetMyRating(long programId, long userId)
+        public async Task<Rating> GetMyRating(long userId, string item, long itemId)
         {
-            var rating = await context.Ratings
-                .Where(r => r.ProgramId == programId && r.UserId == userId)
-                .FirstOrDefaultAsync();
+            Rating rating;
+            if(item == "programs")
+            {
+                rating = await context.Ratings
+                    .Where(r => r.ProgramId == itemId && r.UserId == userId)
+                    .FirstOrDefaultAsync();
+            } else
+            {
+                rating = await context.Ratings
+                    .Where(r => r.TrainerId == itemId && r.UserId == userId)
+                    .FirstOrDefaultAsync();
+            }
 
             return rating;
         }
 
-        public async Task<int> GetRatingsCount(long programId)
+        public async Task<int> GetRatingsCount(string item, long itemId)
         {
-            var ratingsCount = await context.Ratings
-                .CountAsync(r => r.ProgramId == programId);
+            int ratingsCount;
+            if (item == "programs")
+            {
+                ratingsCount = await context.Ratings
+                    .CountAsync(r => r.ProgramId == itemId);
+            } 
+            else
+            {
+                ratingsCount = await context.Ratings
+                    .CountAsync(r => r.TrainerId == itemId);
+            }
 
             return ratingsCount;
         }
 
-        public async Task<ProgramRating> Update(ProgramRating rating)
+        public async Task<Rating> Update(Rating rating)
         {
             context.Ratings.Update(rating);
             await context.SaveChangesAsync();
             return rating;
         }
-        public async Task<ProgramRating> Add(ProgramRating rating)
+        public async Task<Rating> Add(Rating rating)
         {
             context.Ratings.Add(rating);
             await context.SaveChangesAsync();
             return rating;
         }
-        public async Task Delete(ProgramRating rating)
+        public async Task Delete(Rating rating)
         {
             context.Ratings.Remove(rating);
             await context.SaveChangesAsync();

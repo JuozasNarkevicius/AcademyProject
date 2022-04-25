@@ -21,10 +21,10 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ProgramRating>> GetRating(long id)
+        [HttpGet("/{item}/{id}")]
+        public async Task<ActionResult<Rating>> GetRating(long id, string item)
         {
-            var rating = await _ratingRepository.GetAverage(id);
+            var rating = await _ratingRepository.GetAverage(id, item);
 
             if (double.IsNaN(rating))
             {
@@ -34,18 +34,18 @@ namespace WebAPI.Controllers
             return Ok(rating);
         }
 
-        [HttpGet("/api/myRatings")]
-        public async Task<ActionResult<ProgramRating>> GetMyRating(long userId, long programId)
+        [HttpGet("/api/user/{userId}/{item}/{itemId}/myRating")]
+        public async Task<ActionResult<Rating>> GetMyRating(long userId, string item, long itemId)
         {
-            var myRating = await _ratingRepository.GetMyRating(programId, userId);
+            var myRating = await _ratingRepository.GetMyRating(userId, item, itemId);
 
             return Ok(myRating);
         }
 
-        [HttpGet("~/api/programs/{programId}/ratingsCount")]
-        public async Task<ActionResult<int>> RatingsCount(long programId)
+        [HttpGet("~/api/{item}/{itemId}/ratingsCount")]
+        public async Task<ActionResult<int>> RatingsCount(string item, long itemId)
         {
-            var ratingsCount = await _ratingRepository.GetRatingsCount(programId);
+            var ratingsCount = await _ratingRepository.GetRatingsCount(item, itemId);
 
             return Ok(ratingsCount);
         }
@@ -68,14 +68,13 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ProgramRating>> PostRating(CreateRatingDTO ratingDTO)
+        public async Task<ActionResult<Rating>> PostRating(CreateRatingDTO ratingDTO)
         {
-            var rating = _mapper.Map<ProgramRating>(ratingDTO);
+            var rating = _mapper.Map<Rating>(ratingDTO);
 
             await _ratingRepository.Add(rating);
 
             return Ok();
-            //return CreatedAtAction(nameof(GetExercise), new { workoutId, id = exerciseFromDb.Id }, _mapper.Map<ExerciseDTO>(exerciseFromDb));
         }
 
         [HttpDelete("{id}")]

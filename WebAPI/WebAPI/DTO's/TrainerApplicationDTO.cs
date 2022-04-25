@@ -13,6 +13,7 @@
         public string WorkExperience { get; set; }
         public string ImageId { get; set; }
         public string Status { get; set; }
+        public double Rating { get; set; }
         public long UserId { get; set; }
     }
 }
