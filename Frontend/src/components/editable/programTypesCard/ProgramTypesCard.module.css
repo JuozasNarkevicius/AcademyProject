@@ -1,0 +1,11 @@
+.effect {
+    text-align: center;
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    text-transform: capitalize;
+    /* background-color: - add your own background-color */
+    padding: 20px 0px;
+    width: 150px;
+    overflow: hidden;
+  }

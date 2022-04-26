@@ -2,7 +2,7 @@
 /* eslint-disable max-lines */
 import React, { useContext, useState } from 'react';
 import {
-  Accordion, AccordionSummary, AccordionDetails, Button, Box,
+  Accordion, AccordionSummary, AccordionDetails, Button, Box, Card,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PropTypes from 'prop-types';
@@ -15,6 +15,7 @@ import EditableName from '../editable/EditableName';
 import programService from '../../services/ProgramService';
 import { workoutService } from '../../services/WorkoutService';
 import COLORS from '../../styles/colors';
+import ProgramTypesCard from '../editable/programTypesCard/ProgramTypesCard';
 
 const ProgramDaysAccordion = ({ deleteProgram }) => {
   const { program, setProgram } = useContext(ProgramContext);
@@ -87,17 +88,27 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
 
   return (
     <Box sx={{ ml: 8, mt: '8rem', mr: -10 }}>
-      <Box sx={{ mb: '2rem' }}>
-        <EditableName
-          imgSrcEdit={editIcon}
-          imgSrcSave={saveIcon}
-          nameField={program.name}
-          objectId={program.id}
-          objectType="program"
-          saveNewName={updateProgramName}
-          deleteObject={deleteProgram}
-        />
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+        <Card sx={{
+          mb: '1rem',
+          backgroundColor: COLORS.ITEM,
+          height: '4.5rem',
+          width: '18rem',
+          p: '1rem',
+        }}
+        >
+          <EditableName
+            imgSrcEdit={editIcon}
+            imgSrcSave={saveIcon}
+            nameField={program.name}
+            objectId={program.id}
+            objectType="program"
+            saveNewName={updateProgramName}
+            deleteObject={deleteProgram}
+          />
+        </Card>
       </Box>
+      <ProgramTypesCard />
       <DragDropContext onDragEnd={handleOnDragEnd} onDragUpdate={() => setIsDraggable(true)}>
         <Droppable droppableId="workouts" type="outerItem">
           {(provided) => (
