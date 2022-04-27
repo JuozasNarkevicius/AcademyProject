@@ -1,7 +1,7 @@
 import React from 'react';
 import { Typography, Grid, CssBaseline } from '@mui/material';
 import athlete from '../../assets/images/athlete.png';
-import programTool from '../../assets/images/programtool.png';
+import programTool from '../../assets/images/program_tool.png';
 import personalTrainer from '../../assets/images/personalTrainer.webp';
 import COLORS from '../../styles/colors';
 import FadeInSection from '../../components/layout/fadeInSection/FadeInSection';
