@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable max-lines */
 import React, { useContext, useState } from 'react';
 import {
@@ -7,6 +6,7 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import PropTypes from 'prop-types';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import { useSnackbar } from 'notistack';
 import EditableWorkoutDay from '../editable/EditableWorkoutDay';
 import { ProgramContext } from '../../Context';
 import editIcon from '../../assets/icons/edit.svg';
@@ -19,6 +19,7 @@ import COLORS from '../../styles/colors';
 const ProgramDaysAccordion = ({ deleteProgram }) => {
   const { program, setProgram } = useContext(ProgramContext);
   const [isDraggable, setIsDraggable] = useState(true);
+  const { enqueueSnackbar } = useSnackbar();
 
   const createWorkout = async () => {
     const newProgram = program;
@@ -78,11 +79,17 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
     await programService.getProgramPdfAPI(program.id, program.name);
   };
 
+  const handleClickVariant = (message, variant) => {
+    const snackBarStyle = { marginLeft: '12rem' };
+    enqueueSnackbar(message, { variant, style: snackBarStyle });
+  };
+
   // Todo: change so that the current user email is passed
   const sendProgramPdfToEmail = async () => {
     // const response = await userService.getCurrentUserAPI();
     // await programService.sendProgramPdfToEmailAPI(program.id);
     await programService.sendProgramPdfToEmailAPI('juoznark@gmail.com', program.id);
+    handleClickVariant('Program successfully sent to your email!', 'success');
   };
 
   return (

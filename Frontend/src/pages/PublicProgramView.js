@@ -1,17 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Container, Typography, Box, CssBaseline, Card, IconButton, Icon,
+  Container, Box, CssBaseline,
 } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
-import Rating from '@mui/material/Rating';
-import StarIcon from '@mui/icons-material/Star';
 import programService from '../services/ProgramService';
 import ratingService from '../services/Rating';
 import ProgramAccordion from '../components/dataDisplay/ProgramAccordion';
 import Loading from '../components/Loading';
 import backgroundImage from '../assets/images/workoutEquipment.jpg';
-import COLORS from '../styles/colors';
-import exitIcon from '../assets/icons/x.svg';
 import Button from '../components/Button';
 import RatingCards from '../components/dataDisplay/RatingCards';
 
@@ -53,15 +49,6 @@ const PublicProgramView = () => {
     await programService.deleteSavedProgramAPI(program.id);
   };
 
-  // const handleRatingChange = async (value) => {
-  //   if (personalRating) {
-  //     await ratingService.updateRatingAPI(personalRating.id, { starCount: value });
-  //   } else {
-  //     await ratingService.postRatingAPI({ starCount: value, programId: id, userId });
-  //   }
-  //   await getData();
-  // };
-
   const removeRating = async () => {
     await ratingService.deleteRatingAPI(personalRating.id);
     const programResponse = await programService.getProgramAPI(id);
@@ -74,8 +61,6 @@ const PublicProgramView = () => {
   useEffect(() => {
     getData();
   }, []);
-
-  console.log(program);
 
   if (isLoading) {
     return <Loading />;
