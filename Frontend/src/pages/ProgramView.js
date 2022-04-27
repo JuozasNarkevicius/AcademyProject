@@ -78,7 +78,7 @@ const ProgramView = () => {
     <Container sx={{
       backgroundImage: `url(${backgroundImage})`,
       minWidth: '100%',
-      minHeight: '93.1vh',
+      minHeight: '92.3vh',
       backgroundPosition: 'center',
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',

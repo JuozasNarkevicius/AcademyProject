@@ -10,6 +10,7 @@ import ROUTES from '../constants/Routes';
 import { AuthorizationContext } from '../Context';
 import backgroundImage from '../assets/images/workoutEquipment.jpg';
 import COLORS from '../styles/colors';
+import logo from '../assets/images/logo.png';
 
 const loginFields = [
   { name: 'email', label: 'Email', type: 'text' },
@@ -45,7 +46,7 @@ const Login = () => {
   return (
     <Container sx={{
       minWidth: '100%',
-      minHeight: '93vh',
+      minHeight: '92.3vh',
       paddingTop: '5rem',
       backgroundImage: `url(${backgroundImage})`,
       backgroundSize: 'cover',
@@ -55,8 +56,9 @@ const Login = () => {
     }}
     >
       <CssBaseline />
+      <img src={logo} alt="" style={{ height: '7rem', marginTop: '5vh', marginRight: '1vw' }} />
       <Box sx={{
-        display: 'flex', justifyContent: 'center', marginTop: '17vh',
+        display: 'flex', justifyContent: 'center', marginTop: '3vh',
       }}
       >
         <Card sx={{ pt: '1.5rem', pb: '1rem' }}>

@@ -46,7 +46,7 @@ const Registration = () => {
   return (
     <Container sx={{
       minWidth: '100%',
-      minHeight: '93vh',
+      minHeight: '92.3vh',
       paddingTop: '5rem',
       backgroundImage: `url(${backgroundImage})`,
       backgroundSize: 'cover',

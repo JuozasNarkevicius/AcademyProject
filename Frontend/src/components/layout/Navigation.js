@@ -8,6 +8,7 @@ import ROUTES from '../../constants/Routes';
 import authenticationService from '../../services/AuthenticationService';
 import { AuthorizationContext } from '../../Context';
 import COLORS from '../../styles/colors';
+import logo from '../../assets/images/logo.png';
 
 const NavButton = styled(Button)({
   minWidth: '6vw',
@@ -22,7 +23,7 @@ const Navigation = () => {
         <Toolbar>
           {isLoggedIn === 'true' ? (
             <>
-              <NavButton color="inherit" component={Link} to={ROUTES.HOME}>Logo</NavButton>
+              <NavButton color="inherit" component={Link} to={ROUTES.HOME}><img src={logo} alt="" style={{ height: '2rem' }} /></NavButton>
               <NavButton color="inherit" component={Link} to={ROUTES.MY_PROGRAMS}>My programs</NavButton>
               <NavButton color="inherit" component={Link} to={ROUTES.BROWSE_PROGRAMS}>Browse programs</NavButton>
               <NavButton color="inherit" component={Link} to={ROUTES.TRAINERS}>Trainers</NavButton>
@@ -47,7 +48,7 @@ const Navigation = () => {
           ) : (
             <>
               <Box>
-                <Button color="inherit" component={Link} to={ROUTES.HOME}>Logo</Button>
+                <Button color="inherit" component={Link} to={ROUTES.HOME}><img src={logo} alt="" style={{ height: '2rem' }} /></Button>
               </Box>
               <Box>
                 <NavButton color="inherit" component={Link} to={ROUTES.LOGIN}>Login</NavButton>

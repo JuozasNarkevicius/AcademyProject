@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-no-useless-fragment */
 import {
-  Container, Typography, List, ListItem,
-  ListItemButton, Chip, CssBaseline, Box,
+  Container, Typography, CssBaseline, Box,
   Rating,
 } from '@mui/material';
 import React, { useEffect, useState } from 'react';
@@ -11,7 +10,6 @@ import StarIcon from '@mui/icons-material/Star';
 import programService from '../services/ProgramService';
 import ROUTES from '../constants/Routes';
 import paginationService from '../services/genericServices/pagination';
-import Pagination from '../components/layout/Pagination';
 import SearchBar from '../components/dataInput/SearchBar';
 import Loading from '../components/Loading';
 import COLORS from '../styles/colors';
@@ -56,7 +54,6 @@ const SharedPrograms = () => {
     try {
       const response = await programService.getAllPublicProgramsAPI();
       setPrograms(response.data);
-      console.log(response.data);
       setfilteredPrograms(response.data);
     } catch (error) {
       if (error.response.status === 401) {
@@ -81,7 +78,7 @@ const SharedPrograms = () => {
   return (
     <Container sx={{
       minWidth: '100%',
-      minHeight: '93vh',
+      minHeight: '92.3vh',
       paddingTop: '5rem',
       backgroundImage: `url(${backgroundImage})`,
       backgroundSize: 'cover',
@@ -94,7 +91,7 @@ const SharedPrograms = () => {
     >
       <CssBaseline />
       <Box>
-        <Typography variant="h5">Programs shared by other users</Typography>
+        <Typography variant="h5" sx={{ mb: '2rem' }}>Programs shared by other users</Typography>
         <SearchBar
           elements={programs}
           setFilteredElements={setfilteredPrograms}

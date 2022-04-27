@@ -49,8 +49,8 @@ const Trainers = () => {
   return (
     <Container sx={{
       minWidth: '100%',
-      minHeight: '93vh',
-      paddingTop: '2rem',
+      minHeight: '92.3vh',
+      paddingTop: '1.5rem',
       backgroundImage: `url(${backgroundImage})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',
