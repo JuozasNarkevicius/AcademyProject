@@ -81,7 +81,10 @@ namespace WebAPI.Controllers
 
             var mapped = _mapper.Map<TrainerApplicationDTO>(application);
 
-            mapped.Rating = rating;
+            if (mapped != null)
+            {
+                mapped.Rating = rating;
+            }
 
             return Ok(mapped);
         }
