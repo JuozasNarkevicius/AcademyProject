@@ -7,16 +7,11 @@ namespace WebAPI.Services
 {
     public interface IPdfCreator
     {
-        public byte[] CreatePdf(WorkoutProgram program);
+        public byte[] CreatePdf(WorkoutProgram program, IConverter converter);
     }
     public class PdfCreator : IPdfCreator
     {
-        private readonly IConverter _converter;
-        public PdfCreator(IConverter converter)
-        {
-            _converter = converter;
-        }
-        public byte[] CreatePdf(WorkoutProgram program)
+        public byte[] CreatePdf(WorkoutProgram program, IConverter converter)
         {
 
             var globalSettings = new GlobalSettings
@@ -41,9 +36,10 @@ namespace WebAPI.Services
                 Objects = { objectSettings }
             };
 
-            var file = _converter.Convert(pdf);
+            converter.Convert(pdf);
+            var pdfFile = converter.Convert(pdf);
 
-            return file;
+            return pdfFile;
         }
     }
 }

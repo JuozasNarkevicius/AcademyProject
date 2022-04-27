@@ -25,8 +25,7 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> CreatePDF(long Id)
         {
             var program = await _workoutProgramRepository.Get(Id);
-
-            var file = _pdfCreator.CreatePdf(program);
+            var file = _pdfCreator.CreatePdf(program, _converter);
 
             return File(file, "application/pdf");
         }
@@ -35,11 +34,8 @@ namespace WebAPI.Controllers
         public async Task<IActionResult> CreatePDFAndSendToEmail(string Email, long programId)
         {
             var program = await _workoutProgramRepository.Get(programId);
-
-            var file = _pdfCreator.CreatePdf(program);
-
+            var file = _pdfCreator.CreatePdf(program, _converter);
             var stream = new MemoryStream(file);
-
             IFormFile newFile = new FormFile(stream, 0, file.Length, program.Name, program.Name);
 
             var message = new Message(Email, "Your program PDF", "You will find your program pdf attached to this email.Have a nice day!", newFile);
