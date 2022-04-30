@@ -133,6 +133,7 @@ const TrainerApplication = () => {
       minWidth: '100%',
       minHeight: '92.3vh',
       paddingTop: '2rem',
+      paddingBottom: '2rem',
       backgroundImage: `url(${backgroundImage})`,
       backgroundSize: 'cover',
       backgroundPosition: 'center',

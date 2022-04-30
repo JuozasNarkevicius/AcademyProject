@@ -93,7 +93,7 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
   };
 
   return (
-    <Box sx={{ ml: 8, mt: '8rem', mr: -10 }}>
+    <Box sx={{ ml: '12rem', mt: '3rem', mr: -10 }}>
       <Box sx={{ mb: '2rem' }}>
         <EditableName
           imgSrcEdit={editIcon}

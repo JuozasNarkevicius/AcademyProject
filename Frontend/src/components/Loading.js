@@ -8,7 +8,7 @@ const Loading = () => (
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    height: '93.1vh',
+    height: '92.3vh',
     backgroundColor: COLORS.BACKGROUND,
     minWidth: '100%',
     backgroundImage: `url(${backgroundImage})`,

@@ -1,5 +1,5 @@
 const COLORS = {
-  HEADER: '#373737',
+  HEADER: '#151515',
   BACKGROUND: '#1a1a18',
   ITEM: '#2d2d2d',
   SUB_ITEM: '#373737',

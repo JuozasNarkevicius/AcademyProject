@@ -33,7 +33,7 @@ const columns = [
                 emptyIcon={<StarIcon style={{ opacity: 1 }} fontSize="inherit" />}
                 readOnly
               />
-              {params.value}
+              {Math.round(params.value * 2) / 2}
             </>
           )
           : <>Not given yet</>}

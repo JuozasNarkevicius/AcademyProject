@@ -49,7 +49,7 @@ const ExerciseDetails = ({ exercise, setIsBackdropOpen }) => {
       <Card sx={{ m: '2rem', p: '1rem', backgroundColor: COLORS.SUB_ITEM }}>
         {exercise.videoUrl ? (
           <YouTube
-            videoUrl={exercise.videoUrl
+            videoId={exercise.videoUrl
         && videoService.getIdFromUrl(exercise.videoUrl)}
             opts={opts}
             onPlay={setVideoEvent}
