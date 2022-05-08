@@ -11,7 +11,7 @@ namespace Application.Jwt
     public interface IAuthorizationService
     {
         public Task<bool> VerifyPassword(AuthenticateRequest request);
-        public Task<string> GenerateJwtToken(string email);
+        //public Task<string> GenerateJwtToken(string email);
     }
 
     public class AuthorizationService : IAuthorizationService
@@ -42,19 +42,19 @@ namespace Application.Jwt
             return BCrypt.Net.BCrypt.EnhancedVerify(request.Password, user.Password, hashType: HashType.SHA384);
         }
 
-        public async Task<string> GenerateJwtToken(string email)
-        {
-            var user = await _userRepository.Get(email);
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_config.Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
-                Expires = DateTime.UtcNow.AddMinutes(15),
-                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
-            };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
-        }
+        //public async Task<string> GenerateJwtToken(string email)
+        //{
+        //    var user = await _userRepository.Get(email);
+        //    var tokenHandler = new JwtSecurityTokenHandler();
+        //    var key = Encoding.ASCII.GetBytes(_config.Secret);
+        //    var tokenDescriptor = new SecurityTokenDescriptor
+        //    {
+        //        Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
+        //        Expires = DateTime.UtcNow.AddMinutes(15),
+        //        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        //    };
+        //    var token = tokenHandler.CreateToken(tokenDescriptor);
+        //    return tokenHandler.WriteToken(token);
+        //}
     }
 }

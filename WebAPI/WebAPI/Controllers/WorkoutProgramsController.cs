@@ -137,8 +137,8 @@ namespace WebAPI.Controllers
             return Ok(_mapper.Map<UpdateProgramNameDTO>(updatedProgram));
         }
 
+        [AllowAnonymous]
         [HttpPost]
-        [Route("name")]
         public async Task<ActionResult<UpdateProgramNameDTO>> PostProgramName(long userId, UpdateProgramNameDTO programDTO)
         {
             var program = _mapper.Map<WorkoutProgram>(programDTO);

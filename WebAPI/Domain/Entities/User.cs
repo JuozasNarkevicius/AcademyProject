@@ -11,7 +11,5 @@ namespace Domain.Entities
         public int Age { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        [JsonIgnore]
-        public List<RefreshToken> RefreshTokens { get; set; }
     }
 }

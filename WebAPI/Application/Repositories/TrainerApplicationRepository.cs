@@ -25,7 +25,7 @@ namespace Application.Repositories
 
         public async Task<IEnumerable<TrainerApplication>> GetAll()
         {
-            var applications = await _context.Applications
+            var applications = await _context.TrainerApplications
                 .Where(appl => appl.Status != "declined")
                 .ToListAsync();
 
@@ -34,7 +34,7 @@ namespace Application.Repositories
 
         public async Task<IEnumerable<TrainerApplication>> GetAllVerified()
         {
-            var applications = await _context.Applications
+            var applications = await _context.TrainerApplications
                 .Where(a => a.Status == "verified")
                 .ToListAsync();
 
@@ -42,14 +42,14 @@ namespace Application.Repositories
         }
         public async Task<TrainerApplication> Get(long id)
         {
-            var application = await _context.Applications.FindAsync(id);
+            var application = await _context.TrainerApplications.FindAsync(id);
 
             return application;
         }
 
         public async Task<TrainerApplication> GetByUserId(long id)
         {
-            var application = await _context.Applications
+            var application = await _context.TrainerApplications
                 .Where(a => a.UserId == id)
                 .FirstOrDefaultAsync();
 
@@ -58,20 +58,20 @@ namespace Application.Repositories
 
         public async Task<TrainerApplication> Update(TrainerApplication application)
         {
-            _context.Applications.Update(application);
+            _context.TrainerApplications.Update(application);
             await _context.SaveChangesAsync();
             return await Get(application.Id);
         }
 
         public async Task<TrainerApplication> Add(TrainerApplication application)
         {
-            _context.Applications.Add(application);
+            _context.TrainerApplications.Add(application);
             await _context.SaveChangesAsync();
             return await Get(application.Id);
         }
         public async Task Delete(TrainerApplication application)
         {
-            _context.Applications.Remove(application);
+            _context.TrainerApplications.Remove(application);
             await _context.SaveChangesAsync();
         }
     }

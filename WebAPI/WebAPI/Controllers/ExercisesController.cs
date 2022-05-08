@@ -21,14 +21,6 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet("~/api/exerciseNames")]
-        public async Task<ActionResult<IEnumerable<Exercise>>> GetExerciseNames()
-        {
-            var exerciseNames = await _exerciseRepository.GetExerciseNames();
-
-            return Ok(exerciseNames);
-        }
-
         [HttpGet("{id}")]
         public async Task<ActionResult<Exercise>> GetExercise(long id)
         {
@@ -101,9 +93,10 @@ namespace WebAPI.Controllers
                 await _exerciseRepository.Update(exercise);
             }
 
-            return Ok();
+            return Ok(exercises);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<Exercise>> PostExercise(CreateExerciseDTO exerciseDTO, long workoutId)
         {
@@ -121,12 +114,12 @@ namespace WebAPI.Controllers
         {
             var exercise = await _exerciseRepository.Get(id);
 
-            var position = exercise.Position;
-
             if (exercise == null)
             {
                 return NotFound();
             }
+
+            var position = exercise.Position;
 
             await _exerciseRepository.Delete(exercise);
 

@@ -6,7 +6,7 @@ using WebAPI.Services;
 
 namespace WebAPI.Controllers
 {
-    [Route("api/pdfcreator")]
+    [Route("api/pdf")]
     [ApiController]
     public class PdfCreatorController : ControllerBase
     {
