@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import {
-  IconButton, Input, Icon, Box,
+  IconButton, Input, Icon, Box, Typography,
 } from '@mui/material';
 import PropTypes from 'prop-types';
+import { useSnackbar } from 'notistack';
 import AlertDialog from '../modal/Modal';
 import imgSrcDelete from '../../assets/icons/x.svg';
 import COLORS from '../../styles/colors';
@@ -12,12 +13,24 @@ const EditableName = ({
 }) => {
   const [newName, setNewName] = useState(null);
   const [isUpdated, setIsUpdated] = useState(false);
+  const [error, setError] = useState();
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleClickVariant = (message, variant) => {
+    const snackBarStyle = { marginLeft: '12rem' };
+    enqueueSnackbar(message, { variant, style: snackBarStyle });
+  };
 
   const save = (e) => {
     e.stopPropagation();
-    saveNewName(newName, objectId);
-    setNewName(null);
-    setIsUpdated(false);
+    if (newName) {
+      saveNewName(newName, objectId);
+      setNewName(null);
+      setIsUpdated(false);
+    } else {
+      setIsUpdated(false);
+      handleClickVariant('This field cannot be empty!', 'error');
+    }
   };
 
   return (
@@ -77,6 +90,7 @@ const EditableName = ({
           </IconButton>
         </>
       )}
+      <Typography>{error}</Typography>
     </Box>
   );
 };

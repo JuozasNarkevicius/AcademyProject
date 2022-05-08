@@ -38,6 +38,7 @@ const Form = ({
           onChange={formik.handleChange}
           error={formik.touched[field.name] && Boolean(formik.errors[field.name])}
           helperText={formik.touched[field.name] && formik.errors[field.name]}
+          placeholder={field.placeholder}
         />
       ))}
       <Button sx={{ m: '1rem' }} variant="contained" size="large" type="submit">Submit</Button>

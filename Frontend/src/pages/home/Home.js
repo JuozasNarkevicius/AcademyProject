@@ -54,7 +54,7 @@ const Home = () => (
         }}
       >
         <Typography sx={{ textAlign: 'left', fontSize: '35px', m: '13rem' }}>
-          Create your own workout programs with our flexible tool!
+          Create and rearrange your own workout programs with our flexible tool!
         </Typography>
       </Grid>
     </FadeInSection>
@@ -66,7 +66,10 @@ const Home = () => (
           color: 'white', minHeight: '45rem', display: 'flex', justifyContent: 'center', alignItems: 'center', mt: '7rem',
         }}
       >
-        <Typography sx={{ textAlign: 'left', fontSize: '35px', m: '13rem' }}>
+        <Typography sx={{
+          textAlign: 'left', fontSize: '35px', m: '13rem', mt: '7.5rem',
+        }}
+        >
           Find a suitable trainer, who can help you along with your journey!
         </Typography>
       </Grid>

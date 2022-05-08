@@ -15,6 +15,7 @@ import EditableName from '../editable/EditableName';
 import programService from '../../services/ProgramService';
 import { workoutService } from '../../services/WorkoutService';
 import COLORS from '../../styles/colors';
+import userService from '../../services/UserService';
 
 const ProgramDaysAccordion = ({ deleteProgram }) => {
   const { program, setProgram } = useContext(ProgramContext);
@@ -84,11 +85,9 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
     enqueueSnackbar(message, { variant, style: snackBarStyle });
   };
 
-  // Todo: change so that the current user email is passed
   const sendProgramPdfToEmail = async () => {
-    // const response = await userService.getCurrentUserAPI();
-    // await programService.sendProgramPdfToEmailAPI(program.id);
-    await programService.sendProgramPdfToEmailAPI('juoznark@gmail.com', program.id);
+    const response = await userService.getCurrentUserAPI();
+    await programService.sendProgramPdfToEmailAPI(response.data.email, program.id);
     handleClickVariant('Program successfully sent to your email!', 'success');
   };
 

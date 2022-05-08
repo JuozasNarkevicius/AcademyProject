@@ -3,6 +3,7 @@ import {
   TableCell, IconButton, Icon, TextField,
 } from '@mui/material';
 import PropTypes from 'prop-types';
+import { useSnackbar } from 'notistack';
 import AlertDialog from '../modal/Modal';
 import detailsIcon from '../../assets/icons/description.svg';
 import COLORS from '../../styles/colors';
@@ -12,10 +13,22 @@ const EditableExercise = ({
   updateExercise, deleteExercise, objectType, handleBackdropOpen,
 }) => {
   const [editedExercise, setEditedExercise] = useState({});
+  const { enqueueSnackbar } = useSnackbar();
+
+  const handleClickVariant = (message, variant) => {
+    const snackBarStyle = { marginLeft: '12rem' };
+    enqueueSnackbar(message, { variant, style: snackBarStyle });
+  };
 
   const submitUpdatedExercise = () => {
-    updateExercise(editedExercise, exercise.id);
-    setEditedExercise({});
+    console.log(editedExercise);
+    if (editedExercise.name && editedExercise.sets
+      && editedExercise.reps && editedExercise.rest) {
+      updateExercise(editedExercise, exercise.id);
+      setEditedExercise({});
+    } else {
+      handleClickVariant('All fields are required!', 'error');
+    }
   };
   return (
     editedExercise.id && editedExercise.id === exercise.id ? (
@@ -40,13 +53,14 @@ const EditableExercise = ({
             variant="standard"
             InputProps={{
               inputProps: { min: 1 },
+              // onInput: "validity.valid||(value='');",
             }}
-            onKeyPress={(e) => (e.key === 'Enter' && submitUpdatedExercise())}
+            onKeyPress={(e) => ((e.key === 'Enter' && submitUpdatedExercise()) || (e.code === 'Minus' && e.preventDefault()))}
             value={editedExercise.sets}
             onChange={(event) => {
               setEditedExercise({
                 ...editedExercise,
-                sets: event.target.value,
+                sets: event.target.value.replace(/^0+/, ''),
               });
             }}
           />
@@ -71,7 +85,7 @@ const EditableExercise = ({
           <TextField
             required
             variant="standard"
-            onKeyPress={(e) => (e.key === 'Enter' && submitUpdatedExercise())}
+            onKeyPress={(e) => ((e.key === 'Enter' && submitUpdatedExercise()) || (e.code === 'Minus' && e.preventDefault()))}
             value={editedExercise.rest}
             type="number"
             InputProps={{
@@ -80,7 +94,7 @@ const EditableExercise = ({
             onChange={(event) => {
               setEditedExercise({
                 ...editedExercise,
-                rest: event.target.value,
+                rest: event.target.value.replace(/^0+/, ''),
               });
             }}
           />

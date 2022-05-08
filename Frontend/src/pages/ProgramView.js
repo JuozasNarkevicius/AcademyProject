@@ -3,6 +3,7 @@ import {
   Container, Typography, Button, Box,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 import ProgramListDrawer from '../components/dataDisplay/ProgramListDrawer';
 import ProgramDaysAccordion from '../components/dataDisplay/ProgramDaysAccordion';
 import programService from '../services/ProgramService';
@@ -11,6 +12,7 @@ import ProgramAccordion from '../components/dataDisplay/ProgramAccordion';
 import COLORS from '../styles/colors';
 import Loading from '../components/Loading';
 import backgroundImage from '../assets/images/workoutEquipment.jpg';
+import userService from '../services/UserService';
 
 const ProgramView = () => {
   const [programList, setProgramList] = useState([]);
@@ -19,6 +21,7 @@ const ProgramView = () => {
   const [selectedProgramType, setSelectedProgramType] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   const programMemo = useMemo(() => ({ program, setProgram }), [program]);
 
@@ -66,6 +69,21 @@ const ProgramView = () => {
     await getPrograms();
   };
 
+  const getProgramPdf = async () => {
+    await programService.getProgramPdfAPI(program.id, program.name);
+  };
+
+  const handleClickVariant = (message, variant) => {
+    const snackBarStyle = { marginLeft: '12rem' };
+    enqueueSnackbar(message, { variant, style: snackBarStyle });
+  };
+
+  const sendProgramPdfToEmail = async () => {
+    const response = await userService.getCurrentUserAPI();
+    await programService.sendProgramPdfToEmailAPI(response.data.email, program.id);
+    handleClickVariant('Program successfully sent to your email!', 'success');
+  };
+
   useEffect(() => {
     getPrograms();
   }, [program]);
@@ -108,6 +126,24 @@ const ProgramView = () => {
               onClick={unfollowProgram}
             >
               Unfollow program
+            </Button>
+            <Button
+              variant="contained"
+              sx={{
+                float: 'left', ml: '2rem', backgroundColor: COLORS.SECONDARY, '&:hover': { backgroundColor: COLORS.SECONDARY_HOVER },
+              }}
+              onClick={getProgramPdf}
+            >
+              Download PDF
+            </Button>
+            <Button
+              variant="contained"
+              sx={{
+                float: 'left', ml: '2rem', backgroundColor: COLORS.SECONDARY, '&:hover': { backgroundColor: COLORS.SECONDARY_HOVER },
+              }}
+              onClick={sendProgramPdfToEmail}
+            >
+              Send PDF to Email
             </Button>
           </Box>
         )}

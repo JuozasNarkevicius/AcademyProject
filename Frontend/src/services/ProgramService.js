@@ -12,7 +12,7 @@ const submitProgramAPI = async (program) => {
 
 const postProgramAPI = async (name) => {
   const userId = sessionStorage.getItem('id');
-  const response = await API.post(`/users/${userId}/programs/name`, { name });
+  const response = await API.post(`/users/${userId}/programs`, { name });
   return response;
 };
 
@@ -61,7 +61,7 @@ const isProgramSavedAPI = async (programId) => {
 };
 
 const getProgramPdfAPI = async (programId, name) => {
-  const response = await API.get(`/pdfcreator/${programId}`, { responseType: 'blob' });
+  const response = await API.get(`/pdf/${programId}`, { responseType: 'blob' });
   const url = window.URL.createObjectURL(new Blob([response.data]));
   const link = document.createElement('a');
   link.href = url;

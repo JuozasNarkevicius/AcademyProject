@@ -77,7 +77,7 @@ const AdditionalField = ({
           variant="contained"
           onClick={() => setIsAdding(true)}
         >
-          {`Add ${attribute}`}
+          {attribute === 'videoUrl' ? 'Add video' : `Add ${attribute}`}
         </Button>
       );
     }
@@ -86,6 +86,7 @@ const AdditionalField = ({
         <Form
           fields={[field]}
           initialValues={{ [attribute]: exercise[attribute] }}
+          placeholder={field.placeholder}
           onSubmitFunction={submitDescription}
         />
       );
