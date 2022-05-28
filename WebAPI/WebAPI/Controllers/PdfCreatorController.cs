@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Application.Repositories;
 using EmailService;
 using WebAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebAPI.Controllers
 {
+    [Authorize]
     [Route("api/pdf")]
     [ApiController]
     public class PdfCreatorController : ControllerBase

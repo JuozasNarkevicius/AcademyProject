@@ -24,7 +24,6 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<WorkoutProgram>>> GetPrograms(long userId)
         {
@@ -85,7 +84,6 @@ namespace WebAPI.Controllers
             return Ok(mapped);
         }
 
-        [AllowAnonymous]
         [HttpGet("/api/programs/{id}")]
         public async Task<ActionResult<WorkoutProgram>> GetProgram(long id)
         {
@@ -137,7 +135,6 @@ namespace WebAPI.Controllers
             return Ok(_mapper.Map<UpdateProgramNameDTO>(updatedProgram));
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<UpdateProgramNameDTO>> PostProgramName(long userId, UpdateProgramNameDTO programDTO)
         {

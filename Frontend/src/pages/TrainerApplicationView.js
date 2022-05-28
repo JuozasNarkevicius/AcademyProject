@@ -27,6 +27,7 @@ const TrainerApplicationView = () => {
   };
 
   const declineTrainer = async () => {
+    await userService.changeUserRoleAPI(application.userId, 'user');
     await applicationService.changeApplicationStatusAPI(application.id, 'declined');
     navigate(ROUTES.TRAINER_APPLICATION_LIST);
   };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Container, CssBaseline, Box, CircularProgress,
+  Container, CssBaseline, Box,
 } from '@mui/material';
 import { useParams, useNavigate } from 'react-router-dom';
 import applicationService from '../services/ApplicationService';

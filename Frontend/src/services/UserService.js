@@ -13,6 +13,7 @@ const getUserById = async (userId) => {
 
 const changeUserRoleAPI = async (userId, newRole) => {
   await API.put(`/users/${userId}/role`, newRole);
+  sessionStorage.setItem('role', newRole);
 };
 
 const userService = {

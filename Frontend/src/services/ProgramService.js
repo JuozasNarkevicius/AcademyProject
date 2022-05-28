@@ -69,9 +69,7 @@ const getProgramPdfAPI = async (programId, name) => {
   link.click();
 };
 
-// Todo: change to email that is not hardcoded
 const sendProgramPdfToEmailAPI = async (email, programId) => {
-  // await API.get(`/email/${email}/program/${programId}`);
   await API.get(`/email/${email}/program/${programId}`);
 };
 

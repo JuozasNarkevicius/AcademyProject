@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Typography, Grid, CssBaseline, Icon, IconButton, Box,
+  Typography, Grid, CssBaseline, Box,
 } from '@mui/material';
 import athlete from '../../assets/images/athlete.png';
 import programTool from '../../assets/images/program_tool.png';

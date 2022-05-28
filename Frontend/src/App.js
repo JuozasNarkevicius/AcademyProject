@@ -3,13 +3,13 @@ import { Routes, Route } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { initializeApp } from 'firebase/app';
-import { SnackbarProvider, useSnackbar } from 'notistack';
+import { SnackbarProvider } from 'notistack';
 import firebaseConfig from './constants/firebase';
 import Navigation from './components/layout/Navigation';
 import {
-  Home, Sport, Login, Registration,
-  ProgramCreation, ProgramView, SharedPrograms,
-  PublicProgramView, Trainers, TrainerProfile, Gyms,
+  Home, Login, Registration,
+  ProgramView, SharedPrograms,
+  PublicProgramView, Trainers, TrainerProfile,
   TrainerApplication, TrainerApplicationList,
   TrainerApplicationView,
 } from './pages';
@@ -37,16 +37,13 @@ const App = () => {
               <Navigation />
               <Routes>
                 <Route path={ROUTES.HOME} element={<Home />} />
-                <Route path={ROUTES.SPORT} element={<Sport />} />
                 <Route path={ROUTES.MY_PROGRAMS} element={<ProgramView />} />
                 <Route path={ROUTES.LOGIN} element={<Login />} />
                 <Route path={ROUTES.REGISTER} element={<Registration />} />
-                <Route path={ROUTES.CREATE_PROGRAM} element={<ProgramCreation />} />
                 <Route path={ROUTES.BROWSE_PROGRAMS} element={<SharedPrograms />} />
                 <Route path={`${ROUTES.PUBLIC_PROGRAM}/:id`} element={<PublicProgramView />} />
                 <Route path={ROUTES.TRAINERS} element={<Trainers />} />
                 <Route path={`${ROUTES.TRAINER_PROFILE}/:id`} element={<TrainerProfile />} />
-                <Route path={ROUTES.GYMS} element={<Gyms />} />
                 <Route path={ROUTES.TRAINER_APPLICATION} element={<TrainerApplication />} />
                 <Route
                   path={ROUTES.TRAINER_APPLICATION_LIST}

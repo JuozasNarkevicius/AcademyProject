@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-no-useless-fragment */
 import {
   Container, Typography, CssBaseline, Box,
   Rating,
@@ -61,10 +60,6 @@ const SharedPrograms = () => {
       }
     }
     setIsLoading(false);
-  };
-
-  const handlePageChange = (event, value) => {
-    setPage(value);
   };
 
   useEffect(() => {

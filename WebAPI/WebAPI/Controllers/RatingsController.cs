@@ -7,7 +7,7 @@ using WebAPI.DTO_s;
 
 namespace WebAPI.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/ratings")]
     [ApiController]
     public class RatingsController : ControllerBase

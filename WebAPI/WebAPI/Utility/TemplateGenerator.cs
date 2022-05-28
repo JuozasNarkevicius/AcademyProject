@@ -1,5 +1,4 @@
-﻿using Application.Repositories;
-using Domain.Entities;
+﻿using Domain.Entities;
 using System.Text;
 
 namespace WebAPI.Utility
@@ -46,20 +45,6 @@ namespace WebAPI.Utility
             {
                 foreach (var exercise in workout.Exercises)
                 {
-                    //if (exercise.Description != null && exercise.Description != "" && exercise.VideoUrl != null && exercise.VideoUrl != "")
-                    //{
-                    //    sb.AppendFormat(@"<h6>{0}</h6>", exercise.Name);
-                    //    sb.AppendFormat(@"<p>Description - {0}</p>", exercise.Description);
-                    //    sb.AppendFormat(@"<p>Video link - {0}</p>", exercise.VideoUrl);
-                    //}
-                    //else if (exercise.Description != null && exercise.Description != "")
-                    //{
-                    //    sb.AppendFormat(@"<p>{0} - {1}</p>", exercise.Name, exercise.Description);
-                    //}
-                    //else if (exercise.VideoUrl != null && exercise.VideoUrl != "")
-                    //{
-                    //    sb.AppendFormat(@"<p>{0} - {1}</p>", exercise.Name, exercise.Description);
-                    //}
                     if (exercise.Description != null && exercise.Description != "")
                     {
                         sb.AppendFormat(@"<p>{0} - {1}</p>", exercise.Name, exercise.Description);

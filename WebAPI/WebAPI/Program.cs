@@ -43,8 +43,6 @@ builder.Services.AddMvc(options =>
 builder.Services.AddDbContext<WebContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("WebContext")));
 
-builder.Services.Configure<JwtConfig>(builder.Configuration.GetSection("AppSettings"));
-
 builder.Services.AddScoped<IPdfCreator, PdfCreator>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IExerciseRepository, ExerciseRepository>();
@@ -60,7 +58,7 @@ builder.Services.AddAuthentication(options => {
 }).AddCookie("Cookies", options => {
     options.Cookie.Name = "accessToken";
     options.Cookie.SameSite = SameSiteMode.None;
-    options.Cookie.MaxAge = TimeSpan.FromHours(5);
+    options.Cookie.MaxAge = TimeSpan.FromHours(1);
     options.Events = new CookieAuthenticationEvents
     {
         OnRedirectToLogin = redirectContext =>

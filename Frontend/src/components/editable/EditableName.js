@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-  IconButton, Input, Icon, Box, Typography,
+  IconButton, Input, Icon, Box,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
@@ -13,7 +13,6 @@ const EditableName = ({
 }) => {
   const [newName, setNewName] = useState(null);
   const [isUpdated, setIsUpdated] = useState(false);
-  const [error, setError] = useState();
   const { enqueueSnackbar } = useSnackbar();
 
   const handleClickVariant = (message, variant) => {
@@ -90,7 +89,6 @@ const EditableName = ({
           </IconButton>
         </>
       )}
-      <Typography>{error}</Typography>
     </Box>
   );
 };

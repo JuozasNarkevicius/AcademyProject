@@ -8,7 +8,6 @@ namespace Application.Repositories
     {
         public Task<IEnumerable<Exercise>> GetAll();
         public Task<IEnumerable<Exercise>> GetExercisesByWorkout(long workoutId);
-        //public Task<IEnumerable<ExerciseName>> GetExerciseNames();
         public Task<Exercise> Get(long id);
         public Task<Exercise> Update(Exercise exercise);
         public Task<Exercise> Add(Exercise exercise);
@@ -29,13 +28,6 @@ namespace Application.Repositories
 
             return exercises;
         }
-
-        //public async Task<IEnumerable<ExerciseName>> GetExerciseNames()
-        //{
-        //    var exerciseNames = await context.ExerciseNames.ToListAsync();
-
-        //    return exerciseNames;
-        //}
 
         public async Task<Exercise> Get(long id)
         {

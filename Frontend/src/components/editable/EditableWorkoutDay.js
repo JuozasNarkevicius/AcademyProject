@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import React, { useContext, useState } from 'react';
 import {
   Table, TableBody, TableCell, Backdrop, TableContainer,

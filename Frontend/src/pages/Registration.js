@@ -12,7 +12,6 @@ import COLORS from '../styles/colors';
 const registationFields = [
   { name: 'firstName', label: 'First Name', type: 'text' },
   { name: 'lastName', label: 'Last Name', type: 'text' },
-  { name: 'age', label: 'Age', type: 'number' },
   { name: 'email', label: 'Email', type: 'text' },
   { name: 'password', label: 'Password', type: 'password' },
 ];
@@ -20,7 +19,6 @@ const registationFields = [
 const validationSchema = yup.object({
   firstName: yup.string().required('Enter your first name'),
   lastName: yup.string().required('Enter your last name'),
-  age: yup.number().min(0, 'Age must be a positive number').required('Enter your age'),
   email: yup.string().email('Enter a valid email').required('Enter your email'),
   password: yup.string().min(4).required('Enter your password'),
 });
@@ -32,7 +30,6 @@ const Registration = () => {
     initialValues: {
       firstName: '',
       lastName: '',
-      age: '',
       email: '',
       password: '',
     },

@@ -22,16 +22,6 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        {
-            var users = await _userRepository.GetAll();
-
-            var mapped = _mapper.Map<IEnumerable<CreateUserDTO>>(users);
-
-            return Ok(mapped);
-        }
-
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(long id)
         {
@@ -45,23 +35,6 @@ namespace WebAPI.Controllers
             var mapped = _mapper.Map<CreateUserDTO>(user);
 
             return Ok(mapped);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(long id, UpdateUserDTO userDTO)
-        {
-            var userFromDB = await _userRepository.Get(id);
-
-            if (userFromDB == null)
-            {
-                return NotFound();
-            }
-
-            _mapper.Map(userDTO, userFromDB);
-
-            await _userRepository.Update(userFromDB);
-
-            return Ok();
         }
 
         [HttpPut("~/api/users/{id}/role")]
@@ -82,13 +55,11 @@ namespace WebAPI.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<ActionResult<User>> PostUser(CreateUserDTO userDTO)
         {
             var user = _mapper.Map<User>(userDTO);
 
             user.Role = "user";
-
             user.Password = BCrypt.Net.BCrypt.EnhancedHashPassword(user.Password, HashType.SHA384);
 
             var userFromDb = await _userRepository.Add(user);

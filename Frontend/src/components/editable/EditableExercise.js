@@ -53,7 +53,6 @@ const EditableExercise = ({
             variant="standard"
             InputProps={{
               inputProps: { min: 1 },
-              // onInput: "validity.valid||(value='');",
             }}
             onKeyPress={(e) => ((e.key === 'Enter' && submitUpdatedExercise()) || (e.code === 'Minus' && e.preventDefault()))}
             value={editedExercise.sets}

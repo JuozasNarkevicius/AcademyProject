@@ -30,7 +30,9 @@ const ProgramView = () => {
       name: 'New Program',
     };
     const response = await programService.postProgramAPI(newProgram.name);
+    const program = await programService.getProgramAPI(response.data.id);
     newProgram.id = response.data.id;
+    setProgram(program.data);
     setProgramList([...programList, newProgram]);
   };
 
@@ -113,7 +115,13 @@ const ProgramView = () => {
         />
         <Box sx={{ display: 'flex', justifyContent: 'center', width: '90vw' }}>
           {program && selectedProgramType === 'owned'
-        && <ProgramDaysAccordion deleteProgram={deleteProgram} programType={selectedProgramType} />}
+        && (
+          <ProgramDaysAccordion
+            deleteProgram={deleteProgram}
+            programType={selectedProgramType}
+            getPrograms={getPrograms}
+          />
+        )}
           {program && selectedProgramType === 'saved'
         && (
           <Box sx={{ ml: '13rem' }}>

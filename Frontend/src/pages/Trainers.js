@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
-  Card, Container, CardActions, CardContent,
-  Button, Typography, Grid, CssBaseline, Box,
+  Card, Container,
+  Typography, Grid, CssBaseline,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import ROUTES from '../constants/Routes';

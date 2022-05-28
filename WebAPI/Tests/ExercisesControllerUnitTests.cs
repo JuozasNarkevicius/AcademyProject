@@ -1,13 +1,8 @@
-using Application.DatabaseContext;
 using Application.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.Controllers;
 using WebAPI.DTO_s;
@@ -195,54 +190,5 @@ namespace Tests
 
             Assert.IsType<NotFoundResult>(response);
         }
-
-        //[Theory]
-        ////[InlineData(1, 0, 4, new int[] { 4, 1, 2, 3, 0 })]
-        ////[InlineData(1, 0, 1, new int[] { 0, 1, 2, 3, 4 })]
-        ////[InlineData(1, 2, 0)]
-        ////[InlineData(1, 2, 0)]
-        ////[InlineData(1, 2, 0)]
-        ////[InlineData(int.MinValue, -1, int.MaxValue)]
-        //public async void CanAddTheory(int workoutId, int first, int second, int[] expected)
-        //{
-        //    var workout = new WorkoutDay
-        //    {
-        //        Id = workoutId,
-        //        Name = "workout",
-        //        Position = 0,
-        //        Exercises = new List<Exercise>(),
-        //    };
-
-        //    for (int i = 0; i < 5; i++)
-        //    {
-        //        var exercise = new Exercise
-        //        {
-        //            Id = 1,
-        //            Name = "Exercise",
-        //            Sets = 4,
-        //            Reps = "12, 12, 12, 12",
-        //            Rest = 60,
-        //            Position = i,
-        //        };
-        //        workout.Exercises.Add(exercise);
-        //    }
-
-        //    List<int> positions = new List<int> { first, second };
-
-        //    exerciseRepository.Setup(x => x.GetExercisesByWorkout(workoutId)).ReturnsAsync(workout.Exercises);
-
-        //    var response = await controller.PutPositions(workoutId, positions);
-
-        //    var result = Assert.IsType<OkObjectResult>(response.Result);
-        //    var exerciseList = Assert.IsType<List<Exercise>>(result.Value);
-
-        //    int[] positionsArray = new int[5];
-        //    for (int i = 0; i < 5; i++)
-        //    {
-        //        positionsArray[i] = exerciseList.ElementAt(i).Position;
-        //    }
-
-        //    Assert.Equal(expected, positionsArray);
-        //}
     }
 }

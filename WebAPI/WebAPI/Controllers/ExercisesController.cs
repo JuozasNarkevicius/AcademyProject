@@ -96,7 +96,6 @@ namespace WebAPI.Controllers
             return Ok(exercises);
         }
 
-        [AllowAnonymous]
         [HttpPost]
         public async Task<ActionResult<Exercise>> PostExercise(CreateExerciseDTO exerciseDTO, long workoutId)
         {

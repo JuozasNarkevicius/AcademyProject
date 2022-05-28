@@ -11,11 +11,6 @@ namespace Application.DatabaseContext
 
         }
 
-        //public WebContext() : base()
-        //{
-
-        //}
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Seed();

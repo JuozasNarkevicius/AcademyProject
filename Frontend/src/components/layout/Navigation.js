@@ -27,9 +27,14 @@ const Navigation = () => {
               <NavButton color="inherit" component={Link} to={ROUTES.MY_PROGRAMS}>My programs</NavButton>
               <NavButton color="inherit" component={Link} to={ROUTES.BROWSE_PROGRAMS}>Browse programs</NavButton>
               <NavButton color="inherit" component={Link} to={ROUTES.TRAINERS}>Trainers</NavButton>
-              <NavButton color="inherit" component={Link} to={ROUTES.TRAINER_APPLICATION}>Become a trainer</NavButton>
               {role === 'admin'
-              && <NavButton color="inherit" component={Link} to={ROUTES.TRAINER_APPLICATION_LIST}>Trainer applications</NavButton>}
+                ? (
+                  <>
+                    <NavButton color="inherit" component={Link} to={ROUTES.TRAINER_APPLICATION_LIST}>Trainer applications</NavButton>
+                  </>
+                ) : (
+                  <NavButton color="inherit" component={Link} to={ROUTES.TRAINER_APPLICATION}>{role === 'trainer' ? 'My trainer profile' : 'Become a trainer'}</NavButton>
+                )}
               <Box sx={{ flexGrow: 1 }} />
               <NavButton
                 sx={{ p: 0 }}

@@ -1,10 +1,9 @@
-/* eslint-disable max-lines */
 import {
-  Container, TextField, Chip, Typography, Backdrop, CssBaseline, Box, Card, CircularProgress, Input,
+  Container, TextField, Chip, Typography, Backdrop, CssBaseline, Box, Card, CircularProgress,
 } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import applicationService from '../services/ApplicationService';
 import userService from '../services/UserService';
@@ -16,6 +15,7 @@ import Loading from '../components/Loading';
 import backgroundImage from '../assets/images/workoutEquipment.jpg';
 import Button from '../components/Button';
 import COLORS from '../styles/colors';
+import { AuthorizationContext } from '../Context';
 
 const ApplicationFields = [
   { name: 'description', label: 'Description', type: 'text' },
@@ -43,6 +43,7 @@ const TrainerApplication = () => {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isStatusLoading, setIsStatusLoading] = useState(false);
+  const { setRole } = useContext(AuthorizationContext);
   const navigate = useNavigate();
 
   const getApplication = async () => {
@@ -107,6 +108,10 @@ const TrainerApplication = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
+      if (application.userId) {
+        await userService.changeUserRoleAPI(application.userId, 'user');
+      }
+      setRole('user');
       setApplication(values);
       setIsStatusLoading(true);
       if (application.description) {

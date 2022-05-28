@@ -74,11 +74,6 @@ namespace WebAPI.Controllers
 
             var rating = await _ratingRepository.GetAverage(id, "trainers");
 
-            //if (application == null)
-            //{
-            //    return NotFound();
-            //}
-
             var mapped = _mapper.Map<TrainerApplicationDTO>(application);
 
             if (mapped != null)

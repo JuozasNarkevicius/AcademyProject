@@ -1,14 +1,11 @@
 export { default as Home } from './home/Home';
 export { default as Login } from './Login';
-export { default as ProgramCreation } from './ProgramCreation';
 export { default as Registration } from './Registration';
-export { default as Sport } from './Sport';
 export { default as ProgramView } from './ProgramView';
 export { default as SharedPrograms } from './SharedPrograms';
 export { default as PublicProgramView } from './PublicProgramView';
 export { default as Trainers } from './Trainers';
 export { default as TrainerProfile } from './TrainerProfile';
-export { default as Gyms } from './Gyms';
 export { default as TrainerApplication } from './TrainerApplication';
 export { default as TrainerApplicationList } from './TrainerApplicationList';
 export { default as TrainerApplicationView } from './TrainerApplicationView';

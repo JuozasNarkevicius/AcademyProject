@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import React, { useContext, useState } from 'react';
 import {
   Accordion, AccordionSummary, AccordionDetails, Button, Box,
@@ -17,7 +16,7 @@ import { workoutService } from '../../services/WorkoutService';
 import COLORS from '../../styles/colors';
 import userService from '../../services/UserService';
 
-const ProgramDaysAccordion = ({ deleteProgram }) => {
+const ProgramDaysAccordion = ({ deleteProgram, getPrograms }) => {
   const { program, setProgram } = useContext(ProgramContext);
   const [isDraggable, setIsDraggable] = useState(true);
   const { enqueueSnackbar } = useSnackbar();
@@ -44,6 +43,7 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
   const updateProgramName = async (newName) => {
     setProgram({ ...program, name: newName });
     await programService.updateProgramAPI(program.id, newName);
+    getPrograms();
   };
 
   const updateWorkoutName = async (newName, workoutId) => {
@@ -209,6 +209,7 @@ const ProgramDaysAccordion = ({ deleteProgram }) => {
 
 ProgramDaysAccordion.propTypes = {
   deleteProgram: PropTypes.func.isRequired,
+  getPrograms: PropTypes.func.isRequired,
 };
 
 export default ProgramDaysAccordion;

@@ -1,10 +1,5 @@
 ﻿using MailKit.Net.Smtp;
 using MimeKit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EmailService
 {
@@ -26,7 +21,6 @@ namespace EmailService
             emailMessage.From.Add(new MailboxAddress(_emailConfig.From, _emailConfig.From));
             emailMessage.To.Add(message.To);
             emailMessage.Subject = message.Subject;
-            //emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Text) { Text = message.Content };
 
             var bodyBuilder = new BodyBuilder { TextBody = message.Content };
 
@@ -59,7 +53,6 @@ namespace EmailService
                 }
                 catch
                 {
-                    //log an error message or throw an exception or both.
                     throw;
                 }
                 finally
