@@ -21,6 +21,21 @@ namespace WebAPI.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<WorkoutDay>> GetWorkout(long id)
+        {
+            var workout = await _workoutRepository.Get(id);
+
+            if (workout == null)
+            {
+                return NotFound();
+            }
+
+            var mapped = _mapper.Map<WorkoutDayDTO>(workout);
+
+            return Ok(mapped);
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> PutWorkout(long id, UpdateWorkoutNameDTO workout)
         {
@@ -89,8 +104,6 @@ namespace WebAPI.Controllers
             workout.ProgramId = programId;
 
             var workoutFromDb = await _workoutRepository.Add(workout);
-
-            Console.WriteLine(workoutFromDb.Id);
 
             return CreatedAtAction("GetWorkout", new { programId, id = workoutFromDb.Id }, _mapper.Map<WorkoutDayDTO>(workoutFromDb));
         }
